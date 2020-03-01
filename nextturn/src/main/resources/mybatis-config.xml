@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 긴 이름을 짧게 쓸수 있도록 설정하는 파일 -->
+	<typeAliases>
+		<typeAlias type="com.nextturn.domain.ProductDTO" alias="ProductDTO"></typeAlias>
+	<!-- 	<typeAlias type="com.paiksrecipe.domain.MemberDTO" alias="MemberDTO"></typeAlias> -->
+	</typeAliases>
+	
+</configuration>

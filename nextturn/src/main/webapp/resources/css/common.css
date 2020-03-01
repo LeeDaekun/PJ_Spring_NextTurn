@@ -1,0 +1,79 @@
+		/*구글 웹폰트*/
+	@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
+	@import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap');
+	@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap');
+	@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:700&display=swap');
+		/* 공통사항 */
+		
+		div {
+		/*	border: 1px solid #ff000042;*/
+		}
+
+		* {
+			font-family: : Dotum, '돋움',Helvetica, sans-serif;
+			box-sizing: border-box;
+			}	
+		
+
+		
+
+		<body>
+
+		body, h1, h2, h3, h4, h5 ,h6, ul, p {
+			margin:  0; /*태그 자체가 마진 패딩이 있으므로 지움*/
+			padding: 0;
+		}	
+		body {
+			background-color: #f5f6f7;
+			font-size: 12px;		
+		}
+		ul{
+			list-style: none;
+		}
+		a{
+			text-decoration: none;  /*하이퍼 링크에 밑줄 없음*/
+			color: inherit;	/*부모로 부터 상속받은 색을 사용함*/
+		}
+		
+		body{
+			font-family: 'Nanum Gothic', sans-serif;
+			/*font-family: 'Do Hyeon', sans-serif;	*/
+			/*font-family: 'Nanum Pen Script', cursive;*/
+			/*font-family: 'Nanum Gothic', sans-serif;*/
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+			color: #222222;
+		}
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		a {
+			color: inherit;  /*부모에게 상속받은 색깔을 사용함 inherit 옵션*/
+			text-decoration-line: none;
+		}
+		
+		/*글자색, 배경색*/
+		.f-color1 {color: #3885ca;}
+		.f-color2 {color: #eba444;}
+		.f-color3 {color: #d1d1dd;}
+
+		.bg-color1 {background-color: #3885ca; }
+		.bg-color2 {background-color: #eba444; }
+		.bg-color3 {background-color: #d1d1dd; }
+
+/*버튼들*/
+		button.btn{
+			display: inline-block;
+			font-weight: 600;
+			text-align: center;
+			font-size: 15px;
+			border-radius: 5px;
+			cursor: pointer;
+			padding: 11px 12px;
+			border: 1px solid transparent;
+		}
+

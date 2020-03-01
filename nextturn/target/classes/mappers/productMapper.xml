@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextturn.persistence.ProductDAO">
+	
+	<!-- 처음으로 만든 맵퍼 -->
+	<!-- 리절트 타입을 풀경로로 써줘야하는데, mybatis-config.xml에서 줄일수 있다 -->
+	
+	<!-- 서브쿼리문이기 때문에, 안쪽부터 읽는다( 내용: 테이블에서 날짜 DESC순으로 정렬 한것을 best라고 별칭을 지어줌) -->
+	<!-- 본문 쿼리문은 (서브쿼리 조회결과인 best를 /rownum: 새로운 컬럼라인을 만들고, 그것의 이름은 rnum 컬럼이됨  -->
+	<!-- rnum 컬럼에 best가 조회된 순서대로 rnum 넘버를 새로 매겨준다 -->
+	<!-- where : rnum 중에 1부터 5까지만 보여주세요 (베스트 5를 보기 위해서 이렇게만듬) -->
+	<select id="newPdtList" resultType="ProductDTO"> 
+		SELECT * 
+		FROM (SELECT rownum rnum, best.* 
+			  FROM ( SELECT * FROM tbl_pdt 
+			  		 ORDER BY regdate DESC 
+			  		 ) best
+			  )
+		WHERE rnum between 1 and 5
+	</select>
+</mapper>
+
