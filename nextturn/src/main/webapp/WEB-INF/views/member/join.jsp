@@ -1,10 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+       <%@ include file="../include/include.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>join_input</title>
-	<link rel="stylesheet" type="text/css" href="../css/common.css">
-	<link rel="stylesheet" type="text/css" href="../css/footer.css"><!-- 푸터 CSS추가 -->
-	<link rel="stylesheet" type="text/css" href="../css/nt_join_input.css">
+	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
+	<link rel="stylesheet" type="text/css" href="${path}/resources/css/footer.css"><!-- 푸터 CSS추가 -->
+	<link rel="stylesheet" type="text/css" href="${path}/resources/css/nt_join_input.css">
 
 	
 	<link rel="icon" type="image/png" href=".."> <!-- 파비콘 -->
@@ -26,8 +30,11 @@
 		</header>
 
 		<section>
-			<form name="frm_join" action="" method="POST"><!-- 정보를 숨겨야 하니까 post 로 (get 방식 사용금지) -->
-				<div class="container"> <!-- div.container 자동완성 -->
+			<!-- Spring 폼태그 형식의 Form, 세션 어트리뷰트에 자료를 담을때는 스프링폼태그를 써야함 -->
+			<!-- 폼태그 안에 name 값들이 변수로 담길꺼야 -->
+			<form:form id="frm_member" modelAttribute="memberDTO" autocomplete="on">  
+						
+				<div class="container">
 					<div class="join_content">
 						
 						<div class="row_group">
@@ -37,7 +44,7 @@
 									<label for="uid">아이디</label>
 								</h3>
 								<span class="ps_box int_id join_info_box_content">
-									<input type="text" id="uid" name="uid" class="int jq_eff"> <!-- 유효성체크 uid -->
+									<input type="text" id="uid" name="id" class="int jq_eff">
 									<span class="step_url">@naver.com</span>
 								</span>
 								<span class="join_err_msg">필수 정보입니다.</span>
@@ -48,7 +55,7 @@
 									<label for="upw">비밀번호</label>
 								</h3>
 								<span class="ps_box int_pass join_info_box_content" >
-									<input type="text" id="upw" name="upw" class="int jq_eff"><!-- 유효성체크 upw -->
+									<input type="text" id="upw" name="pw" class="int jq_eff">
 									<span class="step_url"><span class="pw_lock"></span></span>
 								</span>
 								<span class="join_err_msg">필수 정보입니다.</span>
@@ -59,12 +66,12 @@
 									<label for="urpw">비밀번호 재확인</label>
 								</h3>
 								<span class="ps_box int_pass join_info_box_content">
-									<input type="text" id="urpw" name="urpw" class="int jq_eff"><!-- 유효성체크 urpw -->
+									<input type="text" id="urpw" name="rpw" class="int jq_eff">
 									<span class="step_url"><span class="repw_lock"></span></span>
 								</span>
 								<span class="join_err_msg">필수 정보입니다.</span>
 							</div>
-						</div><!-- row_group ===================-->
+						</div>
 						
 
 
@@ -74,8 +81,8 @@
 								<h3 class="join_title">
 									<label for="uname">이름</label>
 								</h3>
-								<span class="ps_box join_info_box_content" ><!-- icon 안들어가서 int태그 지운다 -->
-									<input type="text" id="uname" name="uname" class="int jq_eff"><!-- 유효성체크 uname -->
+								<span class="ps_box join_info_box_content" >
+									<input type="text" id="uname" name="name" class="int jq_eff">
 								</span>
 								<span class="join_err_msg">필수 정보입니다.</span>
 							</div>
@@ -87,7 +94,7 @@
 								<div class="bir_wrap">
 
 									<div class="bir_yy">
-										<span class="ps_box join_info_box_content"><!-- icon 안들어가서 int태그 지운다 -->
+										<span class="ps_box join_info_box_content">
 											<input type="text" id="yy" name="yy" class="int jq_eff" placeholder="년 (4자)">
 										</span>
 									</div>
@@ -109,23 +116,24 @@
 												<option value="12">12</option>
 											</select>
 										</span>
-									</div><!-- bir_mm -->
+									</div>
 
 									<div class="bir_dd">
 										<span class="ps_box join_info_box_content">
 										<input type="text" id="dd" placeholder="일" class="int jq_eff" >
 										</span>
 									</div>
-								</div><!-- bir_wrap -->
+									<input type="hidden" name="birth" id="birth">
+								</div>
 								<span class="join_err_msg">태어난 년도를 4자리 입력하세요</span>
-							</div><!-- join_row join_birthday-->
+							</div>
 
 							<div class="join_row">
 								<h3 class="join_title">
 									<label for="male">성별</label>
 								</h3>
-								<span class="ps_box join_info_box_content"><!-- icon 안들어가서 int태그 지운다 -->
-									<select class="sel" id="male">
+								<span class="ps_box join_info_box_content">
+									<select class="sel" id="male" name="male">
 										<option>성별</option>
 										<option value="m">남성</option>
 										<option value="w">여성</option>
@@ -138,9 +146,9 @@
 								<h3 class="join_title">
 									<label for="uemail">본인 확인 이메일<span class="choice">(선택)</span></label>
 								</h3>
-								<span class="ps_box join_info_box_content"><!-- icon 안들어가서 int태그 지운다 -->
-									<input type="text" id="uemail" name="uemail" class="int jq_eff" placeholder="선택입력">
-									<!-- 유효성체크 uphone -->
+								<span class="ps_box join_info_box_content">
+									<input type="text" id="uemail" name="email" class="int jq_eff" placeholder="선택입력">
+
 								</span>
 								<span class="join_err_msg">필수 정보입니다.</span>
 							</div>
@@ -149,14 +157,14 @@
 								<h3 class="join_title">
 									<label for="uphone">휴대전화</label>
 								</h3>
-								<span class="ps_box join_info_box_content"><!-- icon 안들어가서 int태그 지운다 -->
-									<input type="text" id="uphone" name="uphone" class="int jq_eff" placeholder="-없이 입력 예)01077779999"><!-- 유효성체크 uphone -->
+								<span class="ps_box join_info_box_content">
+									<input type="text" id="uphone" name="phone" class="int jq_eff" placeholder="-없이 입력 예)01077779999">
 								</span>
 								<span class="join_err_msg">필수 정보입니다.</span>
 							</div>
 
 
-						<!-- Daum 주소입력창 -->
+
 							<div class="join_row">
 								<h3 class="join_title">
 									<label for="uaddr">주소<span class="highlight">*</span></label>
@@ -164,15 +172,15 @@
 								<div class="addr_wrap">
 									<div class="postcode" style="display: flex;">
 										<span class="join_info_box_content ps_box addr_poc">
-											<input type="text" id="sample6_postcode" class="int jq_eff addr_only" placeholder="우편번호" value="520831" readonly>
+											<input type="text" id="sample6_postcode" class="int jq_eff addr_only" name="postcode" placeholder="우편번호" value="520831" readonly>
 										</span>
 										<input type="button" id='btn_post' class="addr_poc_button jq_eff" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 									</div>
 									<span class="join_info_box_content ps_box">
-										<input type="text" id="sample6_address" class="int addr_only jq_eff" placeholder="주소" readonly><br>
+										<input type="text" id="sample6_address" class="int addr_only jq_eff" name="addr1" placeholder="주소" readonly><br>
 									</span>
 									<span class="join_info_box_content ps_box">
-										<input type="text" id="sample6_detailAddress" class="int jq_eff" placeholder="상세주소">
+										<input type="text" id="sample6_detailAddress" class="int jq_eff" name="addr2" placeholder="상세주소">
 									</span>
 								</div>
 								<span class="join_err_msg">필수 정보입니다.</span>
@@ -180,15 +188,15 @@
 
 
 
-						</div><!-- row_group ===================-->
+						</div>
 
-						<div class="btn_double_area"> <!-- btn_join제이쿼리 사용 -->
+						<div class="btn_double_area">
 							<span><a href="#" id="btn_join" class="btn_type">가입하기</a></span>
 						</div>
 
-					</div><!-- join_content ====================================== -->
-				</div> <!-- container =========================================================-->
-			</form> 
+					</div>
+				</div>
+			</form:form> <!-- 스프링전용 폼태그 닫음  -->
 		</section>
 
 
@@ -205,7 +213,7 @@
 				<div id="address">
 					<span>
 						<a href="../html/header.html">
-							<img id="addr_logo" src="../img/logos.png">
+							<img id="addr_logo" src="${path}/resources/img/logos.png">
 						</a>
 					</span>
 					&nbsp;
@@ -242,7 +250,7 @@
 <!-- 제이쿼리 -->
 	<script type="../../js/daum_post.js"></script> <!-- daum 주소입력 관련 스크립트 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="../js/validation.js"></script>
+	<script src="${path}/resources/js/validation.js"></script> <!-- 유효성체크 모아둔것 -->
 	<script type="text/javascript">
 
 		//$(document).ready(function(){  });
@@ -263,12 +271,13 @@
 	//전체 열기/닫기
 		// 아이디 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			// >> #uid인 input태그의 값을 가져와서 체크
-			$('#uid').keyup(function(){
+			$('#uid').keyup(function(){  //uid 사용자가 입력하는 input 창
 				var id = $(this).val().trim();  //트림을 넣으면 좌공백 우공백을 지워준다, 가운데 껴있는건 못지움
 				
 				//joinValidate.js 에서 checkID로 유효성 체크를 실행하고,
 				//결과를 result에 담음 (code, desc)
-				var result = joinValidate.checkId(id);  //joinValidate.checkID메서드를 실행
+				var result = joinValidate.checkId(id);  //상단에 path 해둔 validation.js 의
+														//joinValidate.checkID메서드를 실행
 				
 				if(result.code == 0) {
 					checkArr[0] = 'true';
@@ -440,7 +449,7 @@
 			});
 
 		//버튼 활성화!
-		$('.jq_eff').blur(function(){
+		$('.jq_eff').keyup(function(){
 			var checkAll = true;
 
 			for(var i = 0; i < checkArr.length; i++) {
@@ -460,37 +469,46 @@
 				$('.btn_type').css('cursor', 'no-drop');  //커서는 노드롭으로 바꿈
 			}
 		});//$('.join_info_box_input').blur(function(){
-
+			
 		// 회원가입 버튼 클릭! ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			$('#btn_join').click(function(){
 				// alert('클릭 테스트');
-				var invalidAll = true;
-				for (var i = 0; i<checkArr.length; i++) {
+				printCheckArr(checkArr);
+				var invalidAll = true;   //모든 유효성 검사가 완료되면, 여기에 트루가 들어온다
+				for (var i = 0; i<checkArr.length; i++) { 
 					if(!checkArr[i]){  //false 라면 패스
-						invalidAll = false;
+						invalidAll = false;  //유효성 검사가 하나라도 통과못하면 false 가 됨
 						
 						$('.join_err_msg:eq('+i+')').css('visibility', 'visible')
 												.css('color', '#d95339');
 						} //갯수가 모자라서 아래까지 안뜸. 어레이 목록을 더 작업해야함
-					
 				}//for
-				console.log(invalidAll);
-				if(invalidAll){
+				
+				console.log(invalidAll);  //트루인지 펄스인지 콘솔로 확인
+				
+				//생년월일 데이터 하나의 변수로 합치기 birth
+				var yy = $('#yy').val();
+				var mm = $('#mm').val();
+				var dd = $('#dd').val();
+				var birth = $('#birth').val(yy+mm+dd);
+				
+				if(invalidAll){  //트루라면
 					alert('회원가입 성공!');
-
+					// submit : form태그 안에 있는 데이터들을 서버단으로 전송
+					// action : 목적지(MemberController '/join')
+					// method : 방법(POST : 숨겨서)
+					$('#frm_member').submit();  //서브밋은 컨트롤러로 값을 넘겨줌(스프링 폼태그의 기본값은 post 로 전송)
 				}else {
 					alert('유효성체크를 진행해주세요');
 				}
-
 				//유효성체크가 전부 true이면
-
 				//유효성체크가 하나라도 false 이면
-
-
 			});//$('#btn_join').click(function(){
 
-
 		}); //function end
+		
+		
+		
 	//function ckDesign(code, desc, line, msg) {■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		function ckDesign(code, desc, line, msg) {  //???
 			if(code == 0 || code == 10) { // 유효성검사 통과 O
@@ -558,16 +576,10 @@
                         if(extraAddr !== ''){
                             extraAddr = ' (' + extraAddr + ')';
                         }
-                        // 조합된 참고항목을 해당 필드에 넣는다.
-                        document.getElementById("sample6_extraAddress").value = extraAddr;
-                    
-                    } else {
-                        document.getElementById("sample6_extraAddress").value = '';
                     }
-
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
                     document.getElementById('sample6_postcode').value = data.zonecode;
-                    document.getElementById("sample6_address").value = addr;
+					document.getElementById("sample6_address").value = addr + extraAddr;
                     // 커서를 상세주소 필드로 이동한다.
                     document.getElementById("sample6_detailAddress").focus();
                 }

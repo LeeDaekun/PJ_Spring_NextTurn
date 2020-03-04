@@ -130,7 +130,7 @@ var joinValidate = {
 
 
 //아이디 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-	checkId: function(id) {
+	checkId: function(id) {  //이런걸 정규식이라고 함
 		var regEmpty = /\s/g; // 공백문자
 		var regEtc = /[~`!@#$%^&*()+=\|\\\{\}\[\]:";'<>.,?//]/g; // 특수문자
 		var regId = /[^a-z0-9-_.]+/g;
@@ -155,7 +155,9 @@ var joinValidate = {
 		} else if(id.length < 5 || id.length > 20) { // 6.길이(5~20자 이내)
 			return this.resultCode.length_id;
 
-		} else {
+		} else if(idCheck(id)){ // 7. 아이디 중복 체크
+			return this.resultCode.overlap_id;
+		}else {
 			return this.resultCode.success_id;
 		}
 	},
@@ -307,5 +309,27 @@ var joinValidate = {
 	}
 
 
+} //var joinValidate = { 종료=========
 
-} //var joinValidate = {
+
+//==id중복값 체크==============AJAX 쓰는 이유는 , 한 페이지 안에서 아이디 체크를 하기 위해서 =====================================================//@PostMapping("y1member/idoverlap") 을 찾아가세요
+function idCheck(id) {
+	var return_val = true;
+	$.ajax({
+		type : 'POST',
+		url : 'idoverlap?id=' + id,
+		async : false, 					//retrun 사용하기 위해서, ajax(비동기방식)는 차례대로 실행x 다 먼저 실행하므로 return 사용불가능
+		success : function(data) {
+			console.log(data);
+			if (data >= 1) {
+				return_val = true;
+			} else {
+				return_val = false;
+			}
+		},
+		error : function() {
+			alert('System ERROR:(');
+		}
+	});
+	return return_val;
+}

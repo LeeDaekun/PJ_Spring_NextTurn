@@ -198,43 +198,36 @@
 				
 				  
 				
-				/* a 태그 기능 구현   Header 가입하기 버튼 클릭시 동의 페이지 이동 (앵커a테그를 사용하면 경로가 유출되니까 제이쿼리로 경로를 바꿔준다) */
+				/* a 태그 기능 구현  -- 약관등의 페이지에서 '취소'버튼 클릭시 'index'로 이동*/
 				$(document).on('click', '#cons_btn_cancel', function() {
 					location.href = "${path}/"; /* 이 경로가 작동하려면 MemberController 에 셋팅이 되있어야함 */
 				});
 				
-				/* a 태그 기능 구현   Header 가입하기 버튼 클릭시 동의 페이지 이동 (앵커a테그를 사용하면 경로가 유출되니까 제이쿼리로 경로를 바꿔준다) */
+				/* a 태그 기능 구현 -- 약관동의 페이지에서'확인'버튼 클릭시 '기능 처리후 'join'으로 이동 */
 				$(document).on('click', '#cons_btn_agree', function() {
 
-					var agree_one = $('#cons_box1').is(':checked');
-					var agree_two = $('#cons_box2').is(':checked');
+					/* 체크한거에 따라 트루인지 펄스인지 값받기 */
+					var agree_one = $('#cons_box1').is(':checked');  //ture
+					var agree_two = $('#cons_box2').is(':checked');	 //ture
 					var agree_three = $('#cons_box3').is(':checked');
 					var agree_four = $('#cons_box4').is(':checked');
 
 					if (agree_one == false || agree_two == false) {
 						$('.err_check').css('visibility', 'visible');
-						return false;
+						return false; //false 되면 강제로 멈춤
 					}
 					
 					// 유효성체크 통과시 회원가입 페이지로 이동
 					/* 이 경로가 작동하려면 MemberController 에 셋팅이 되있어야함 */
-					/* */
-					location.href = "${path}/member/join?useon="+ agree_one 
+					location.href = "${path}/member/join?useon="+ agree_one    //@겟방식의 join 을 타라
 												 + "&primaryon=" + agree_two
 												     + "&locon=" + agree_three 
-												   + "&eventon=" + agree_four 
-												 	             + "&flag=1";
+												   + "&eventon=" + agree_four
+												   + "&flag=1";  //맴버 컨트롤러 @GetMapping /join 으로 이동
 
 							
 				});
 
-						
-				
-				
-				
-				
-				
-				
 	}); /* 펑션종료 */
 </script>
 </html>

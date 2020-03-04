@@ -88,7 +88,8 @@ Get 과 Post는 데이터를 숨기느냐 마느냐의 전송방식
 			url : '${path}/sample/ajax',
 			data : {
 				name : '뚱깐징어'
-			},
+			},},  //위에 값을 가지고, 컨트롤러에 다녀오셔서, 성공인지 실패인지 확인후에 아래 실행
+			
 			success : function(data) {
 				console.log(data);
 				$('#ajax_txt').text(data);

@@ -89,9 +89,10 @@ public class SampleController {
 		return "sample"; /* 페이지 전환하면서 요청했던 sample페이지에 배뚱아를 심어줌 */
 		}
 		
+		
 		// 비동기방식(AJAX)
-		// @ResponseBody : viewresolver가 읽지못하고 더이상 화면단으로 인식x
-		@ResponseBody
+		@ResponseBody // @ResponseBody : viewresolver가 작동하지 못하게 하는 어노테이션
+		
 		// produces="application/text;charset=utf-8" -> 한글이 깨지지않게 utf-8로 설정
 		@PostMapping(value="/ajax", produces="application/text;charset=utf-8")
 		public String async(String name) {
