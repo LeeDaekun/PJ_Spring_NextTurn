@@ -54,9 +54,9 @@
 											<li><a href="#">쪽지 확인</a></li>
 											<li><a href="#">내 게시글</a></li>
 											<li><a href="#">닉네임 변경</a></li>
-											<li><a href="#">비밀번호 변경</a></li>
+											<li><button type="button" id="header_btn_pwupdate">비밀번호 변경</button></li>
 											<li><a href="#">고객센터</a></li>
-											<li><a href="${path}/resources/html/nt_secession.html">탈퇴하기</a></li>
+											<li><span a href="${path}/resources/html/nt_secession.html">탈퇴하기</a></li>
 										</ul>
 									</div>
 								</div>
@@ -91,4 +91,17 @@
 		});
 	});
 
+	
+	
+	$(document).ready(function() {
+		
+		/* Header 가입하기 버튼 클릭시 동의 페이지 이동 (앵커a테그를 사용하면 경로가 유출되니까 제이쿼리로 경로를 바꿔준다) */
+		$(document).on('click', '#header_btn_pwupdate', function() {
+			location.href = "${path}/member/pwupdate";
+			/* 이 경로가 작동하려면 MemberController 에 셋팅이 되있어야함 */
+			/* 이렇게 get post 명시를 안하면 Get 방식이다 . @GetMapping("/constract") 를 찾아서 실행해라
+			   ( @Controller 애들중에서 /member 를 처리하는 애를 찾아봐)*/
+		});
+	});
+	
 </script>

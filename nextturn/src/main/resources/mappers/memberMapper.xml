@@ -5,10 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.nextturn.persistence.MemberDAO">
 
 	<insert id="memInsert">
-		INSERT INTO tbl_member(id, pw, name, phone, email, postcode, addr1, addr2, useon, primaryon, locon, eventon) 
-		VALUES (#{id}, #{pw}, #{name}, #{phone}, #{email}, #{postcode}, #{addr1}, #{addr2}, #{useon}, #{primaryon}, #{locon}, #{eventon})
+		INSERT INTO tbl_member(id, pw, name, phone, email, postcode, addr1, addr2) 
+		VALUES (#{id}, #{pw}, #{name}, #{phone}, #{email}, #{postcode}, #{addr1}, #{addr2})
 	</insert>
-	
+			
 	<!-- 아이디 중복체크  (아이디 가있으면1 없으면0)-->
 	<select id="idOverLap" resultType="int">
 		SELECT COUNT(*) FROM tbl_member 

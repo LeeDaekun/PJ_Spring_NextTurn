@@ -64,6 +64,10 @@ var joinValidate = {
 			code: 7,
 			desc : '현재비밀번호와 다르게 입력해주세요.'
 		},
+		success_nowpw : {
+			code : 100,
+			desc: '확인되었습니다.'
+		},
 	// name ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		success_name : {
 			code: 0,
@@ -138,7 +142,7 @@ var joinValidate = {
 	// 1.값이 있는지 없는지 체크
 	// space값이 있으면 값이 있다 판단되어 통과하니까 id.length == 0 을 준다
 		if(id == '' || id.length == 0) {
-			return this.resultCode.empty_val;
+			return this.resultCode.empty_val;  //'필수 정보입니다' 출력
 
 		} else if(id.match(regEmpty)) { // 2.값사이에 공백이 있는지 체크
 			return this.resultCode.space_length_val;  //공백없이 입력해주세요
@@ -294,8 +298,8 @@ var joinValidate = {
 
 //주소 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 	//영어대문자, 영어소문자, 한글, -, 공백외에 전부 체크
-	checkAddr : function(addrDetail, addrPost) {
-		var regAddr = /^[a-zA-Z가-힣]+$/;
+	checkAddr : function(addrDetail, addrPost) {  //상세주소 input , 우편번호 input 받는곳
+		var regAddr = /^[a-zA-Z가-힣]+$/;  //들어올 수 있는 글자종류
 
 		if(addrPost == '' || addrPost.length == 0) {
 			return this.resultCode.empty_post;
@@ -306,12 +310,27 @@ var joinValidate = {
 		} else {
 			return this.resultCode.success_addr;
 		}
-	}
+	},
+	checkNowpw : function(pw){  //순차적으로 1,2,3 진행해서 유효성검사
+		var regEmpty = /\s/g; // 공백문자
+		if(pw == '' || pw.length == 0) { // 1.값 유무 체크
+			return this.resultCode.empty_val;
+		} else if(pw.match(regEmpty)) { // 2.공백값이 있는지 체크
+			return this.resultCode.space_length_val;
+		} else if(pwCheck(pw)) { //3. 현재 비밀번호와 동일한지 체크 후 pwCheck(pw)에 pw를 전달
+			return this.resultCode.other_pw;  //비밀번호가 일치하지 않습니다.
+		}else{ //4. 유효성체크 통과
+			return this.resultCode.success_nowpw;  //확인되었습니다.
+		}
+		
+	}//checkNowpw : function(pw) 종료
 
+	
+	
 
 } //var joinValidate = { 종료=========
 
-
+// [start]
 //==id중복값 체크==============AJAX 쓰는 이유는 , 한 페이지 안에서 아이디 체크를 하기 위해서 =====================================================//@PostMapping("y1member/idoverlap") 을 찾아가세요
 function idCheck(id) {
 	var return_val = true;
@@ -330,6 +349,29 @@ function idCheck(id) {
 		error : function() {
 			alert('System ERROR:(');
 		}
+	});
+	return return_val;
+}
+// [end]
+
+//비밀번호 체크
+function pwCheck(pw){
+	var return_val = true;
+	$.ajax({
+		type: 'POST',
+		url: 'pwcheck?pw='+pw,
+		async: false,
+		success: function(data) {
+			if(data == 1) {
+				return_val = false;
+			} else if(data == 0) {
+				return_val = true;
+			}
+		},
+		error: function() {
+			alert('System ERROR:(');
+		}
+		
 	});
 	return return_val;
 }

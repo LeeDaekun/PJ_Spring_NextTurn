@@ -49,13 +49,14 @@ public class MemberController {
 	public MemberDTO newMember() {
 		return new MemberDTO();
 	}
-	
+
 	@GetMapping("/constract") // Get 방식이 기본값이라. Post라고 안쓰면 무조건 Get
 	public String viewConstract() {
 		log.info(">>>>> MEMBER/CONSTRACT PAGE 출력");
 		return "member/constract";
 	}
 
+	
 	/*
 	 * SessionAttributes에서 설정한 변수(객체)에는
 	 * 
@@ -78,8 +79,15 @@ public class MemberController {
 		return "member/join";  //1이면 회원가입 페이지로 이동
 	}
 
+
+	//pwupdate.jsp 파일을 열기위한 컨트롤러
+	@GetMapping("/pwupdate") // Get 방식이 기본값이라. Post라고 안쓰면 무조건 Get
+	public String viewPwUpdate() {
+		log.info(">>>>> MEMBER/Pw Update 출력");
+		return "member/pwupdate";
+	}
 	
-	
+
 	
 	
 	@PostMapping("/join") // 스프링 폼태그를 submit 으로 제출했을때 여기를 탄다.
@@ -126,7 +134,7 @@ public class MemberController {
 		// sessionStatus : controller에서 공유하던 영역을 제거
 		sessionStatus.setComplete();
 		
-		return "redirect:/";
+		return "redirect:/";  //리 다이랙트
 	}
 	
 	
@@ -144,4 +152,23 @@ public class MemberController {
 		}
 		return flag; //화면단을 결정하는게 아니면 @ResponseBody 를 붙여준다 
 	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

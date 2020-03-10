@@ -238,25 +238,42 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <!-- 제이쿼리 -->
 	<script type="../../js/daum_post.js"></script> <!-- daum 주소입력 관련 스크립트 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="${path}/resources/js/validation.js"></script> <!-- 유효성체크 모아둔것 -->
 	<script type="text/javascript">
-
 		//$(document).ready(function(){  });
 		// $(function(){	});              둘이 똑같은 코드이다
-
+	
 		$(function(){
+			if('${user}' != '') {
+				// 회원정보수정 디자인 변경
+				// → 버튼 텍스트가 수정하기
+				$('#btn_join').text('수정하기');
+				// → 비밀번호, 비밀번호 재설정 제거
+				$('.join_info_box:eq(1)').css('display', 'none');
+				// → id에 readonly효과를 줘서 입력이 불가능
+				//   id=#id를 제거해서 우리가 입력한 유효성체크 동작 불가능
+				$('.join_info_box_input:eq(0)').attr('readonly', 'true').removeAttr('id');
+				
+				var name = '${user.name}'; 		 //memberController.java 에서 변수 선언해줘야함  
+				var phone = '${user.phone}'; 	//memberController.java 에서 변수 선언해줘야함
+				var email = '${user.email}'; 	//memberController.java 에서 변수 선언해줘야함
+				var postcode = '${user.postcode}'; //memberController.java 에서 변수 선언해줘야함
+				var addr1 = '${user.addr1}';		//memberController.java 에서 변수 선언해줘야함
+				var addr2 = '${user.addr2}';	//memberController.java 에서 변수 선언해줘야함
+				ckName(name);
+				ckPhone(phone);
+				ckEmail(email);
+				ckAddr(postcode, addr2);
+				checkArr[0] = true;
+				ckeckArr[1] = true;
+				ckColorBtn();
+				printCheckArr(checkArr);
+			} //2020.03.09 오전에 보훈이꺼 붙여넣기함
+			
+			
 			//비밀번호가 유효한 값인지 체크해주는 Flag값
 			var pwFlag = false;  //유효성검사 5번까지 통과하면 true로 바꾸세요, (checkId: function(id) 유효성검사기)
 
@@ -276,8 +293,7 @@
 				
 				//joinValidate.js 에서 checkID로 유효성 체크를 실행하고,
 				//결과를 result에 담음 (code, desc)
-				var result = joinValidate.checkId(id);  //상단에 path 해둔 validation.js 의
-														//joinValidate.checkID메서드를 실행
+				var result = joinValidate.checkId(id);  //상단에 path 해둔 validation.js에서  heckID메서드를 실행
 				
 				if(result.code == 0) {
 					checkArr[0] = 'true';
@@ -355,23 +371,54 @@
 		// 이름 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			$('#uname').keyup(function(){
 				var name = $.trim($(this).val());
+				ckName(name);
+			});
+			
+			function ckName(name){
 				var result = joinValidate.checkName(name);
 				ckDesign(result.code, result.desc, 3, 3); //3번째에 라인, 2번째에 메시지 띄움
-
+			
 				//기능테스트기 (나중에 삭제)
 				if(result.code == 0) {
 					checkArr[2]= true;
 				}else{
 					checkArr[2]= false;
 				}
-				printCheckArr(checkArr);  //상태로고 띄우는 기능 (하단에 만들어둠)
+				printCheckArr(checkArr);  //상태로고 띄우는 기능 (하단에 만들어둠)}
+			}//function name 종료
+			
+			
+			
 
 
+		// 전화번호 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+			$('#uphone').keyup(function(){
+				var phone = $.trim($(this).val());  //변수 phone
+				ckPhone(phone);
 			});
 		
-		// 이메일 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+		
+			function ckPhone(phone){
+				var result = joinValidate.checkPhone(phone);
+				ckDesign(result.code, result.desc, 9, 7); //3번째에 라인, 2번째에 메시지 띄움
+
+				//기능테스트기 (나중에 삭제)
+				if(result.code == 0) {
+				checkArr[4] = true;
+				} else {
+					checkArr[4] = false;
+				}printCheckArr(checkArr);  //상태로고 띄우는 기능 (하단에 만들어둠)
+			}//function phone 종료
+
+
+			// 이메일 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			$('#uemail').keyup(function(){
 				var email = $.trim($(this).val());	//변수 email
+				ckEmail(email);			
+			});
+			
+			
+			function ckEmail(email){
 				var result = joinValidate.checkEmail(email);
 				// alert('test');
 				ckDesign(result.code, result.desc, 8, 6); // 쌤꺼는 
@@ -382,25 +429,9 @@
 				} else {
 					checkArr[3] = false;
 				}printCheckArr(checkArr);  //상태로고 띄우는 기능 (하단에 만들어둠)
-
-			});
-
-		// 전화번호 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			$('#uphone').keyup(function(){
-				var phone = $.trim($(this).val());  //변수 phone
-				var result = joinValidate.checkPhone(phone);
-				ckDesign(result.code, result.desc, 9, 7); //3번째에 라인, 2번째에 메시지 띄움
-
-				//기능테스트기 (나중에 삭제)
-				if(result.code == 0) {
-				checkArr[4] = true;
-				} else {
-					checkArr[4] = false;
-				}printCheckArr(checkArr);  //상태로고 띄우는 기능 (하단에 만들어둠)
-
-			});
-
-
+			}//function phone 종료
+			
+			
 
 		//daum 주소창 관력 클릭시 동작펑션■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 			$('.addr_only').click(function(){ //우편번호, 주소를 클릭했을때 동작
@@ -409,22 +440,24 @@
 			});
 
 		//daum 상세주소를 클릭했을때 동작기능 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			$('#sample6_detailAddress').click(function(){   //상세주소 클릭시 동작
-				var addrPost = $('#sample6_postcode').val();
-				if(addrPost == '' || addrPost.length == 0){
+			$('#sample6_detailAddress').click(function(){   //상세주소 클릭시 동작한다
+				var addrPost = $('#sample6_postcode').val();  //우편번호 란에 입력된 input을 받아서 addrPost 에 저장
+				if(addrPost == '' || addrPost.length == 0){  //addrPost에 우편번호가 없거나, 글자수가 0이라면
 					// $('#btn_post').click();  //우편번호 찾기를 누름
-
+					//여기의 전체 기능은 사용되지 않고있음
 				}
-
 			});
 
 		// 주소 유효성체크 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-			$('#sample6_detailAddress').keyup(function(){
-				var addrDetail = $.trim($(this).val());
-				var addrPost = $('#sample6_postcode').val();
-				// console.log('우편번호: ' + addrPost + ' 상세주소: ' + addrDetail);
-
-				var result = joinValidate.checkAddr(addrDetail, addrPost);
+			$('#sample6_detailAddress').keyup(function(){	//id=sample6_detailAddress 에서 키를 눌렀을때 동작
+				var addrDetail = $.trim($(this).val()); 	//this = sample6_detailAddress  (trim은 문자열에 들어오는 공백값을 무시하는 기능)
+				var addrPost = $('#sample6_postcode').val();//우편번호 란에 입력된 input을 받아서 addrPost 에 저장
+				console.log('우편번호: ' + addrPost + ' 상세주소: ' + addrDetail);
+				ckAddr(addrDetail,addrPost);  //function ckAddr 호출
+			});
+			
+			function ckAddr(addrDetail,addrPost){  //상세주소랑 우편번호를 받아서
+				var result = joinValidate.checkAddr(addrDetail, addrPost);  //validation.js에서 checkAddr(주소유효성체크) 호출
 				// console.log(result.code + ', ' + result.desc);
 
 				if(result.code == 3) { // 우편번호 & 주소 X
@@ -438,15 +471,13 @@
 					ckDesign(result.code, result.desc, 12, 8);
 				}
 
-
 				//기능테스트기 (나중에 삭제)
 				if(result.code == 0) {
 				checkArr[5] = true;
 				} else {
 					checkArr[5] = false;
 				}printCheckArr(checkArr);  //상태로고 띄우는 기능 (하단에 만들어둠)
-
-			});
+			}
 
 		//버튼 활성화!
 		$('.jq_eff').keyup(function(){
@@ -515,15 +546,14 @@
 				
 				$('.join_info_box_content:eq('+line+')').css('border-bottom', '2px solid #3885CA');  	
 					//몇번째(line) join_info_box_content 인지 확인
-					//실패하면, 주황색으로 테두리색상 변경 
+					//실패하면, CSS로 주황색으로 테두리색상이 되도록 변경 
 				
 				$('.join_err_msg:eq('+msg+')').css('visibility', 'visible') //에러메시지 출력
 									    	  .text(desc)
 							  		    	  .css('color', '#3885CA');
 					return true;
 
-
-
+//
 			} else { // 유효성검사통과 X
 				//테두리 색상 변경
 				$('.join_info_box_content:eq('+line+')').css('border-bottom', '2px solid #d95339');
@@ -533,6 +563,7 @@
 									    	  .css('color', '#d95339');
 				return false;
 			}
+//e
 		}//function ckDesign(code, desc, line, msg) 
 	</script>
 
@@ -544,6 +575,7 @@
 <!-- daum address -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+    	//■■■■■■■■ daum 주소입력창
         function sample6_execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -553,13 +585,14 @@
                     // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                     var addr = ''; // 주소 변수
                     var extraAddr = ''; // 참고항목 변수
+					
 
                     //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                     if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                         addr = data.roadAddress;
                     } else { // 사용자가 지번 주소를 선택했을 경우(J)
                         addr = data.jibunAddress;
-                    }
+                	   }
 
                     // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                     if(data.userSelectedType === 'R'){
@@ -585,17 +618,15 @@
                 }
             }).open();
         }
-// 개발시 사용: 유효성 체크 전체여부를 출력해주는 함수 (true, false) ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-       
-       function printCheckArr(checkArr){
 
+      
+	
+	// ■■■■■■■■■ 개발시 사용: 유효성 체크 전체여부를 출력해주는 함수 (true, false) (웹에서 F12 눌러서 확인할 수 있음) ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+       function printCheckArr(checkArr){
 			// 유효성체크 여부를 알려주는 배열
 			// for(var i=0; i < checkArr.length; i++){  //체크Arr 갯수만큼 반복돌림
 			// 	console.log(i+'번지:'+checkArr[i]);	 //콘솔 로그 찍음
-			
 			// }
-
-
 				console.log('1아이디▶▶▶'+checkArr[0]);
 				console.log('2PW/rPW▶▶▶'+checkArr[1]);
 				console.log('3 이름 ▶▶▶'+checkArr[2]);
