@@ -330,7 +330,6 @@ var joinValidate = {
 
 } //var joinValidate = { 종료=========
 
-// [start]
 //==id중복값 체크==============AJAX 쓰는 이유는 , 한 페이지 안에서 아이디 체크를 하기 위해서 =====================================================//@PostMapping("y1member/idoverlap") 을 찾아가세요
 function idCheck(id) {
 	var return_val = true;
@@ -352,7 +351,6 @@ function idCheck(id) {
 	});
 	return return_val;
 }
-// [end]
 
 //비밀번호 체크
 function pwCheck(pw){

@@ -41,8 +41,7 @@ public class MemberController {
 	
 	@Autowired  //메일 인증할때 필요한 서비스
 	private MailService mailService;  //메일서비스로 이동할 수 있게 연결해줌
-	
-	
+		
 	
 	// 초기화하는 작업(필수)
 	@ModelAttribute("memberDTO")
@@ -92,7 +91,8 @@ public class MemberController {
 	
 	@PostMapping("/join") // 스프링 폼태그를 submit 으로 제출했을때 여기를 탄다.
 	public String join(@ModelAttribute("memberDTO") MemberDTO mDto, SessionStatus sessionStatus, 
-			HttpServletRequest request, RedirectAttributes rttr) { // @ModelAttribute 를 해줘야, @SessionAttribute 에 담을 수 있다.
+			HttpServletRequest request, RedirectAttributes rttr) { 
+		// @ModelAttribute 를 해줘야, @SessionAttribute 에 담을 수 있다.
 		//@ModelAttribute 는 데이터베이스 값을 전달하려고 있는거
 		//상단에 공용자원인 @SessionAttributes({"memberDTO"}) 이걸 열었는데, 자원을 사용하고 반납까지 해줘야하는데, 반납하는 역할은 SessionStatus sessionStatus 이거로 해준다.
 																		
@@ -102,7 +102,7 @@ public class MemberController {
 	// 1. 사용자 암호 hash 변환
 		String encPw=passwordEncoder.encode(mDto.getPw());  //페스워드 인코더가 해시값으로 변환시킨다. 그걸 encPW에 저장
 		mDto.setPw(encPw);  //변환된 값을 DTO에 기록해라
-		log.info("Password(+Hash): " + mDto.getPw());  //DTO에 저장된 변수를 get으로 가져와서 확인하기
+		log.info("Password(+Hash):" + mDto.getPw());  //DTO에 저장된 변수를 get으로 가져와서 확인하기
 				
 		
 	// 2. DB에 회원 등록
@@ -134,7 +134,7 @@ public class MemberController {
 		// sessionStatus : controller에서 공유하던 영역을 제거
 		sessionStatus.setComplete();
 		
-		return "redirect:/";  //리 다이랙트
+		return "redirect:/";
 	}
 	
 	

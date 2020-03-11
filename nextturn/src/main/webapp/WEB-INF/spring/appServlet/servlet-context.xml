@@ -29,7 +29,7 @@
 	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com"/>
 		<beans:property name="port" value="587" /> <!-- 465 or 25 -->
-		<beans:property name="username" value="nextturn.games@gmail.com" />
+		<beans:property name="username" value="nextturn.games01@gmail.com" />
 		<beans:property name="password" value="01031617755" />
 		<beans:property name="defaultEncoding" value="utf-8" />
 		<beans:property name="javaMailProperties">
