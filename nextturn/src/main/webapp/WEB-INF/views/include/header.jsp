@@ -38,6 +38,13 @@
 	color: black;
 	border: 1px solid blue;
 }
+
+.modal_error_next_box {
+	visibility: hidden;
+	color: rgb(217, 83, 57);
+	font-size: 13px;
+	padding: 6px 6px 0;
+}
 </style>
 <title>Next Turn Games</title>
 </head>
@@ -164,11 +171,11 @@
 									<li><a href="#">쪽지 확인</a></li>
 									<li><a href="#">내 게시글</a></li>
 									<li><a href="#">닉네임 변경</a></li>
-									<!-- <li><button type="button" id="header_btn_pwupdate">비밀번호 변경</button></li> -->
-									<li><a href="#" id="header_dropdown_btn_pwupdate">비밀번호
-											변경</a></li>
 									<li><a href="#">고객센터</a></li>
-									<li><a href="#" id="header_dropdown_btn_drop">탈퇴하기</a></li>
+									<li><a href="${path}/member/mypage">마이페이지</a></li>
+									
+									<!-- <li><a href="#" id="header_dropdown_btn_pwupdate">비밀번호 	변경</a></li>
+									<li><a href="#" id="header_dropdown_btn_drop">탈퇴하기</a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -192,9 +199,9 @@
 							<!-- 시그니쳐 색깔 -->
 						</c:when>
 						<c:otherwise>
-							<div>${name}님</div>
+							<div style="color:white">${name}님</div>
 							<div>
-								<button type="button" class="btn btn-basic login_open">로그아웃</button>
+								<button type="button" class="btn btn-basic" id="header_btn_logout">로그아웃</button>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -339,41 +346,56 @@
 	
 	
 	// LOGIN 버튼 클릭시 AJAX 동작
-	$(document).on(
-			'click',
-			'#btn_login',
-			function() {
+	$(document).on('click', '#btn_login',function() {
 
-				// id와 pw 값 받아와서 null이면 작동X
-				var id = $('#login_id').val();
-				var pw = $('#login_pw').val();
-
-				// 유효성체크 (id, pw) null 체크
-				if (id != '' && pw != '' && id.length != 0 && pw.length != 0) { //인풋창에 id랑 비번이 빈값이 아니면, ajax 를 실행
-					$
-							.ajax({
-								url : '${path}/login/in',
-								type : 'POST',
-								data : 'id=' + id + '&pw=' + pw,
-								success : function(data) {
-									console.log(data);
-									if (data == 0 || data == 3) {
-										$('.modal_error_next_box')
-										.css('visibility', 'visible')
-										.text('아이디 또는 비밀번호를 확인해주세요.');
-									} else if (data == 1) {
-										console.log('로그인 성공');
-										location.reload(); // 새로고침
-									} else if (data == 2) {
-										$('.modal_error_next_box')
-										.css('visibility', 'visible')
-										.text('이메일 인증 후에 이용하실 수 있습니다.');
-									}
-								},
-								error : function() {
-									alert('System Error:/');
-								}
-							});
+		// id와 pw 값 받아와서 null이면 작동X
+		var id = $('#login_id').val();
+		var pw = $('#login_pw').val();
+		
+		// 유효성체크 (id, pw) null 체크
+		if (id != '' && pw != '' && id.length != 0 && pw.length != 0) { //인풋창에 id랑 비번이 빈값이 아니면, ajax 를 실행
+			/* ajax 는 return 된 데이터를 받을때 string 만 받을수 있어서, int 같은거로 반환을 했다면, int 등의 타입을 string으로 형변환 해주는 라이브러리가 필요함 */
+			$.ajax({
+				url : '${path}/login/in',
+				type : 'POST',
+				data : 'id=' + id + '&pw=' + pw,
+				success : function(data) {
+					console.log(data);
+					if (data == 0 || data == 3) {
+						$('.modal_error_next_box')
+						.css('visibility', 'visible')
+						.text('아이디 또는 비밀번호를 확인해주세요.');
+					} else if (data == 1) {
+						console.log('로그인 성공');
+						location.reload(); // 새로고침
+					} else if (data == 2) {
+						$('.modal_error_next_box')
+						.css('visibility', 'visible')
+						.text('이메일 인증 후에 이용하실 수 있습니다.');
+					}
+				},
+				error : function() {
+					alert('System Error:/');
 				}
 			});
+		}
+				
+	});
+		/* 로그아웃 기능 */
+		$(document).on('click', '#header_btn_logout', function(){
+			$.ajax({
+				url: '${path}/login/out',
+				type: 'POST',
+				success: function() {
+					console.log('Logout Success:)');
+					location.reload();
+				},
+				error: function() {
+					alert('System Error:/');
+				}
+			});
+		});
+		
+		
+		
 </script>

@@ -31,4 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id = #{param1} AND useyn = #{param2}
 	</update>
 	
+	<select id="userView" resultType="MemberDTO">
+		SELECT * FROM tbl_member 
+		WHERE id = #{id}
+	</select>
+	
+	
+	
+	
 </mapper>

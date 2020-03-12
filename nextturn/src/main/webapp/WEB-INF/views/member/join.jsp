@@ -254,7 +254,7 @@ to {
 									<label for="uid">아이디</label>
 								</h3>
 								<span class="ps_box int_id join_info_box_content"> <input
-									type="text" id="uid" name="id" class="int jq_eff"> <span
+									type="text" id="uid" name="id" class="int jq_eff" value="${user.id}"> <span
 									class="step_url">@naver.com</span>
 								</span> <span class="join_err_msg">필수 정보입니다.</span>
 							</div>
@@ -267,9 +267,6 @@ to {
 									type="text" id="upw" name="pw" class="int jq_eff"> <span
 									class="step_url"><span class="pw_lock"></span></span>
 								</span> <span class="join_err_msg">필수 정보입니다.</span>
-							</div>
-
-							<div class="join_row">
 								<h3 class="join_title">
 									<label for="urpw">비밀번호 재확인</label>
 								</h3>
@@ -288,11 +285,11 @@ to {
 								<h3 class="join_title">
 									<label for="uname">이름</label>
 								</h3>
-								<span class="ps_box join_info_box_content"> <input
-									type="text" id="uname" name="name" class="int jq_eff">
+								<span class="ps_box join_info_box_content"> 
+									<input type="text" id="uname" name="name" class="int jq_eff" value="${user.name}">
 								</span> <span class="join_err_msg">필수 정보입니다.</span>
 							</div>
-
+<!-- 
 							<div class="join_row join_birthday">
 								<h3 class="join_title">
 									<label for="yy">생년월일</label>
@@ -346,16 +343,15 @@ to {
 										<option value="w">여성</option>
 								</select>
 								</span> <span class="join_err_msg">필수 정보입니다.</span>
-							</div>
+							</div> 
+-->
 
 							<div class="join_row">
 								<h3 class="join_title">
 									<label for="uemail">본인 확인 이메일<span class="choice">(선택)</span></label>
 								</h3>
-								<span class="ps_box join_info_box_content"> <input
-									type="text" id="uemail" name="email" class="int jq_eff"
-									placeholder="선택입력">
-
+								<span class="ps_box join_info_box_content"> 
+									<input type="text" id="uemail" name="email" class="int jq_eff" placeholder="선택입력" value="${user.email}">
 								</span> <span class="join_err_msg">필수 정보입니다.</span>
 							</div>
 
@@ -363,10 +359,10 @@ to {
 								<h3 class="join_title">
 									<label for="uphone">휴대전화</label>
 								</h3>
-								<span class="ps_box join_info_box_content"> <input
-									type="text" id="uphone" name="phone" class="int jq_eff"
-									placeholder="-없이 입력 예)01077779999">
-								</span> <span class="join_err_msg">필수 정보입니다.</span>
+								<span class="ps_box join_info_box_content"> 
+									<input type="text" id="uphone" name="phone" class="int jq_eff" placeholder="-없이 입력 예)01077779999" value="${user.phone}">
+								</span> 
+								<span class="join_err_msg">필수 정보입니다.</span>
 							</div>
 
 
@@ -377,20 +373,16 @@ to {
 								</h3>
 								<div class="addr_wrap">
 									<div class="postcode" style="display: flex;">
-										<span class="join_info_box_content ps_box addr_poc"> <input
-											type="text" id="sample6_postcode"
-											class="int jq_eff addr_only" name="postcode"
-											placeholder="우편번호" value="520831" readonly>
-										</span> <input type="button" id='btn_post'
-											class="addr_poc_button jq_eff"
-											onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+										<span class="join_info_box_content ps_box addr_poc"> 
+											<input type="text" id="sample6_postcode" class="int jq_eff addr_only" name="postcode" placeholder="우편번호" value="520831" value="${user.postcode}" readonly>
+										</span> 
+										<input type="button" id='btn_post' class="addr_poc_button jq_eff" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 									</div>
-									<span class="join_info_box_content ps_box"> <input
-										type="text" id="sample6_address" class="int addr_only jq_eff"
-										name="addr1" placeholder="주소" readonly><br>
-									</span> <span class="join_info_box_content ps_box"> <input
-										type="text" id="sample6_detailAddress" class="int jq_eff"
-										name="addr2" placeholder="상세주소">
+									<span class="join_info_box_content ps_box"> 
+										<input type="text" id="sample6_address" class="int addr_only jq_eff" name="addr1" placeholder="주소" value="${user.addr1}" readonly><br>
+									</span> 
+									<span class="join_info_box_content ps_box"> 
+										<input type="text" id="sample6_detailAddress" class="int jq_eff" name="addr2" value="${user.addr2}" placeholder="상세주소">
 									</span>
 								</div>
 								<span class="join_err_msg">필수 정보입니다.</span>
@@ -456,35 +448,8 @@ to {
 	// $(function(){	});              둘이 똑같은 코드이다
 
 	$(function() {
-		if ('${user}' != '') {
-			// 회원정보수정 디자인 변경
-			// → 버튼 텍스트가 수정하기
-			$('#btn_join').text('수정하기');
-			// → 비밀번호, 비밀번호 재설정 제거
-			$('.join_info_box:eq(1)').css('display', 'none');
-			// → id에 readonly효과를 줘서 입력이 불가능
-			//   id=#id를 제거해서 우리가 입력한 유효성체크 동작 불가능
-			$('.join_info_box_input:eq(0)').attr('readonly', 'true')
-					.removeAttr('id');
-
-			var name = '${user.name}'; //memberController.java 에서 변수 선언해줘야함  
-			var phone = '${user.phone}'; //memberController.java 에서 변수 선언해줘야함
-			var email = '${user.email}'; //memberController.java 에서 변수 선언해줘야함
-			var postcode = '${user.postcode}'; //memberController.java 에서 변수 선언해줘야함
-			var addr1 = '${user.addr1}'; //memberController.java 에서 변수 선언해줘야함
-			var addr2 = '${user.addr2}'; //memberController.java 에서 변수 선언해줘야함
-			ckName(name);
-			ckPhone(phone);
-			ckEmail(email);
-			ckAddr(postcode, addr2);
-			checkArr[0] = true;
-			ckeckArr[1] = true;
-			ckColorBtn();
-			printCheckArr(checkArr);
-		} //2020.03.09 오전에 보훈이꺼 붙여넣기함
-
 		//비밀번호가 유효한 값인지 체크해주는 Flag값
-		var pwFlag = false; //유효성검사 5번까지 통과하면 true로 바꾸세요, (checkId: function(id) 유효성검사기)
+		var pwFlag = false; //유효성검사 5번까지 통과하c면 true로 바꾸세요, (checkId: function(id) 유효성검사기)
 
 		// 유효성체크 여부를 알려주는 배열
 		var checkArr = new Array(6).fill(false); //트루 펄스 상황을 체크해주는 변수
@@ -492,6 +457,35 @@ to {
 
 		//유효성체크 모두 통과 or 불통 여부를 알려주는 변수
 		var checkAll = true; //checkArr이 7개 전부 트루값일때 트루로 바꿔줄것
+		
+		if('${user}' != ''){
+			// 회원정보수정 디자인 변경
+			// 버튼 텍스트 수정하기
+			$('#btn_join').text('수정하기');
+			// 비밀번호, 비밀번호 재설정 제거
+			$('.join_row:eq(1)').css('visibility', 'hidden')
+								.css('height', '0px');
+			// id에 readonly효과를 줘서 입력이 불가능
+			// id=#id를 제거해서 우리가 입력한 유효성체크 동작 불가능
+			$('#uid').attr('readonly', 'true')
+					 .removeAttr('id');
+			
+			var name = '${user.name}';
+			var phone = '${user.phone}';
+			var email = '${user.email}';
+			var postcode = '${user.postcode}';
+			var addr1 = '${user.addr1}';
+			var addr2 = '${user.addr2}';
+			ckName(name);
+			ckPhone(phone);
+			ckEmail(email);
+			ckAddr(postcode, addr2);
+			checkArr[0] = true;  //아이디는 항상 true면 유효성검사 항상 통과
+			checkArr[1] = true;  //비밀번호는 항상 true면 유효성검사 항상 통과
+			ckColorBtn();
+			printCheckArr(checkArr);
+			
+		}
 
 		//전체 열기/닫기
 		// 아이디 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -583,7 +577,7 @@ to {
 
 		// 이름 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		$('#uname').keyup(function() {
-			var name = $.trim($(this).val());
+			var name = $.trim($(this).val()); 
 			ckName(name);
 		});
 
@@ -608,7 +602,7 @@ to {
 
 		function ckPhone(phone) {
 			var result = joinValidate.checkPhone(phone);
-			ckDesign(result.code, result.desc, 9, 7); //3번째에 라인, 2번째에 메시지 띄움
+			ckDesign(result.code, result.desc, 5, 5); //3번째에 라인, 2번째에 메시지 띄움
 
 			//기능테스트기 (나중에 삭제)
 			if (result.code == 0) {
@@ -628,7 +622,7 @@ to {
 		function ckEmail(email) {
 			var result = joinValidate.checkEmail(email);
 			// alert('test');
-			ckDesign(result.code, result.desc, 8, 6); // 쌤꺼는 
+			ckDesign(result.code, result.desc, 4, 4); // 쌤꺼는 
 
 			//기능테스트기 (나중에 삭제)
 			if (result.code == 0) {
@@ -639,6 +633,8 @@ to {
 			printCheckArr(checkArr); //상태로고 띄우는 기능 (하단에 만들어둠)
 		}//function phone 종료
 
+		
+		
 		//daum 주소창 관력 클릭시 동작펑션■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		$('.addr_only').click(function() { //우편번호, 주소를 클릭했을때 동작
 
@@ -656,25 +652,24 @@ to {
 
 		// 주소 유효성체크 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		$('#sample6_detailAddress').keyup(function() { //id=sample6_detailAddress 에서 키를 눌렀을때 동작
-			var addrDetail = $.trim($(this).val()); //this = sample6_detailAddress  (trim은 문자열에 들어오는 공백값을 무시하는 기능)
 			var addrPost = $('#sample6_postcode').val();//우편번호 란에 입력된 input을 받아서 addrPost 에 저장
-			console.log('우편번호: ' + addrPost + ' 상세주소: ' + addrDetail);
-			ckAddr(addrDetail, addrPost); //function ckAddr 호출
+			var addrDetail = $.trim($(this).val()); //this = sample6_detailAddress  (trim은 문자열에 들어오는 공백값을 무시하는 기능)
+			ckAddr(addrPost, addrDetail); //function ckAddr 호출
 		});
 
-		function ckAddr(addrDetail, addrPost) { //상세주소랑 우편번호를 받아서
+		function ckAddr(addrPost, addrDetail) { //상세주소랑 우편번호를 받아서
 			var result = joinValidate.checkAddr(addrDetail, addrPost); //validation.js에서 checkAddr(주소유효성체크) 호출
 			// console.log(result.code + ', ' + result.desc);
 
 			if (result.code == 3) { // 우편번호 & 주소 X
-				ckDesign(result.code, result.desc, 10, 8);
-				ckDesign(result.code, result.desc, 11, 8);
+				ckDesign(result.code, result.desc, 6, 6);
+				ckDesign(result.code, result.desc, 7, 6);
 			} else if (result.code == 0) { // 성공
-				ckDesign(result.code, result.desc, 10, 8);
-				ckDesign(result.code, result.desc, 11, 8);
-				ckDesign(result.code, result.desc, 12, 8);
+				ckDesign(result.code, result.desc, 6, 6);
+				ckDesign(result.code, result.desc, 7, 6);
+				ckDesign(result.code, result.desc, 8, 6);
 			} else { // 상세주소 X
-				ckDesign(result.code, result.desc, 12, 8);
+				ckDesign(result.code, result.desc, 8, 6);
 			}
 
 			//기능테스트기 (나중에 삭제)
@@ -688,6 +683,10 @@ to {
 
 		//버튼 활성화!
 		$('.jq_eff').keyup(function() {
+			ckColorBtn();
+		});//$('.join_info_box_input').blur(function(){
+
+		function ckColorBtn(){
 			var checkAll = true;
 
 			for (var i = 0; i < checkArr.length; i++) {
@@ -706,8 +705,8 @@ to {
 				// $('#btn_join').prop('disabled', true);
 				$('.btn_type').css('cursor', 'no-drop'); //커서는 노드롭으로 바꿈
 			}
-		});//$('.join_info_box_input').blur(function(){
-
+		}
+			
 		// 회원가입 버튼 클릭! ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 		$('#btn_join').click(
 				function() {
@@ -771,8 +770,41 @@ to {
 			.text(desc).css('color', '#d95339');
 			return false;
 		}
-		//e
+	
 	}//function ckDesign(code, desc, line, msg)
+	
+	// ■■■■■■■■■ 개발시 사용: 유효성 체크 전체여부를 출력해주는 함수 (true, false) (웹에서 F12 눌러서 확인할 수 있음) ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+	function printCheckArr(checkArr) {
+		// 유효성체크 여부를 알려주는 배열
+		// for(var i=0; i < checkArr.length; i++){  //체크Arr 갯수만큼 반복돌림
+		// 	console.log(i+'번지:'+checkArr[i]);	 //콘솔 로그 찍음
+		// }
+		console.log('1아이디▶▶▶' + checkArr[0]);
+		console.log('2PW/rPW▶▶▶' + checkArr[1]);
+		console.log('3 이름 ▶▶▶' + checkArr[2]);
+		console.log('4이메일▶▶▶' + checkArr[3]);
+		console.log('5휴대폰▶▶▶' + checkArr[4]);
+		console.log('6 주소 ▶▶▶' + checkArr[5]);
+		console.log('■■■■■■■■■■■■■■■■■■■■■');
+	}//  function printCheckArr(checkArr){ 
+
+	// 로딩바 출력
+	function FunLoadingBarStart() {
+		var loadingBarImage = ''; // 가운데 띄워줄 이미지
+		loadingBarImage += "<div id='back'>";
+		loadingBarImage += "<div id='loadingBar'>";
+		loadingBarImage += "<i class='fas fa-spinner loading_img'></i>";
+		loadingBarImage += "</div></div>";
+		$('body').append(loadingBarImage); //append 는 HTML에 소스를 추가해주는 기능 
+		$('#back').css('display', 'flex');
+		$('.loading_img').show();
+	}
+
+	// 로딩바 제거
+	function FunLoadingBarEnd() {
+		$('#back, #loadingBar').hide();
+		$('#back, #loadingBar').remove();
+	}
 </script>
 
 
@@ -781,8 +813,7 @@ to {
 
 
 <!-- daum address -->
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	//■■■■■■■■ daum 주소입력창
 	function sample6_execDaumPostcode() {
@@ -833,37 +864,5 @@ to {
 				}).open();
 	}
 
-	// ■■■■■■■■■ 개발시 사용: 유효성 체크 전체여부를 출력해주는 함수 (true, false) (웹에서 F12 눌러서 확인할 수 있음) ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-	function printCheckArr(checkArr) {
-		// 유효성체크 여부를 알려주는 배열
-		// for(var i=0; i < checkArr.length; i++){  //체크Arr 갯수만큼 반복돌림
-		// 	console.log(i+'번지:'+checkArr[i]);	 //콘솔 로그 찍음
-		// }
-		console.log('1아이디▶▶▶' + checkArr[0]);
-		console.log('2PW/rPW▶▶▶' + checkArr[1]);
-		console.log('3 이름 ▶▶▶' + checkArr[2]);
-		console.log('4이메일▶▶▶' + checkArr[3]);
-		console.log('5휴대폰▶▶▶' + checkArr[4]);
-		console.log('6 주소 ▶▶▶' + checkArr[5]);
-		console.log('■■■■■■■■■■■■■■■■■■■■■');
-	}//  function printCheckArr(checkArr){ 
-
-	// 로딩바 출력
-	function FunLoadingBarStart() {
-		var loadingBarImage = ''; // 가운데 띄워줄 이미지
-		loadingBarImage += "<div id='back'>";
-		loadingBarImage += "<div id='loadingBar'>";
-		loadingBarImage += "<i class='fas fa-spinner loading_img'></i>";
-		loadingBarImage += "</div></div>";
-		$('body').append(loadingBarImage); //append 는 HTML에 소스를 추가해주는 기능 
-		$('#back').css('display', 'flex');
-		$('.loading_img').show();
-	}
-
-	// 로딩바 제거
-	function FunLoadingBarEnd() {
-		$('#back, #loadingBar').hide();
-		$('#back, #loadingBar').remove();
-	}
 </script>
 </html>

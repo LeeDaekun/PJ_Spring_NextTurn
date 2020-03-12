@@ -126,9 +126,9 @@
 
 			<div class="all_button">
 				<div>
-					<button>회원정보 수정</button>
-					<button>비밀번호 변경</button>
-					<button>회원탈퇴</button>
+					<a href="${path}/member/update">회원정보 수정</a>
+					<a href="${path}/member/pwupdate">비밀번호 변경</a>
+					<a href="${path}/member/drop">회원탈퇴</a>
 				</div>
 			</div>
 		</div>

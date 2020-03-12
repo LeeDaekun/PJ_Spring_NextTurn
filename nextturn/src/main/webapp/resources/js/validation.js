@@ -299,7 +299,8 @@ var joinValidate = {
 //주소 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 	//영어대문자, 영어소문자, 한글, -, 공백외에 전부 체크
 	checkAddr : function(addrDetail, addrPost) {  //상세주소 input , 우편번호 input 받는곳
-		var regAddr = /^[a-zA-Z가-힣]+$/;  //들어올 수 있는 글자종류
+		var regAddr = /^[a-zA-Z0-9가-힣-\s]+$/;  //들어올 수 있는 글자종류
+	                  
 
 		if(addrPost == '' || addrPost.length == 0) {
 			return this.resultCode.empty_post;

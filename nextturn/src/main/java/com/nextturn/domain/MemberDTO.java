@@ -30,6 +30,4 @@ public class MemberDTO {
 	private String eventon;		// 이벤트 등 프로모션 알림 메일 수신
 	private String useyn;		// 가입후 이메일 인증 유무 yn
 	private Date regdate;		// 가입일자
-	private int birth;
-	private String male; //성별
 }

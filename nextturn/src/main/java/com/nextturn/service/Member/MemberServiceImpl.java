@@ -31,5 +31,9 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.idOverLap(id);  //여기 안해서 개고생했음
 	}
 	
+	@Override
+	public MemberDTO userView(String id) {
+		return mDao.userView(id);
+	}
 	
 }

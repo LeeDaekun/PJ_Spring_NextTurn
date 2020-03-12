@@ -1,6 +1,7 @@
 package com.nextturn.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -185,6 +186,27 @@ public class MemberController {
 	}
 	
 	
+	
+	// 회원정보수정
+	@GetMapping("/update")
+	public String memUpdate(HttpSession session, Model model) {
+		log.info("★★★★★★★★★★★★★★★ GET : Member Update Page");
+		
+		// 현재 로그인 상태를 확인
+		// session영역에 담을경우 제일 최상의 타입인 object로 변환하여 담음
+		// 담기 전 형변환 해야함
+		String id = (String)session.getAttribute("userid");
+		
+		// 로그인이 안돼있으면 비정상적인 접근으로 간주하여
+		// 인덱스페이지로 이동!
+		if(id == null) {
+			return "redirect:/";
+		}
+		
+		// 로그인 된 유저의 정보를 GET
+		model.addAttribute("user", mService.userView(id));
+		return "member/join";
+	}
 	
 	
 

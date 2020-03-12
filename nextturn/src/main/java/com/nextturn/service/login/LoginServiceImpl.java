@@ -13,7 +13,6 @@ import com.nextturn.persistence.LoginDAO;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class LoginServiceImpl implements LoginService{
 
 	@Autowired
@@ -35,8 +34,6 @@ public class LoginServiceImpl implements LoginService{
 		// 비즈니스 로직 처리
 		// 1. DB에 가서 회원인지 아닌지 유무체크
 		MemberDTO loginDto = lDao.loginUser(mDto);
-		log.info("★★★★★★★★★★★★★★★ 로그인 결과");
-		
 		// 로그인 결과값
 		int result = 0;
 		
@@ -79,4 +76,13 @@ public class LoginServiceImpl implements LoginService{
 		return result;
 	}
 		
+	
+	@Override
+	public void logout(HttpSession session) {
+		// 비즈니스 로직: 로그아웃
+	
+		session.invalidate();	// 세션 초기화
+	}
+	
+	
 }
