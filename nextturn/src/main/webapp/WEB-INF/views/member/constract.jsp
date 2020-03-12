@@ -9,13 +9,264 @@
 	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="${path}/resources/css/footer.css"><!-- 푸터 CSS추가 -->
 	<link rel="icon" type="image/png" href=""><!-- 파비콘 -->
-	<link rel="stylesheet" type="text/css" href="${path}/resources/css/nt_join_agree.css">
 	
 	<style type="text/css">
+	
+		.wrap {
+			width: 768px;
+			margin: 0 auto;
+		}
 
+		/* Header */
+		#header {
+		    height: 105px;
+		    padding-top: 15px;
+		    position: relative;
+		}
+		#container {
+			position: relative;
+		}
+
+
+		.naver_logo {
+			font-size: 2em; /*글자크기 2배 32px 정도 (3em은 3배)*/
+		}
+		.n_logo {
+			display: block;
+			width: 300px;
+			height: 80px;
+			/*width: 240px;*/
+			/*height: 44px;*/
+			background: url(../resources/img/logos.png) 100% 50% no-repeat;
+			background-size: 300px;
+			margin: 0 210px;
+		}
+		.lang {
+			position: absolute;
+			top: 14px;
+			right: 0px;
+		}
+		.langselect {
+			font-size: 12px;
+			font-weight: 400;
+			height: 30px;
+			padding: 6px 8px 5px 7px;
+			min-width: 98px;
+			color: #333;
+			border: 1px solid #ccc;
+		}
+		.lang > select {
+			background: url(../resources/img/naver/sel_arr.gif) 100% 50% no-repeat;
+			-webkit-appearance: none; /* 삼각형을 지워라 */
+			background-color: white;
+		}
+
+		/* Container */
+		.join_content {
+			width: 460px;
+			margin: 0 auto;
+		}
+		.terms {
+			margin-bottom: 20px;
+			background-color: white;
+			border: 1px solid #dadada;
+		}
+		.terms_span > input {
+			position: absolute;
+			right: 1px;
+			top: 50%;
+			width: 22px;
+			margin-top: -11px;
+			visibility: hidden;
+		}
+		.terms_p {
+			display: block;
+			padding: 15px;
+			margin: 0px;
+			position: relative;
+		}
+		.terms_span > label {
+			background: url('../resources/img/naver/check_off.gif') 100% 50% no-repeat;
+			display: block;
+			line-height: 20px;
+			height: 58px;
+			top: -1px;
+			font-style: 14px;
+			font-weight: 700;
+		}
+		.terms_span {
+			position: relative;
+			display: block;
+			height: 58px;
+		}
+		.terms_span > input:checked +label {
+			background-image: url('../resources/img/naver/check_on.gif');
+		}
+		.terms_ul {
+			padding-bottom: 7px;
+		}
+		.terms_ul_li1 {
+			border-top: 1px solid #f0f0f0;
+		}
+		ul.terms_ul > li {
+			display: block;
+			padding: 13px 15px 7px;
+		}
+		.ul_li_span {
+			position: relative;
+			display: block;
+			height: 24px;
+		}
+		.label1 {
+			height: 24px;
+			font-size: 14px;
+			font-weight: 700;
+			line-height: 24px;
+			position: absolute;
+			color: #333;
+			top: 0px;
+			left: 0px;
+			width: 100%;
+		}
+
+
+
+
+	/* 로그인 상태 유지 아이콘 */
+		.icon_check {
+			overflow: hidden;
+			float: left;
+			width: 25px;
+			height: 25px;
+			margin: 1px 8px 0 0;
+			background: url(../resources/img/check_off.gif) no-repeat;
+						
+		}
+		.ul_li_span > input:checked +label > .icon_check {
+			/*background-position: 0 -30px;*/
+			background: url(../resources/img/check_on.png)no-repeat;
+		}
+		.terms_span > input:checked +label > .icon_check {
+			/*background-position: 0 -30px;*/
+			background: url(../resources/img/check_on.png)no-repeat;
+		}
+		.terms_span > label > span {
+			display: inline-block;
+		}
+		.terms_span > label > .icon_check {
+			margin: 19px 8px 0 0;
+		}
+
+
+
+
+		.span_only {
+			color: blue;
+			font-size: 12px;
+			font-weight: 400;
+		}
+		.ul_li_span > input {
+			visibility: hidden;
+			position: absolute;
+			right: 1px;
+			width: 22px;
+			height: 22px;
+			margin-top: -11px;
+			top: 50%;
+		}
+		.ul_li_span > label {
+			background: url('../resources/img/naver/check_off.gif') 100% 50% no-repeat;
+			display: block;
+		}
+		.ul_li_span > input:checked +label {
+			background-image: url('../resources/img/naver/check_on.gif');
+		}
+		.terms_box {
+			position: relative;
+			box-sizing: border-box;
+			height: 88px;
+			margin-top: 11px;
+			padding: 8px 10px;
+			border: 1px solid #f0f0f0;
+			background-color: #f7f7f7;
+			overflow: auto;
+		}
+		h3.article_title {
+			font-size: 12px;
+			font-weight: 700;
+			line-height: 16px;
+			color: #666;
+		}
+		.article > p {
+			display: block;
+			font-size: 12px;
+			line-height: 16px;
+			color: #666;
+		}
+		.span_select {
+			color: #969696;
+			font-size: 12px;
+			font-weight: 400;
+		}
+		.err_check_msg {
+			height: 24px;
+			font-size: 12px;
+			line-height: 14px;
+			color: #f46665;
+			display: block;
+		}
+		.err_check {
+			display: none;
+		}
+		.btn_double_area {
+			margin: 30px -5px 0px;
+			overflow: hidden;
+		}
+		.btn_double_area > span {
+			display: block;
+			float: left;
+			width: 50%;
+		}
+		.btn_type {
+		    width: 225px;
+		    margin: 0px auto;
+		    font-size: 20px;
+		    font-weight: 600;
+		    line-height: 61px;
+		    display: block;
+		    box-sizing: border-box;
+		    height: 61px;
+		    padding-top: 1px;
+		    text-align: center;
+		}
+		.btn_default {
+			color: #333;
+			border: 1px solid #e7e7e7;
+			background-color: #fff;
+		}
+		.btn_agree {
+			color: #fff;
+			background-color: #121212;
+		}
+		.group_join {
+			margin: 10px 0px 5px;
+		    text-align: center;
+		    color: #666;
+		    font-size: 12px;
+		}
+		.group_join > a {
+			text-decoration: underline;
+			color: #333;
+		}
+
+		
+
+
+		
 	</style>
 </head>
 <body>
+	<%@ include file="../include/header.jsp"%>
 	<div class="wrap">
 		<header>
 			<div id="header">

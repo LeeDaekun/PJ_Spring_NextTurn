@@ -10,7 +10,7 @@ import com.nextturn.persistence.MemberDAO;
 @Service
 public class MemberServiceImpl implements MemberService {
 //임플리먼트 (구현)을 했으면 @Override 를 반드시 해줘야한다.
-	
+
 	@Autowired
 	private SqlSession sqlSession;
 	

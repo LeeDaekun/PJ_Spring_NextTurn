@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller // 컨트롤러 붙여준 이유는, 핸들러맵핑이 /member 붙은애를 찾아봐,
-@RequestMapping("/member")
+@RequestMapping("/member") 
 @SessionAttributes({"memberDTO"}) // 공용저장소 만듬. (join페이지 직접 못넘어가게 하는거 할때 만듬)
 public class MemberController {
 	@Autowired // DI 기능을 켜고
@@ -48,9 +48,9 @@ public class MemberController {
 	public MemberDTO newMember() {
 		return new MemberDTO();
 	}
-
+	
 	@GetMapping("/constract") // Get 방식이 기본값이라. Post라고 안쓰면 무조건 Get
-	public String viewConstract() {
+	public String viewConstract() {   
 		log.info(">>>>> MEMBER/CONSTRACT PAGE 출력");
 		return "member/constract";
 	}
@@ -65,6 +65,7 @@ public class MemberController {
 	 * 
 	 * @ModelAttribute("객체이름")을 필수로 지정해주어야 한다.
 	 */
+
 	@GetMapping("/join") // (join페이지 직접 못넘어가게 하는거 할때 만듬)
 	public String join(@ModelAttribute("memberDTO") MemberDTO mDto, Model model, 
 		@RequestParam(value="flag", defaultValue="0") String flag) {  //String flag 는 기본값을 설정할수 없으니까, 
@@ -86,6 +87,17 @@ public class MemberController {
 		return "member/pwupdate";
 	}
 	
+	@GetMapping("/drop") // Get 방식이 기본값이라. Post라고 안쓰면 무조건 Get
+	public String viewDrop() {
+		log.info(">>>>> MEMBER/drop 출력");
+		return "member/drop";
+	}
+	
+	@GetMapping("/mypage") // Get 방식이 기본값이라. Post라고 안쓰면 무조건 Get
+	public String viewMypage() {
+		log.info(">>>>> MEMBER/mypage 출력");
+		return "member/mypage";
+	}
 
 	
 	

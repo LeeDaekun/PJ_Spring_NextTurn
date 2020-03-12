@@ -1,9 +1,5 @@
-body {    background: linear-gradient(180deg, rgba(113, 130, 64, 0.1) -1.1659551760939162%,rgba(7, 20, 53, 0.2) 95.20544290288153%);
-}
-
-
-
-
+		body {    background: linear-gradient(180deg, rgba(113, 130, 64, 0.1) -1.1659551760939162%,rgba(7, 20, 53, 0.2) 95.20544290288153%);
+		}
 
 	/* 메인 이미지박스 */
 		.main_image{

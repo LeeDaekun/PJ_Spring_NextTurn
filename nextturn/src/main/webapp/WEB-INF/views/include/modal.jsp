@@ -4,13 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- 회원가입 후에 인증 모달창, 인증완료 후 모달창 -->
 <title>Insert title here</title>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous">
 	<style type="text/css">
-		*{
-			font-family: 'Noto Sans KR', sans-serif;
-		}
 		body{
 			padding: 0; margin: 0;
 		}

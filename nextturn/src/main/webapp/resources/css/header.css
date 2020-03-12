@@ -197,8 +197,9 @@
 			font-size: 35px;
 			font-weight: bold;
 			vertical-align: middle;
-			font-family: 'Acme', sans-serif;
 		}
+		
+		/* 드랍다운 메뉴 */
 		.header_dropdown_menu {
 			position: relative; /*값을 주지 않으면 주나 안주나 똑같은것처럼 기본 위치에 고정되있음*/
 			border-bottom-left-radius: 2px;
