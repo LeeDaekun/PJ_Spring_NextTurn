@@ -94,6 +94,8 @@ public class MemberController {
 			HttpServletRequest request, RedirectAttributes rttr) { 
 		// @ModelAttribute 를 해줘야, @SessionAttribute 에 담을 수 있다.
 		//@ModelAttribute 는 데이터베이스 값을 전달하려고 있는거
+		//http서블릿 리퀘스트 이메일 전송할때 필요한것
+		//리다이랙트 어트리뷰트 1회성으로 변수값을 전송하는것
 		//상단에 공용자원인 @SessionAttributes({"memberDTO"}) 이걸 열었는데, 자원을 사용하고 반납까지 해줘야하는데, 반납하는 역할은 SessionStatus sessionStatus 이거로 해준다.
 																		
 		log.info("★★★★★★★★★★★★★★★ MEMBER/JOIN PAGE POST 출력");		
@@ -120,23 +122,40 @@ public class MemberController {
 				// view로 보내기 전 반드시 setComplet()를 실행하여
 				// session에 담긴 값을 clear 해주어야 한다.
 				// sessionStatus : controller에서 공유하던 영역을 제거
-				sessionStatus.setComplete();
+				sessionStatus.setComplete();   //세션 스테이터스는 공용 영역에 변수를 넣어서 사용한것을 다시 초기화 시킨다는 의미, 꼭 사용후 초기화해야함
 				
 				// 회원가입 후 메시지 출력을 위한 값 전달
-				rttr.addFlashAttribute("id", mDto.getId());
+				rttr.addFlashAttribute("id", mDto.getId());  //rttr 은 모델과 비슷하게, 컨트롤러에서 뷰로 전송해주는데, rttr 도 같은 기능을 함 (단 1회성)
 				rttr.addFlashAttribute("email", mDto.getEmail());
-				rttr.addFlashAttribute("key", "join");
-		
-		
-		// SessionAttributes를 사용할 때 insert, update가 완료되고 
-		// view로 보내기 전 반드시 setComplet()를 실행하여
-		// session에 담긴 값을 clear 해주어야 한다.
-		// sessionStatus : controller에서 공유하던 영역을 제거
-		sessionStatus.setComplete();
+				rttr.addFlashAttribute("key", "join");  //변수 key 에 "join"을 담는다
 		
 		return "redirect:/";
 	}
 	
+	
+	
+	
+	
+	// 회원가입 후 email 인증 (인증 이메일에서 a태그가 이 메서드를 실행함)
+	@GetMapping("/keyauth")
+	public String keyAuth(String id, String key, RedirectAttributes rttr) {   //리다이렉트 어트리뷰트 : 원래 데이터를 전달하면 살아있는데, 이거로 보내면 한번 보내고 소멸
+		
+		mailService.keyAuth(id, key);
+		
+		// 인증 후 메시지 출력을 위한 값 전달
+		rttr.addFlashAttribute("id", id);
+		rttr.addFlashAttribute("key", "auth");  //모달창에 값을 전달하고, 모달창이 사라지면, 같이 값이 사라진다. 에드 플래시 어트리뷰트
+		
+		return "redirect:/"; //리다이렉트로 인덱스로 바뀌면 모달창이 떠야함
+	}
+			
+			
+			
+			
+			
+					
+					
+					
 	
 	// 회원가입 ID 중복체크
 	@ResponseBody  //리턴값을 화면단으로 인식하지않고, 일반 데이터로 인식하는거

@@ -73,7 +73,7 @@ public class MailServiceImpl implements MailService {  //implements 가 있어�
 		mDao.getKey(id, key); //id가 파라메터1, key는 파라메터2, 맵퍼에서 이렇게 인식하고있음
 		// 메일 구조를 만듦 (수신, 목적, 제목, 내용은 x)
 		// mime type (String, int 등과 같음) : 동영상, 소리, 사진 등의 파일을 받아주는 타입 
-		MimeMessage mail = mailSender.createMimeMessage();  //
+		MimeMessage mail = mailSender.createMimeMessage();  //메일보내기 위해 편지지같은 틀을 만든다
 		// model1 방식과 비슷
 		
 		
@@ -91,4 +91,10 @@ public class MailServiceImpl implements MailService {  //implements 가 있어�
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public int keyAuth(String id, String key) {
+		return  mDao.alterKey(id, key);
+	}
+
 }

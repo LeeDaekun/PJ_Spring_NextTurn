@@ -16,6 +16,35 @@
 	<link rel="stylesheet" type="text/css" href="">
 	<style type="text/css">
 
+
+/* 로딩바 */
+#back {
+	position: fixed;
+	z-index: 1200;
+	background-color: rgba(0, 0, 0, 0.4);
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.loading_img {
+	animation: ani_loading 1.5s infinite linear;
+	font-size: 70px;
+	color: #EBA444;
+}
+
+@keyframes ani_loading {
+	from {-webkit-transform: rotate(0deg);
+}
+
+to {
+	-webkit-transform: rotate(359deg);
+}
 /*===================================================================*/
 	</style>
 
@@ -523,7 +552,9 @@
 				var dd = $('#dd').val();
 				var birth = $('#birth').val(yy+mm+dd);
 				
-				if(invalidAll){  //트루라면
+				if(invalidAll){  //트루라면 모든유효성체크가 트루인것이다.
+					FunLoadingBarStart();  //빙글빙글 로딩바 함수(하단에 참조)
+					
 					alert('회원가입 성공!');
 					// submit : form태그 안에 있는 데이터들을 서버단으로 전송
 					// action : 목적지(MemberController '/join')
@@ -635,5 +666,29 @@
 				console.log('6 주소 ▶▶▶'+checkArr[5]);
 				console.log('■■■■■■■■■■■■■■■■■■■■■');
        }//  function printCheckArr(checkArr){ 
+    	   
+    	   
+    	   
+    	   
+    	   
+    	   
+	   	// 로딩바 출력
+	   	function FunLoadingBarStart() {
+	   		var loadingBarImage = ''; // 가운데 띄워줄 이미지
+	   		loadingBarImage += "<div id='back'>";
+	   		loadingBarImage += "<div id='loadingBar'>";
+	   		loadingBarImage += "<i class='fas fa-spinner loading_img'></i>";
+	   		loadingBarImage += "</div></div>";
+	   		$('body').append(loadingBarImage);  //append 는 HTML에 소스를 추가해주는 기능 
+	   		$('#back').css('display', 'flex');
+	   		$('.loading_img').show();	   	}
+	
+	   	// 로딩바 제거
+	   	function FunLoadingBarEnd() {
+	   		$('#back, #loadingBar').hide();
+	   		$('#back, #loadingBar').remove();
+	   	} 	   
+    	   
+    	   
     </script>
 </html>

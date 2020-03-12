@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 네임스페이스 사용자 꺼에 맞게 바꿔주세요 -->
+<mapper namespace="com.nextturn.persistence.LoginDAO"> 
+	<select id="loginUser" resultType="MemberDTO">
+		SELECT * FROM tbl_member 
+		WHERE id=#{id}
+	</select>
+</mapper>

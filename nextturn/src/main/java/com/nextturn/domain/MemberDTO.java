@@ -28,7 +28,7 @@ public class MemberDTO {
 	private String primaryon;	// 개인정보 수집 및 이용동의 유무
 	private String locon;		// 위치정보 이용약관 동의 유무
 	private String eventon;		// 이벤트 등 프로모션 알림 메일 수신
-	private String useyn;		// ID 사용 유무
+	private String useyn;		// 가입후 이메일 인증 유무 yn
 	private Date regdate;		// 가입일자
 	private int birth;
 	private String male; //성별

@@ -36,6 +36,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre1.8.0_241/lib/ext/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/developer/ORM (mybatis_ojdbc6_jar)/ojdbc6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

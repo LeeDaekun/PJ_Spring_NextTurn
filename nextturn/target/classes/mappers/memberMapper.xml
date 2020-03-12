@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.nextturn.persistence.MemberDAO">
 
 	<insert id="memInsert">
-		INSERT INTO tbl_member(id, pw, name, phone, email, postcode, addr1, addr2) 
-		VALUES (#{id}, #{pw}, #{name}, #{phone}, #{email}, #{postcode}, #{addr1}, #{addr2})
+		INSERT INTO tbl_member(id, pw, name, phone, email, postcode, addr1, addr2,  useon, primaryon, locon, eventon) 
+		VALUES (#{id}, #{pw}, #{name}, #{phone}, #{email}, #{postcode}, #{addr1}, #{addr2}, #{useon}, #{primaryon}, #{locon}, #{eventon})
 	</insert>
 			
 	<!-- 아이디 중복체크  (아이디 가있으면1 없으면0)-->
@@ -24,5 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id = #{param1}
 	</update>
 	
+	<!-- 이메일 인증 완료시 useyn 의 20자리 난수를 y로 변경함 -->
+	<update id="alterKey">
+		UPDATE tbl_member 
+		SET useyn = 'y' 
+		WHERE id = #{param1} AND useyn = #{param2}
+	</update>
 	
 </mapper>

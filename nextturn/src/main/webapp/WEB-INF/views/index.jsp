@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="include/header.jsp"%>
-<!DOCTYPE html>
+	<%@ include file="include/header.jsp"%>
+	<!DOCTYPE html>
 <html>
 <head>
 
@@ -27,75 +27,9 @@
 </style>
 </head>
 <body>
-<!--■■■■■■ 모달 웹 (열기/닫기)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
-	<div class="modal_wrap"> <!-- 회색 클릭방지화면 -->
-		<div class="modal_content"> <!-- 하얀색 모달창 -->
-			
-		<!-- 앱솔루트 X 버튼 -->
-			<div class="login_close"> 
-				<button><i class="fas fa-times"></i></button> <!-- X버튼 아이콘 -->
-			</div>
-
-		<!-- 로고 -->
-			<div class="modal_logo"></div>
+<%@ include file="include/modal.jsp"%>
 
 
-		<!-- 폼 -->
-			<form action="" class="frm_login"><!-- ID PW state button 값 던져주기위해 form사용 -->
-				<!-- 아이디 -->
-				<div class="send_info">
-					<label class="label_placeholder" for="login_id">
-						<span id="id">아이디</span>
-					</label>
-					<input type="email" id="login_id" class="login_input" required>
-				</div>
-				<!-- 비밀번호 -->
-				<div class="send_info">
-					<label class="label_placeholder" for="login_pw"><span id="pw">비밀번호</span></label>
-					<input type="password" id="login_pw" class="login_input" required minlength="6" maxlength="18"><!-- 인풋에 리콰이어드 추가 -->
-					<span class="pw_eye">
-						<i class="fas fa-eye-slash"></i>
-					</span>
-				</div>
-				<!-- 로그인 상태 유지 -->
-				<div class="login_state">
-					<input type="checkbox" id="staySignedIn">
-					<label for="staySignedIn">
-						<span class="icon_check"></span>
-						<span>로그인 상태 유지</span>
-					</label>
-				</div>
-				<!-- 로그인 버튼 -->
-				<div>
-					<button type="submit" class="btn_confirm">로그인</button> 
-				</div>
-			</form>
-
-
-
-
-
-
-				<!-- footer -->
-			<div class="login_footer">
-				<div>
-					<a href="nt_join_agree.html">회원가입</a>
-				</div>
-				<div>
-					<span><a href="#">계정 찾기</a></span>
-					<span> | </span>
-					<span><a href="#">비밀번호 찾기</a></span>
-				</div>
-			</div>
-
-			
- 		</div>
-
-
-			
-
-		 </div> <!-- model content -->
-	</div><!-- modal wrap-->
 
 
 <!--■■■■■■ 섹션(주내용) ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
