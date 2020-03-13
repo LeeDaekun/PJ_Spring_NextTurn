@@ -40,10 +40,15 @@ var joinValidate = {
 			code: 0,
 			desc : '사용가능한 비밀번호입니다.'
 		},
-		equals_success_pw : {  //새로 추가함
+		equal_success_pw : {  //새로 추가함
 			code: 10,
 			desc : '사용가능한 비밀번호입니다.'
 		},
+		success_nowpw : {
+			code: 100,
+			desc : '확인되었습니다.'
+		},
+		
 		invalid_pw : {
 			code: 3,
 			desc : '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.'
@@ -168,7 +173,7 @@ var joinValidate = {
 
 
 //비밀번호 유효성체크■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-	checkPw : function(pw, rpw) {
+	checkPw : function(nowpw, pw, rpw) {
 		var regEmpty = /\s/g; // 공백문자
 		var regPw = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&_*-]).{8,}$/;
 		var regHangle = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
@@ -192,11 +197,14 @@ var joinValidate = {
 		
 		} else if(!pw.match(regPw)) { // 5.유효한 비밀번호 체크
 			return this.resultCode.invalid_pw;
-
+		
+		}else if (pw == nowpw) {  
+			return this.resultCode.equal_pw;
+		
 	// 6.비밀번호재확인에 값이 있으면, 여기서 성공을 띄움
 		} else if(rpw != '' || rpw.length != 0) {
 			if(pw == rpw) {
-				return this.resultCode.equals_success_pw;  //사용가능한 비밀번호입니다
+				return this.resultCode.equal_success_pw;  //사용가능한 비밀번호입니다
 			} else {
 				return this.resultCode.other_pw;
 			}
@@ -222,7 +230,7 @@ var joinValidate = {
 		// 6.비밀번호재확인에 값이 있으면, 여기서 성공을 띄움
 		} else{
 			if(pw == rpw && pwFlag) {
-				return this.resultCode.equals_success_pw;  //사용가능한 비밀번호입니다
+				return this.resultCode.equal_success_pw;  //사용가능한 비밀번호입니다
 			} else {
 				return this.resultCode.other_pw; //입력하신 비밀번호가 일치하지 않습니다
 			}
@@ -324,9 +332,24 @@ var joinValidate = {
 			return this.resultCode.success_nowpw;  //확인되었습니다.
 		}
 		
-	}//checkNowpw : function(pw) 종료
+	},//checkNowpw : function(pw) 종료
 
 	
+	//비밀번호 수정 페이지에서  내가 기존에 쓰던 비밀번호 유효성체크
+	checkNowpw : function(pw) {
+		var regEmpty = /\s/g; // 공백문자
+		
+		if (pw == '' || pw.length == 0) { // 1. 값이 있는지 체크
+			return this.resultCode.empty_val;
+		} else if (pw.match(regEmpty)) { // 2. 공백값이 있는지 체크
+			return this.resultCode.space_length_val;
+		} else if (pwCheck(pw)) { // 3. 현재 비밀번호와 동일한지 체크
+			return this.resultCode.other_pw;
+		} else { // 4. 유효성 체크 통과
+			return this.resultCode.success_nowpw;
+		}
+	}
+	//기능추가하시면 , 꼭 찍어주셔야 합니다.
 	
 
 } //var joinValidate = { 종료=========
@@ -371,6 +394,29 @@ function pwCheck(pw){
 			alert('System ERROR:(');
 		}
 		
+	});
+	return return_val;
+}
+
+
+//비밀번호 체크인데, 현재 비밀번호가 DB에 있는거랑 같은건지 체크하는거
+function pwCheck(pw) {
+	var return_val = true;
+	$.ajax({
+		type: 'POST', 
+		url: 'pwcheck?pw='+pw, 
+		async: false, 
+		success: function(data){
+			console.log(data);
+			if(data == 1) {
+				return_val = false;
+			} else if(data == 0) {
+				return_val = true;
+			}
+		},
+		error: function(){
+			alert('System ERROR:(');
+		}
 	});
 	return return_val;
 }

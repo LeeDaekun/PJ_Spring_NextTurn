@@ -36,7 +36,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id = #{id}
 	</select>
 	
+	<update id="memUpdate">
+		UPDATE tbl_member SET
+			name = #{name},
+			phone = #{phone},
+			email = #{email},
+			postcode = #{postcode},
+			addr1 = #{addr1},
+			addr2 = #{addr2}
+		WHERE id = #{id}
+	</update>
 	
+	<select id="pwCheck" resultType="String">
+		SELECT pw FROM tbl_member
+		WHERE id = #{param1}
+	</select>
 	
+	<update id="pwUpdate">
+		UPDATE tbl_member 
+		SET pw = #{pw} 
+		WHERE id = #{id}
+	</update>
 	
 </mapper>

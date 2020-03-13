@@ -167,6 +167,11 @@
 								<!-- 마이페이지 드랍다운 메뉴 -->
 								<div class="arrow"></div>
 								<ul class="header_dropdown_menu">
+									<c:if test="${not empty userid}">
+										<li><a href="#" style="color:blue">안녕하세요!</a></li>
+									</c:if>	
+								
+								
 									<!-- 나중에 사이트에 맞게 바꾸기 -->
 									<li><a href="#">쪽지 확인</a></li>
 									<li><a href="#">내 게시글</a></li>

@@ -88,6 +88,36 @@ public class MemberController {
 		return "member/pwupdate";
 	}
 	
+	@PostMapping("/pwupdate")
+	public String pwUpdate(HttpSession session, MemberDTO mDto) {
+		log.info("★★★★★★★★★★★★★★★ POST: Password Update Action");
+		log.info("수정 비밀번호 : " + mDto.getPw());
+		
+		String encPw = passwordEncoder.encode(mDto.getPw());
+		mDto.setPw(encPw);
+		
+		String id = (String)session.getAttribute("userid");
+		mDto.setId(id);
+		log.info(mDto.toString());
+		
+		mService.pwUpdate(mDto);
+		
+		return "redirect:/";
+	}
+	
+	
+	
+	@ResponseBody
+	@PostMapping("/pwcheck")
+	public Integer pwCheck(String pw, HttpSession session) {
+		log.info("★★★★★★★★★★★★★★★ POST: Password Check(AJAX)");
+		
+		String id = (String)session.getAttribute("userid");
+		
+		return mService.pwCheck(id, pw);
+	}
+	
+	
 	@GetMapping("/drop") // Get 방식이 기본값이라. Post라고 안쓰면 무조건 Get
 	public String viewDrop() {
 		log.info(">>>>> MEMBER/drop 출력");
@@ -187,7 +217,7 @@ public class MemberController {
 	
 	
 	
-	// 회원정보수정
+	// 회원정보수정  	@GetMapping("/update")
 	@GetMapping("/update")
 	public String memUpdate(HttpSession session, Model model) {
 		log.info("★★★★★★★★★★★★★★★ GET : Member Update Page");
@@ -209,6 +239,16 @@ public class MemberController {
 	}
 	
 	
+	// 회원정보 수정 	@PostMapping("/update")
+	@PostMapping("/update")
+	public String memUpdate(MemberDTO mDto, HttpSession session) { //	@PostMapping("/update")
+		log.info("★★★★★★★★★★★★★★★ POST: Member Update Action");
+		log.info(mDto.toString());
+		
+		mService.memUpdate(mDto, session);
+
+		return "redirect:/";  //루트컨텍스트(/) 호출
+	}
 
 	
 	

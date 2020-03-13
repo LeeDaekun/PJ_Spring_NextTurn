@@ -239,7 +239,7 @@
 			width: 15px;
 			height: 15px;
 			transform: rotate(45deg);
-			background-color: red;
+			background-color: white;
 			border-color: transparent transparent #fff transparent;
 			z-index: 99; /*포지션이 있어야 z인덱스를 적용할 수 있음*/
 

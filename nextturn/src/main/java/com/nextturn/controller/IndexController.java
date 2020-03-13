@@ -1,5 +1,7 @@
 package com.nextturn.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller  //의존성 주입을 하려고, 스프링에게 제어권을준다 (IOC) IOC를 해야 DI패턴을 할 수 있다
 @Slf4j  //Slf4j로그를 기록하는 프로그램인데, @붙여서 롬복이 쉽게 셋팅해줄수 있음
 public class IndexController {
+	
 	// @Inject, @Autowired, @Resource중 1개라도 붙어있으면 의존성 주입
 
 	// @Inject와 @Atuowired는 타입(변수타입)으로 의존성 주입
@@ -24,9 +27,14 @@ public class IndexController {
 	// iService에 indexServiceImpl Beans가 들어가있는것
 	
 	@RequestMapping("/")  //localhost:8081/ <컨텍스트 루트 라고 부르고, 하위에 /를 리퀘스트 맵핑이 처리하는것
-	public String indexView(Model model) {  //전송방식은 model (컨트롤러에서 뷰단으로 갈때 데이터를 모델로 전달)
+	public String indexView(Model model,  HttpSession session) {  //전송방식은 model (컨트롤러에서 뷰단으로 갈때 데이터를 모델로 전달)
 		log.info("★★★★★★★★ INDEX PAGE 출력");
-				
+		log.info("★★개발자 자동로그인중★★ HttpSession session 사용중");
+		// 개발 종료시 삭제할 것(강제 로그인)
+		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요 
+		 session.removeAttribute("userid"); session.removeAttribute("name");
+		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "상시로그인");
+			
 		
 		model.addAttribute("NewPdt", iService.newPdtList());  //모델은 컨트롤러에서 뷰단으로 전달 (newPdt에는 1~5순위 값이 담겨져서 돌아온다)
 		// iService.newPdtList 를 호출하면

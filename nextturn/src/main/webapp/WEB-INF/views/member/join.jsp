@@ -476,13 +476,14 @@ to {
 			var postcode = '${user.postcode}';
 			var addr1 = '${user.addr1}';
 			var addr2 = '${user.addr2}';
+			//키보드를 안눌러도 즉시 유효성체크 시작
 			ckName(name);
 			ckPhone(phone);
 			ckEmail(email);
 			ckAddr(postcode, addr2);
 			checkArr[0] = true;  //아이디는 항상 true면 유효성검사 항상 통과
 			checkArr[1] = true;  //비밀번호는 항상 true면 유효성검사 항상 통과
-			ckColorBtn();
+			ckColorBtn();  //function ckColorBtn(){ 기능
 			printCheckArr(checkArr);
 			
 		}
@@ -516,7 +517,7 @@ to {
 					var rpw = $.trim($('#urpw').val());
 
 					//▶2. 비밀번호(1) 유효성* 체크하기
-					var result = joinValidate.checkPw(pw, rpw);
+					var result = joinValidate.checkPw("",pw, rpw);
 					console.log(result.code + ',' + result.desc);
 
 					if (result.code == 0 || result.code == 10

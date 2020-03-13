@@ -1,5 +1,7 @@
 package com.nextturn.service.Member;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.nextturn.domain.MemberDTO;
@@ -14,4 +16,13 @@ public interface MemberService {
 	
 	// 1명의 회원정보 
 	public MemberDTO userView(String id);
+	
+	// 회원수정(DB에 수정)
+	public void memUpdate(MemberDTO mDto, HttpSession session);
+	
+	// 비밀번호 수정 : 현재 비밀번호 체크
+	public int pwCheck(String id, String pw);
+	
+	// 비밀번호 수정 : DB에 수정
+	public void pwUpdate(MemberDTO mDto);
 }
