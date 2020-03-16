@@ -39,7 +39,6 @@ public class MemberController {
 	 * 해당 메서드에는 @ModelAttribute("변수명")이 있어야 한다.
 	 */
 	
-	
 	@Autowired  //메일 인증할때 필요한 서비스
 	private MailService mailService;  //메일서비스로 이동할 수 있게 연결해줌
 		
@@ -226,12 +225,6 @@ public class MemberController {
 		// session영역에 담을경우 제일 최상의 타입인 object로 변환하여 담음
 		// 담기 전 형변환 해야함
 		String id = (String)session.getAttribute("userid");
-		
-		// 로그인이 안돼있으면 비정상적인 접근으로 간주하여
-		// 인덱스페이지로 이동!
-		if(id == null) {
-			return "redirect:/";
-		}
 		
 		// 로그인 된 유저의 정보를 GET
 		model.addAttribute("user", mService.userView(id));

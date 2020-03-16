@@ -28,12 +28,17 @@ public class IndexController {
 	
 	@RequestMapping("/")  //localhost:8081/ <컨텍스트 루트 라고 부르고, 하위에 /를 리퀘스트 맵핑이 처리하는것
 	public String indexView(Model model,  HttpSession session) {  //전송방식은 model (컨트롤러에서 뷰단으로 갈때 데이터를 모델로 전달)
+	
 		log.info("★★★★★★★★ INDEX PAGE 출력");
-		log.info("★★개발자 자동로그인중★★ HttpSession session 사용중");
+	
+			
+		/*
 		// 개발 종료시 삭제할 것(강제 로그인)
-		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요 
+		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요
+		 log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
 		 session.removeAttribute("userid"); session.removeAttribute("name");
 		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "상시로그인");
+		 */
 			
 		
 		model.addAttribute("NewPdt", iService.newPdtList());  //모델은 컨트롤러에서 뷰단으로 전달 (newPdt에는 1~5순위 값이 담겨져서 돌아온다)

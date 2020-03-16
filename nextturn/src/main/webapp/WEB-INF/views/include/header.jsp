@@ -228,12 +228,26 @@
 
 
 
-
-
-
 <!-- 제이쿼리 시작 -->
 <script type="text/javascript">
-	$(document).ready(function() {
+    // $(document).ready(function() {
+	// $(function(){   위에꺼랑 같은거
+		
+		//인터셉터로 인한 기능 (로그인 안됐을때 로그인모달 띄우기)
+	$(function(){
+		var message = '${message}';  //flashMap 의 값
+		if(message == 'nologin'){
+			$('.modal_wrap').css('display','flex');  //모달웹을 보이게한다
+			$('#login_id').focus();
+			$('.modal_error_next_box')
+									/* .css('dispaly','block') */
+									.css('visibility','visible')
+									.text('로그인이 필요한 기능입니다')
+		}
+
+
+
+
 		
 		/* 로고 클릭시 index로 이동 [a href 를 대신하는 ajax] */
 		$(document).on('click', '.header_content_logo_img', function() {

@@ -41,12 +41,29 @@
 				</beans:props>
 			</beans:property>
 	</beans:bean>
-	
-	
 	<!-- web.xml이 실행되면서 디스패쳐서블릿을 생성하고, 서블릿컨텍스트를 읽고, 서블릿 컨텍스트에 있는 component-scan 가
 	모든 IOC 패턴의 어노테이션들을 읽어서, 언제든지 수확해서 쓸수 있게 빈즈로 등록해놓는다 -->
 	
 	<!-- <context:component-scan base-package="com.nextturn.*" />  이렇하면 모든것을 읽을수 있는데,
 	필요없는것은 빼야하니 컨트롤러랑 서비스만 등록해서 쓴다-->
+	
+	
+	<!-- 어노테이션 붙이지않고 강제로 beans로 등록 -->
+	<!-- Add Interceptor Beans -->
+	<beans:bean id="loginInterceptor" class="com.nextturn.interceptor.LoginInterceptor"></beans:bean>
+	
+	<!-- URL Mapping for Interceptor call -->
+	<!-- 이 URL로 들어온 애들은 인터셉터 클래스로 보낸다 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/member/mypage"/>
+			<mapping path="/member/update"/>
+			<mapping path="/member/pwupdate"/>
+			<mapping path="/member/drop"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	
 	
 </beans:beans>
