@@ -52,7 +52,7 @@
 			font-weight: bold;
 			font-size: 15px;
 			heigth: 25px;
-			color: #B22230;
+			color: #1f1f1f;
 		}
 		.basic_modal_close button{
 			cursor: pointer;
@@ -65,7 +65,7 @@
 			color: rgb(142, 142, 142);
 		}
 		.basic_modal_close button>i:hover {
-			color: #B22230;
+			color: #1f1f1f;
 		}
 		.basic_modal_content_check{
 			height: 100%;
@@ -84,7 +84,7 @@
 		.y_btn, .n_btn{
 			margin: 5px 20px;
 			padding: 10px 35px;
-			background-color: #B22230;
+			background-color: #1f1f1f;
 			color: white;
 			border-radius: 5px 5px;
 			font-weight: bold;
@@ -100,7 +100,7 @@
 			<div class="basic_modal_content">
 				<div class="basic_modal_header">
 					<div class="basic_modal_header_wrap">
-						<div class="basic_modal_message"> PAIK'S RECIPE 알림</div>
+						<div class="basic_modal_message"> NEXT TURN 인증완료!</div>
 						<div class="basic_modal_close">
 						<button><i class="fas fa-times"></i></button>
 						</div>

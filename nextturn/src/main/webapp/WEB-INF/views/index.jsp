@@ -27,7 +27,7 @@
 </style>
 </head>
 <body>
-<%@ include file="include/modal.jsp"%>
+<%-- <%@ include file="include/modal.jsp"%> --%>
 
 
 

@@ -138,17 +138,16 @@
 				<div class="container">
 					<li><a href="#" class="cool_link">공지사항</a></li>
 					<li><a href="#" class="cool_link">게임후기</a></li>
-					<li><a href="#" class="cool_link">자유게시판</a></li>
+					<li><a href="#" class="cool_link" id="header_menu_list">자유게시판</a></li>
 					<li><a href="#" class="cool_link">중고거래</a></li>
 				</div>
 
 
 				<!-- 검색창 -->
-				<div class="header_content_search">
+				<div>
 					<form name="frm_search" action="" method="GET">
 						<div class="header_content_search_group">
-							<input type="text" placeholder="무엇이든 검색하기" name="keyword"
-								class="header_content_search_input">
+							<input type="text" placeholder="무엇이든 검색하기" name="keyword" class="header_content_search_input">
 							<button type="button" class="header_content_search_btn">
 								<i class="fas fa-search"></i>
 							</button>
@@ -253,14 +252,17 @@
 		$(document).on('click', '.header_content_logo_img', function() {
 				location.href = "${path}/"; //컨트롤러 호출
 		});
-	
-		
-		/* 로고 클릭시 index로 이동 [a href 를 대신하는 ajax] */
+			
+		/* 마이페이지로 이동 [a href 를 대신하는 ajax] */
 		$(document).on('click', '#header_dropdown_btn_mypage', function() {
 				location.href = "${path}/member/mypage"; //컨트롤러 호출
 		});
-	
-	
+		
+		/* 게시판으로 이동 [a href 를 대신하는 ajax] */
+		$(document).on('click', '#header_menu_list', function() {
+				location.href = "${path}/board/list"; //컨트롤러 호출
+		});
+		
 		
 		
 		

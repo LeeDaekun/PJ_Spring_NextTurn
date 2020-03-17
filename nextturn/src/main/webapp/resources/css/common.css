@@ -14,7 +14,7 @@
 			box-sizing: border-box;
 			}	
 
-		body, h1, h2, h3, h4, h5 ,h6, ul, p {
+		body, h1, h2, h3, h4, h5 ,h6, ul, p , form{
 			margin:  0; /*태그 자체가 마진 패딩이 있으므로 지움*/
 			padding: 0;
 		}	

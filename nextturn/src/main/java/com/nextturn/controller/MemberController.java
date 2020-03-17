@@ -246,6 +246,13 @@ public class MemberController {
 	
 	
 	
+//	
+//	@GetMapping("/freeboard")
+//	public String freeBoard() {   
+//		
+//		log.info(">>>>> Board/자유게시판 페이지 출력");
+//		return "board/freeboard";
+//	}
 	
 	
 	
