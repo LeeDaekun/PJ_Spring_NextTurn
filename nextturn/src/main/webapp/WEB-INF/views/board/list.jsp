@@ -18,7 +18,7 @@
 	.board_wrap {
 		width: 900px;
 		height: 800px;
-		margin: 30px auto;
+		margin: 0px auto;
 	}
 
 
@@ -211,6 +211,11 @@
 
 </head>
 <body>
+	<!-- 날짜나오는 것의 포맷을 바꾼다 -->
+	<!-- 자바유틸 데이터를 now 라고 이름짓고, 포맷을 바꾼다, 바꾼녀석의 이름은 today -->
+	<jsp:useBean id="now" class="java.util.Date"/>
+	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today"/>
+								<!-- mm을 대문자로 써야한다 -->
 
 		<div class="board_wrap">
 			<div class="board_head">
@@ -248,77 +253,60 @@
 				<td >제목</td>
 				<td style="width: 4%">조회수</td>
 				<td style="width: 10%">작성자</td>
-				<td style="width: 6%">작성일자</td>
+				<td style="width: 8%">작성일자</td>
 				<td style="width: 6%">첨부파일</td>
 			</tr>
-
+ 		
+		
+			
+			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
+			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
+			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
+			<c:forEach items="${map.list}" var="showDTO">
+			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
+			
+				<fmt:formatDate value="${showDTO.updateDate}" pattern="yyyy-MM-dd" var="regdate"/>
+					<tr>
+						<td>${showDTO.bno}</td>
+						
+						<td>${showDTO.title}
+							<a href="${path}/board/view?bno=${list.bno}">${list.title}</a>
+							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
+							<c:if test="${today == regdate}">
+								<span class="new_color new">New!</span>
+							</c:if>
+						</td>
+						
+						
+						<td>${showDTO.viewcnt}</td>
+						<td>${showDTO.writer}</td>
+					<%--<td>${regdate}</td>	 --%>
+				 	<td>
+						<c:choose>
+							<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
+							<c:when test="${today == regdate}">
+								<fmt:formatDate value="${showDTO.updateDate}" pattern="HH:mm:ss"/>
+							</c:when>
+							<c:otherwise>
+								<fmt:formatDate value="${showDTO.updateDate}" pattern="yyyy-MM-dd"/>
+							</c:otherwise>
+						</c:choose>
+					</td>
+				</tr>
+			</c:forEach>
+			
+			
+			
+			<!-- HTML 예제용 -->
 			<tr>
 				<td>0000</td><!-- 번호  -->
-				
-				<td><a href="#">게시판 테스트<span class="new">New!</span></a></td><!-- 제목  -->
-				
-				<td>22</td><!-- 좋아요  -->
+				<td><a href="#">HTML에서 직접 타이핑(예제용)<span class="new">New!</span></a></td><!-- 제목  -->
+				<td>22</td><!-- 조회수  -->
 				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
+				<td>2020.03.18</td><!-- 작성일자 -->
+				<td>♥</td><!-- 첨부파일 -->
 			</tr>
-		<!-- 접어두기-->
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트<span class="new">New!</span></a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트<span class="new">New!</span></a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트<span class="new">New!</span></a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트</a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트</a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트</a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
-			<tr>
-				<td>0000</td><!-- 번호  -->
-				<td><a href="#">게시판 테스트</a></td><!-- 제목  -->
-				<td>22</td><!-- 좋아요  -->
-				<td>관리자</td><!-- 작성자  -->
-				<td>2020.03.17</td><!-- 작성일자  -->
-				<td>♥</td><!-- 작성일자  -->
-			</tr>
+			
 		</table>
 
 

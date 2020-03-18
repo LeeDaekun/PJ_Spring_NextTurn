@@ -20,7 +20,6 @@ public class IndexServiceImpl implements IndexService{
 	// : root-context.xml에서 생성된 sqlSession빈즈를 주입받음
 	@Autowired
 	private SqlSession sqlSession;
-	
 	ProductDAO pDao; // 전역변수, 값이 없으면 null   DAO가 SQL문을 실행해서 DB에 다녀옴
 	
 	@Autowired
