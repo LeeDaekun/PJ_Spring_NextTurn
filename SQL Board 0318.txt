@@ -67,5 +67,14 @@ INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
 VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글14', '게시글14', '동비', '1', '1', '0');
 INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
 VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글15', '게시글15', '동비', '1', '1', '0');
+commit;
+
 
 SELECT * FROM tbl_board;
+SELECT * FROM tbl_member;
+
+UPDATE tbl_board
+SET writer = '이대군';
+
+commit;
+

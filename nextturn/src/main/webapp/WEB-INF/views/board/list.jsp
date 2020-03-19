@@ -71,17 +71,18 @@
 	}
 	
 	.ani_underline:after {   /*밑줄효과 after 니까 부모 뒤에 오니까 밑으로 내려가서 밑줄이 된다 //before 였으면 윗줄이 된다*/
-			
-			content: '';
+			content: '';  /* 내용없는상태로 대기 */
 			display: block;
 			width: 0%; /*가로라인 0% 길이만큼 (호버했을때 길게 늘릴 예정)*/
 			height: 1px;  /*두께*/
-			background-color: #fff;
+			background-color: #fff;  /*#fff 흰색*/
 			transition: width 0.2s;  /*라인이 0.2초만에 그려짐*/
+		    margin: 3px 0px 0px 0px;  /*라인의 위치 수정*/
 	}
+   
 	.ani_underline:hover:after { /*쿨링크에 호버했을때 효과 width 100% 까지 라인 생성*/
 			width:100%;
-
+			
 	}
 
 
@@ -202,7 +203,14 @@
 			outline: none;
 		}
 		
-
+/* 페이지네이션의 현재 페이지의 숫자 색상*/
+		#check_color {
+		    color: tomato;
+		    font-weight: bold;
+		    background-color: white;
+		    border-radius: 50px;
+		    border: 2px solid #dedede;
+		}
 
 </style>
 
@@ -223,24 +231,26 @@
 				<!-- 검색창 -->
 				<div>
 					<div class="list_content_search">
+					<!-- 검색창을 쓸때, 엔터를 눌러서 검색어가 전달되게 하려면 from 태그를 써야한다. // 인풋의 name="keyword"로 -->
 						<form name="frm_search" action="" method="GET">
 							<div class="list_search_group">
-								<input type="text" placeholder="검색어를 입력하세요" name="keyword" class="list_content_search_input">
+								<input type="text" name="keyword" class="list_content_search_input" placeholder="검색어를 입력하세요">
 								<button type="button" class="list_content_search_btn">
 									<i class="fas fa-search"></i>
 								</button>
 							</div>
 						</form>
+						
 					</div>
 				</div>
 			</div>
 		
 			<div class="orderby_row">
 				<div>
-					<a href="#" class="orderby_btn ani_underline">최신순</a>
-					<a href="#" class="orderby_btn ani_underline">조회순</a>
-					<a href="#" class="orderby_btn ani_underline">댓글순</a>
-					<a href="#" class="orderby_btn ani_underline">추천순</a>
+					<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">최신순</a>
+					<a href="${path}/board/list?sort_option=cnt&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_cnt">조회순</a>
+					<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">댓글순</a>
+					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
 				</div>
 			<div>
 				<li><a href="" class="insert_btn ani_underline" >게시글등록</a></li>
@@ -310,21 +320,57 @@
 		</table>
 
 
-		
+		<!-- 페이지 검색 영역 (페이지 네이션)  < 1 2 3 4 5 >-->
 		<div class="page">
-			<a herf="" class="page_btn hover_btn"><</a>	
-				<a href="#">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">4</a>
-				<a href="#">5</a>
-				<a href="#">6</a>
-				<a href="#">7</a>
-				<a href="#">8</a>
-			<a herf="" class="page_btn hover_btn">></a>	
+		<!-- 페이지네이션 :글이 많을 때 다음 글 또는 이전 글, 다음 글 목록 또는 이전 글 목록으로 이동하는 링크를 만듭니다. 이를 페이지네이션(Pagination)이라고 합니다 -->
+			
+			<!-- 이전페이지, 처음페이지로 이동 (블록이동  1~10번 페이지가 1블록이다) -->
+				<c:if test="${map.pager.curBlock > 1}">
+					<a href="${path}/board/list?curPage=${map.pager.blockBegin-10}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="page_btn hover_btn board_page board_prev page_left">◀</a>
+					<a href="${path}/board/list?curPage=1&sort_option=${map.sort_option}&keyword=${map.keword}" class="board_page board_prev">1</a>
+					<span>...</span>
+				</c:if>
+
+
+			<!-- 페이지내에서 번호를 눌러서 이동  -->
+				<c:forEach var="num" begin="${map.pager.blockBegin}" end="${map.pager.blockEnd}">
+					<c:choose>
+						<c:when test="${num == map.pager.curPage}">
+							<a href="${path}/board/list?curPage=${num}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="board_page" id="check_color">${num}</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${path}/board/list?curPage=${num}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="board_page">${num}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				
+			<!-- 다음페이지, 마지막 페이지로 이동 (블록이동  1~10번 페이지가 1블록이다) -->
+			<c:if test="${map.pager.curBlock < map.pager.totBlock}">
+				<span>...</span>
+				<a href="${path}/board/list?curPage=${map.pager.totPage}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="board_page board_next">${map.pager.totPage}</a>
+				<a href="${path}/board/list?curPage=${map.pager.blockEnd + 1}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="page_btn hover_btn board_page board_next page_right">▶</a>
+			</c:if>
+				
+
 		</div>
 
 
 	</div> <!-- board_wrap -->
 </body>
+
+<script type="text/javascript">
+	$(function(){
+		var sort_option = '${map.sort_option}';  /* 해쉬맵을 받아옴 */
+		
+		if(sort_option != null) {
+			$('#sort_' + sort_option).css('color', '#f3ca00');
+			$('#sort_' + sort_option).css('font-weight', 'bold');
+			$('.ani_underline:after').css('background-color', 'yellow');
+		}
+	    		
+		$('.write_btn').click(function(){
+			location.href="/metop/board/write";
+		});
+	});
+</script>
 </html>

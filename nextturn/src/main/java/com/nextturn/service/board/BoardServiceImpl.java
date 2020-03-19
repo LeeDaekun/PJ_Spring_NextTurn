@@ -26,13 +26,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
-
-	@Override  //부모메서드와 같은이름을 써야함
-	public List<BoardDTO> boardList(int start, int end) {
+				
+	@Override  //부모메서드와 같은이름을 써야함  //비지니스 단이니까 처리할 작업을 적어야함
+	public List<BoardDTO> boardList(String sort_option, String search_option, String keyword,int start, int end) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("start", start);
-		map.put("end", end);
-		//비지니스 단이니까 처리할 작업을 적어야함
+		map.put("sort_option", sort_option);//매개변수를 "sort_option" 맵에 담는다.
+		map.put("start", start);			//매개변수를 "start" 맵에 담는다.
+		map.put("end", end);				//매개변수를 "end" 맵에 담는다.
+		map.put("search_option",search_option);  //키워드 검색에 필요함
+		map.put("keyword","%"+keyword+"%");		 //키워드 검색에 필요함	
 		//DAO의 boardList 에서 작업을 처리하고, 리턴하라
 		return bDao.boardList(map);
 	}
@@ -40,9 +42,12 @@ public class BoardServiceImpl implements BoardService{
 
 
 	@Override
-	public int countArticle() {
-		// TODO Auto-generated method stub
-		return bDao.countArticle();  //dao의 카운트아티클로 이동
+	public int countArticle(String search_option, String keyword) {
+		Map<String, String> map = new HashMap<>();
+		map.put("search_option",search_option);  //키워드 검색에 필요함
+		map.put("keyword","%"+keyword+"%");      //키워드 검색에 필요함
+		
+		return bDao.countArticle(map);  //dao의 카운트아티클로 이동
 	}
 	
 	
