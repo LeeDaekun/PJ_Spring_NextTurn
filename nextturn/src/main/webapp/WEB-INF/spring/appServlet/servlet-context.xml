@@ -9,7 +9,7 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
-	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- Enables the Spring MVC @Controller programming model (어노테이션 사용할 수 있게 어노테이션 드라이버)-->
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
@@ -21,6 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 컴포넌트 스캔은 등록된 4개의 어노테이션을 빈즈로 등록한다 (@Component @Service @Repository @Controller) -->
 	<context:component-scan base-package="com.nextturn.controller" />
 	<context:component-scan base-package="com.nextturn.service" /> <!-- IOC패턴을 하려면 있어야함 -->
 	
@@ -48,12 +49,13 @@
 	필요없는것은 빼야하니 컨트롤러랑 서비스만 등록해서 쓴다-->
 	
 	
-	<!-- 어노테이션 붙이지않고 강제로 beans로 등록 -->
+	
+	<!-- 어노테이션 붙이지않고 강제로 beans로 등록 인터셉터는 설정값과 세트이다 -->
 	<!-- Add Interceptor Beans -->
 	<beans:bean id="loginInterceptor" class="com.nextturn.interceptor.LoginInterceptor"></beans:bean>
 	
 	<!-- URL Mapping for Interceptor call -->
-	<!-- 이 URL로 들어온 애들은 인터셉터 클래스로 보낸다 -->
+	<!-- 여기는 인터셉터 설정값이다. (빈즈가 아님) 이 URL로 들어온 애들은 인터셉터 클래스로 보낸다 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/mypage"/>

@@ -25,15 +25,15 @@
 /*■■■■■■ 상단부 (자유게시판 타이틀■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 	.board_head{
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: space-between;
-	    border-bottom: 3px solid black;
 	}
 	
 	.board_head span {/*자유게시판 글자*/
     font-size: 35px;
     font-weight: bold;
-    margin: 20px 25px;
+    margin: 20px 0px 5px 0px;
+    
 	}
 
 /*■■■■ 호버버튼들 스타일 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
@@ -54,6 +54,7 @@
 	.orderby_row{
 		background-color: #131313;
 		padding: 15px 15px;
+		margin-top: 5px;
 		display: flex;
 		justify-content: space-between;  /*양쪽 정렬*/
 		align-items: center;	         /* 상하 가운데 정렬*/
@@ -183,6 +184,16 @@
 		    width: 225px;
     		height: 45px;
 		}
+		.search_clear {
+			background-color: #f76d6d;;
+			color: white;
+			padding: 3px 6px;
+			border-radius: 10px;
+			}
+
+
+
+
 
 
 		/*아이콘 스타일*/
@@ -234,7 +245,7 @@
 					<!-- 검색창을 쓸때, 엔터를 눌러서 검색어가 전달되게 하려면 from 태그를 써야한다. // 인풋의 name="keyword"로 -->
 						<form name="frm_search" action="" method="GET">
 							<div class="list_search_group">
-								<input type="text" name="keyword" class="list_content_search_input" placeholder="검색어를 입력하세요">
+								<input type="text" name="keyword" class="list_content_search_input" placeholder="검색어를 입력하세요" value="${map.keyword}">
 								<button type="button" class="list_content_search_btn">
 									<i class="fas fa-search"></i>
 								</button>
@@ -244,7 +255,17 @@
 					</div>
 				</div>
 			</div>
-		
+			
+			
+			<!-- 키워드가 비어있지 않을때, 띄움 -->
+			<c:if test="${not empty map.keyword}">
+				<div><span span style="color:red">${map.keyword}</span>의 검색결과 중
+				<span style="color:red">${map.count}</span>건 의 게시글이 검색되었습니다.
+				<a href="${path}/board/list" class="search_clear">닫기</a>
+				</div>
+			</c:if>
+			
+			
 			<div class="orderby_row">
 				<div>
 					<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">최신순</a>

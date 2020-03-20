@@ -67,7 +67,7 @@ public class BoardController {
 		map.put("pager", pager);  //
 		map.put("sort_option", sort_option); //스트링 sort_option을 ▶ 해쉬맵 "sort_option"에 담는다
 		//정렬 옵션 (정렬 옵션은 페이지가 넘어갈때마다 항상 따라다녀야한다. 안그러면 첫페이지만 정렬되고 말아버리니까)
-		map.put("search_option", search_option); //검색옵션?
+		map.put("search_option", search_option); //나는 안만들었으므로, 이건 필요없음 검색할때 세부 옵션 설정하려고 만든거
 		map.put("keyword", keyword);  //사용자가 검색한 키워드
 		
 		model.addAttribute("map",map);  //해쉬맵 map을, 모델"map"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
