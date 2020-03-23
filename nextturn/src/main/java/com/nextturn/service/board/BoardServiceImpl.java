@@ -49,6 +49,22 @@ public class BoardServiceImpl implements BoardService{
 		
 		return bDao.countArticle(map);  //dao의 카운트아티클로 이동
 	}
+
+
+
+	@Override
+	public BoardDTO boardView(int bno) {
+		
+		return bDao.boardView(bno);
+	}
+
+
+
+
+
+
+
+	
 	
 	
 

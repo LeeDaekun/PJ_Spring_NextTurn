@@ -300,8 +300,8 @@
 					<tr>
 						<td>${showDTO.bno}</td>
 						
-						<td>${showDTO.title}
-							<a href="${path}/board/view?bno=${list.bno}">${list.title}</a>
+						<td>
+							<a href="${path}/board/view?bno=${showDTO.bno}">${showDTO.title}</a>
 							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
 							<c:if test="${today == regdate}">
 								<span class="new_color new">New!</span>

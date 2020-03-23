@@ -19,7 +19,10 @@ public interface BoardDAO {
 	//게시글 갯수 계산
 	public int countArticle(@Param("map") Map<String, String> map); //스트링 2개를 받는 맵,Mapper로 전달
 	
-}
+	
+	// 맵퍼는 매개변수를 파라매터 1, 파라매터2 이렇게 순번으로 인식
+	public BoardDTO boardView(int bno); //
+	}
 
 
 	
