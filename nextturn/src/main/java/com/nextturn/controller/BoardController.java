@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -78,15 +79,22 @@ public class BoardController {
 
 	
 	
-	
+	/*
 	@GetMapping("/view")
 	public String view(int bno, Model model) {  //쿼리스트링으로 int 변수를 주입
 			log.info("view 페이지 접속완료");
 			BoardDTO bDto = bService.boardView(bno);
 			
 			model.addAttribute("bDto", bDto);
-			
+		return "board/view";
+	}*/
+	
+	@GetMapping("/view/{bno}")
+	public String view(@PathVariable(value="bno") int bno, Model model) {
+		log.info(">>>>> GET: board/view PAGE 출력");
+		model.addAttribute("bDto", bService.boardView(bno));
 		return "board/view";
 	}
+
 
 }// class 종료

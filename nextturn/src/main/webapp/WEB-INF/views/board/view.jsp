@@ -246,8 +246,13 @@
 					<div>
 						<a href="${path}/board/list" class="down_menu_btn" style="background: #27AE60">목록</a>
 						<a href="#" class="down_menu_btn" style="background: #3498DB">답변</a>
+					
+					<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
+					<c:if test="${name == bDto.writer}">	
 						<a href="#" class="down_menu_btn" style="background: #F39C12">수정</a>
 						<a href="#" class="down_menu_btn" style="background: #C0392B">삭제</a>
+					</c:if>
+					
 					</div>
 				</div>
 
