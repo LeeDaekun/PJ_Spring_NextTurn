@@ -108,8 +108,8 @@
 				</div>
 				<div class="basic_modal_content_check">
 			 		<div class="basic_modal_recheck">
-						<div class="basic_modal_maintext">내용</div>
-						<div class="basic_modal_subtext">내용</div>
+						<div class="basic_modal_maintext">메인텍스트</div>
+						<div class="basic_modal_subtext">서브텍스트</div>
 					</div>
 					<div class="basic_modal_button">
 						<a href="#" class="n_btn">취  소</a>
@@ -152,9 +152,10 @@
 			
 			
 			
-		}else if(key == 'dropBoard') { //키값이 'dropBoard' 이면
+		}else if(key == 'dropBoard') { //보드컨트롤러에서 모델로 키값을 'dropBoard'을 받으면 실행
 			if('${bDto.replycnt}' == 0) { // 댓글이 없는 경우
 				$('.basic_modal_maintext').text(dropBoard_main_txt);  //'정말 삭제하시겠습니까?'
+				$('.basic_modal_subtext').css('display','none');
 			} else { // 댓글이 있는 경우
 				$('.basic_modal_subtext').text(dropBoardNo_main_txt); //'댓글이 있는 게시글은 삭제할 수 없습니다'
 				$('.y_btn').css('display', 'none');

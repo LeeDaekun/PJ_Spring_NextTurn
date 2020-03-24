@@ -97,6 +97,7 @@ public class BoardController {
 		bService.increaseViewCnt(session, bno);
 		
 		model.addAttribute("bDto", bService.boardView(bno));
+		model.addAttribute("key", "dropBoard");
 		return "board/view";
 	}
 	
