@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -89,9 +90,12 @@ public class BoardController {
 		return "board/view";
 	}*/
 	
-	@GetMapping("/view/{bno}")
-	public String view(@PathVariable(value="bno") int bno, Model model) {
+	@GetMapping("/view/{bno}")                        //모델은 뷰단에 데이터를 전달 , HttpSession 공용저장소
+	public String view(@PathVariable(value="bno") int bno, Model model, HttpSession session) {
 		log.info(">>>>> GET: board/view PAGE 출력");
+		
+		bService.increaseViewCnt(session, bno);
+		
 		model.addAttribute("bDto", bService.boardView(bno));
 		return "board/view";
 	}

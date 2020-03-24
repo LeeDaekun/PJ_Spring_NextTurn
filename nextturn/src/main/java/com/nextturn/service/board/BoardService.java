@@ -2,6 +2,8 @@ package com.nextturn.service.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.nextturn.domain.BoardDTO;
 
 public interface BoardService {
@@ -18,6 +20,9 @@ public interface BoardService {
 
 	public BoardDTO boardView(int bno);
 	// 리턴은 DTO로          받는건 int bno
+	
+	
+	public void increaseViewCnt(HttpSession session, int bno);
 
 	
 	

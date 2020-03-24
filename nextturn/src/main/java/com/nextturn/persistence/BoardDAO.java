@@ -22,7 +22,10 @@ public interface BoardDAO {
 	
 	// 맵퍼는 매개변수를 파라매터 1, 파라매터2 이렇게 순번으로 인식
 	public BoardDTO boardView(int bno); //
-	}
+	
 
+	// 게시글 조회수 +1 증가
+	public void increaseViewCnt(@Param("bno") int bno);
 
 	
+}

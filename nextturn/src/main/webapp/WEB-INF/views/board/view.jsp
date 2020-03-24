@@ -212,7 +212,7 @@
 							<div>${bDto.bno}</div><!-- 게시글번호 -->
 							<div>${bDto.writer}</div><!-- 작성자 -->
 							<div>${bDto.viewcnt}</div><!-- 조회수 -->
-							<fmt:formatDate value="${bDto.updateDate}" pattern="yyyy-MM-dd" var="regdate"/>
+							<fmt:formatDate value="${bDto.updateDate}" pattern="yyyy-MM-dd HH:MM:SS" var="regdate"/>
 							<div>${regdate}</div><!-- 시간 -->
 							
 						</div>

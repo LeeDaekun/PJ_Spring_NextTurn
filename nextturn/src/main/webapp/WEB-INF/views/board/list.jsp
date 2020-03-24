@@ -291,12 +291,11 @@
 		
 			
 			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
+			<fmt:formatDate value="${showDTO.updateDate}" pattern="yyyy-MM-dd" var="regdate"/>
 			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
 			<c:forEach items="${map.list}" var="showDTO">
 			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
-			
-				<fmt:formatDate value="${showDTO.updateDate}" pattern="yyyy-MM-dd" var="regdate"/>
 					<tr>
 						<td>${showDTO.bno}</td>
 						
