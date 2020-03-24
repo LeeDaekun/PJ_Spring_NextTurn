@@ -77,7 +77,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE bno = #{bno}
 	</update>
 	
-
+	<update id="delBoard">
+		UPDATE tbl_board
+		SET show = 'n'
+		WHERE bno = #{bno}
+	</update>
 	
 	
 </mapper>

@@ -8,8 +8,7 @@
 	<title>board</title>
 	 <!-- 폰트어썸 아이콘 사용 스크립트 --> 
 	<script src="https://kit.fontawesome.com/fc5ae9294d.js" crossorigin="anonymous"></script>
-	
-	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
 
 <style type="text/css">
 /*  	div, span, table, tr, td, a{
@@ -196,7 +195,7 @@
 
 </head>
 <body>
-
+	<%@ include file="../include/modal.jsp" %>
 		<div class="view_wrap">
 			<!-- 상단부 -->
 			<div class="view_head">
@@ -250,7 +249,7 @@
 					<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
 					<c:if test="${name == bDto.writer}">	
 						<a href="#" class="down_menu_btn" style="background: #F39C12">수정</a>
-						<a href="#" class="down_menu_btn" style="background: #C0392B">삭제</a>
+						<a href="#" class="down_menu_btn" id="delete_btn" style="background: #C0392B">삭제</a>
 					</c:if>
 					
 					</div>
@@ -352,4 +351,17 @@
 
 	</div> <!-- view_wrap -->
 </body>
+<script type="text/javascript">
+	//삭제버튼 클릭시 알림 모달창 열림
+	$(document).on('click', '#delete_btn', function(){
+		$('.basic_modal_wrap').css('display', 'flex');
+	});
+	
+	// 삭제 알림 모달창에서 '확인'버튼 Click -> 게시글 삭제
+	$('.y_btn').click(function(){
+		alert('test');
+		location.href='${path}/board/delete?bno=${bDto.bno}';
+		
+	});
+</script>
 </html>

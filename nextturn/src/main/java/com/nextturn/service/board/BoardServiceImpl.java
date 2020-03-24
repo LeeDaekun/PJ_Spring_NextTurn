@@ -87,6 +87,13 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
+	//뷰에서 게시글 삭제 눌렀을때
+	@Override
+	public void delBoard(int bno) {
+		bDao.delBoard(bno);
+	}
+
+
 
 
 

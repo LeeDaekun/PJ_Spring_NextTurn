@@ -100,7 +100,7 @@
 			<div class="basic_modal_content">
 				<div class="basic_modal_header">
 					<div class="basic_modal_header_wrap">
-						<div class="basic_modal_message"> NEXT TURN 인증완료!</div>
+						<div class="basic_modal_message">NEXT TURN 알림!</div>
 						<div class="basic_modal_close">
 						<button><i class="fas fa-times"></i></button>
 						</div>
@@ -133,6 +133,9 @@
 		var auth_main_txt = id + '님 이메일 인증되셨습니다.';
 		var auth_sub_txt = '지금부터 사이트 활동이 가능합니다. 감사합니다.';
 		
+		var dropBoard_main_txt = '정말 삭제하시겠습니까?';
+		var dropBoardNo_main_txt = '댓글이 있는 게시글은 삭제할 수 없습니다';
+		
 		if(key == 'join'){
 			$('.basic_modal_maintext').text(join_main_txt); // 메인텍스트
 			$('.basic_modal_subtext').text(join_sub_txt); // 서브텍스트
@@ -143,7 +146,25 @@
 			$('.basic_modal_subtext').text(auth_sub_txt);
 			$('.n_btn').css('display', 'none');
 			$('.basic_modal_wrap').css('display', 'flex');
+			
+		
+			
+			
+			
+			
+		}else if(key == 'dropBoard') { //키값이 'dropBoard' 이면
+			if('${bDto.replycnt}' == 0) { // 댓글이 없는 경우
+				$('.basic_modal_maintext').text(dropBoard_main_txt);  //'정말 삭제하시겠습니까?'
+			} else { // 댓글이 있는 경우
+				$('.basic_modal_subtext').text(dropBoardNo_main_txt); //'댓글이 있는 게시글은 삭제할 수 없습니다'
+				$('.y_btn').css('display', 'none');
+				$('.n_btn').text('확 인');
+			}
 		}
+		
+		
+		
+		
 		
 		$('.y_btn').on('click', function(){  //모달창에서 확인 버튼을 눌렀을때 꺼지는거
 			$('.basic_modal_wrap').css('display', 'none');

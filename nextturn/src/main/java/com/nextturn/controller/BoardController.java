@@ -99,6 +99,19 @@ public class BoardController {
 		model.addAttribute("bDto", bService.boardView(bno));
 		return "board/view";
 	}
-
+	
+	//view에서 게시글 삭제버튼 눌렀을때
+		@GetMapping("delete")
+		public String delete (int bno) {
+			log.info(">>>>GET: Board Delete Action");
+			
+			bService.delBoard(bno);
+			
+			return "redirect:/board/list";
+		}
+		
+	
+	
+	
 
 }// class 종료

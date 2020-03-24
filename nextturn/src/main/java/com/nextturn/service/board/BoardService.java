@@ -24,6 +24,9 @@ public interface BoardService {
 	
 	public void increaseViewCnt(HttpSession session, int bno);
 
+	//게시글 삭제할때
+	public void delBoard(int bno);
+
 	
 	
 
