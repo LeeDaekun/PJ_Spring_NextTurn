@@ -160,10 +160,10 @@
 			position: relative;
 			transform: translate(0%, 9px);
 		}
-		div.container > li{
+		div.container > ul > li{
 			display: inline-block;
 		}
-		div.container > li a {
+		div.container > ul > li a {
 			text-decoration: none;
 			display: inline-block;
 			font-weight: 100; /*글자두께*/

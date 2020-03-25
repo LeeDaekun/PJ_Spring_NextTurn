@@ -120,9 +120,8 @@
 		}
 		.color_btn_orderby {
 		    display: flex;
-		    justify-content: space-between;
-		    align-items: center;
-		    margin: 50px 0px 15px 0px;
+		    justify-content: flex-end;
+		    margin: 40px 0px 15px 0px;
 		}
 
 	/* 댓글 입력부================================================== */
@@ -158,35 +157,6 @@
 		    background-color: #2b2b2b;
 		    border-radius: 5px;
 		}
-
-	/* 댓글 출력부================================================== */
-		.reple_view{
-			background-color: white;
-		    border-top: 2px solid #3498db;
-		    margin: 20px 0px;
-		    padding: 15px 10px;
-		}
-		.reple_user_info{
-		    margin: 20px 10px 0px 10px;
-		    border: 1px solid #3498db;
-		    padding: 10px 10px;
-		    border-radius: 5px;
-		}
-		.under_line{
-			border-bottom: 1px solid #b5b5b5;
-		    padding-bottom: 10px;
-		    margin-bottom: 10px;
-		}
-
-		.re_reple_btn{
-		    padding: 5px 10px;
-		    border-radius: 5px;
-		    color: white;
-		    font-weight: bold;
-		}
-		.comment_line {
-			display: flex;
-			justify-content: space-between;}
 
 </style>
 
@@ -235,13 +205,7 @@
 
 			
 				<div class="color_btn_orderby">
-					
-					<div>
-						<a href="#" class="down_menu_btn" style="background: #8E44AD">댓글을 남겨주세요</a>
-						<a href="#"><i class="fas fa-thumbs-up down_menu_btn" style="background: #8E44AD">좋아요</i></a>
-						<a href="#"><i class="fas fa-thumbs-down down_menu_btn" style="background: #8E44AD">싫어요</i></a>
-					</div>
-
+			
 					<div>
 						<!-- <a href="${path}/board/list" class="down_menu_btn" style="background: #27AE60">목록</a> -->
 						<a href="${header.referer}" class="down_menu_btn" style="background: #27AE60">목록</a> <!-- referer은 방금 전페이지로 되돌림 (비정상 페이지로 되돌아가기도함)-->
@@ -257,20 +221,14 @@
 				</div>
 
 
-				<!-- 댓글 -->
-				<div class="reple_wrap">
-					<span class="textarea_bg">
-						<textarea class="input_reple">텍스트 입력창</textarea>
-					</span>
-					<a href="#"  class="input_reple_btn" >
-						<i class="fas fa-comment"></i>댓글등록</a>
-				</div>
+
+			
 			
 			</div> <!-- 컨텐츠공간 닫기 -->
 			
 			
 			
-			<!-- 댓글창 -->
+			<!-- 댓글달린 목록 출력 -->
 			<div id=listReply></div>
 
 

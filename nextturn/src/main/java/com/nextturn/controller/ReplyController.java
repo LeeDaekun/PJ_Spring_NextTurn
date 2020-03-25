@@ -27,6 +27,6 @@ public class ReplyController {
 		log.info("리플 리스트 페이지 띄움");
 		model.addAttribute("list", rService.list(bno));
 		
-		return "/board/commentlist";
+		return "/board/commentlist2";
 	}
 }

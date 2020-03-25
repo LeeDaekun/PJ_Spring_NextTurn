@@ -259,7 +259,7 @@
 			
 			<!-- 키워드가 비어있지 않을때, 띄움 -->
 			<c:if test="${not empty map.keyword}">
-				<div><span span style="color:red">${map.keyword}</span>의 검색결과 중
+				<div><span style="color:red">${map.keyword}</span>의 검색결과 중
 				<span style="color:red">${map.count}</span>건 의 게시글이 검색되었습니다.
 				<a href="${path}/board/list" class="search_clear">닫기</a>
 				</div>
@@ -274,7 +274,7 @@
 					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
 				</div>
 			<div>
-				<li><a href="" class="insert_btn ani_underline" >게시글등록</a></li>
+				<a href="" class="insert_btn ani_underline" >게시글등록</a>
 			</div>
 		</div><!-- orderby_row -->
 

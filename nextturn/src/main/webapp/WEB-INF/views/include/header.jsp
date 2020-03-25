@@ -116,7 +116,7 @@
 
 	</div>
 	<!-- model content -->
-	</div>
+	
 	<!-- modal wrap-->
 
 
@@ -136,10 +136,12 @@
 
 				<!-- 상단 밑줄효과있는 메뉴들  -->
 				<div class="container">
+				<ul>
 					<li><a href="#" class="cool_link">공지사항</a></li>
 					<li><a href="#" class="cool_link">게임후기</a></li>
 					<li><a href="#" class="cool_link" id="header_menu_list">자유게시판</a></li>
 					<li><a href="#" class="cool_link">중고거래</a></li>
+				</ul>
 				</div>
 
 
@@ -221,12 +223,6 @@
 
 	</header>
 </body>
-</html>
-
-
-
-
-
 <!-- 제이쿼리 시작 -->
 <script type="text/javascript">
     // $(document).ready(function() {
@@ -420,3 +416,8 @@
 		
 		
 </script>
+</html>
+
+
+
+

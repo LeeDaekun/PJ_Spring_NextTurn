@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<%@ include file="../include/include.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title></title>
+	<!-- 서치박스 스크립트 -->
+	<script src="https://kit.fontawesome.com/1aa6bb9bc2.js" crossorigin="anonymous"></script>
+	<style type="text/css">
+	/* 댓글 출력부================================================== */
+		.reple_view{
+			background-color: white;
+		    border-top: 2px solid #3498db;
+		    margin: 20px 0px;
+		    padding: 15px 10px;
+		}
+				
+		.reple_user_info {
+		    margin: 20px 10px;
+		    border: 1px solid #3498db;
+		    padding: 10px 10px;
+		    border-radius: 5px;
+		}
+		
+		.comment_line {
+		    display: flex;
+		    justify-content: space-between;
+	        padding: 10px 0px 5px 0px;
+			}
+		
+		.re_reple_btn{
+		    padding: 5px 10px;
+		    border-radius: 5px;
+		    color: white;
+		    font-weight: bold;
+		    }
+		    
+		.reply_login_div {
+		    text-align: center;
+		    font-size: 20px;
+		}
+		
+		.reply_login_btn {
+			color: #007791;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 현재시간 알려주는 코드 today -->
+	<jsp:useBean id="now" class="java.util.Date"/>
+	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today"/>
+		
+
+		
+	<!-- 달린 리플 출력하는곳 -->
+			<div class="reple_view">
+					<div>
+						<a href="#" class="down_menu_btn" style="background: #3498db">최신 댓글순</a>
+						<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
+						<span>등록된 댓글수 ${list.size()} 개</span>
+					</div>
+
+			<!-- 달린 댓글들 -->
+				<c:forEach items="${list}" var="list">
+					<div class="reple_user_info">
+						<div class="under_line">
+							<i class="fas fa-comment"></i>
+							<a href="#"> ${list.writer}</a><!-- 작성자 -->
+							<a href="#"><i class="far fa-envelope"></i></a>
+							<span>${list.regdate}</span><!-- 날짜 -->
+						</div>
+						
+						<!-- 댓글 내용부 -->
+						<div class="comment_line">
+							<div>${list.content}</div>
+							<div style="display: block; align-self: flex-end;">
+								<a href="#" style="background: #3498DB" class="re_reple_btn">댓글달기</a>
+							</div>
+							
+						</div>
+					</div>
+				</c:forEach> <!-- 댓글 종료 -->
+				
+				
+				<!-- 리플 갯수가 0개이면 띄움 -->
+				<c:if test="${list.size() == 0}">
+					<div class="reple_user_info">
+						<div>
+							<span>${regdate}</span><!-- 날짜 -->
+							<div style="text-align: center; font-size: 15px;" >등록된 댓글이 없습니다.</div>
+						</div>
+					</div>
+										
+				</c:if>	
+				
+						
+				<!-- 댓글입력 하는 곳 (로그인시에만 나와야함 -->
+				<!-- 유저아이디가 비어있다면 (로그인이 안되있다면) -->
+				<c:choose>
+					<c:when test="${empty userid}">
+						<div class="reply_login_div">
+							<span class="reply_login_btn">로그인</span>을 하시면 댓글을 등록할 수 있습니다.
+						</div>
+					</c:when>
+					<c:otherwise>	
+						<div>
+							<a href="#" class="down_menu_btn" style="background: #8E44AD">댓글을 남겨주세요</a>
+							<a href="#"><i class="fas fa-thumbs-up down_menu_btn" style="background: #8E44AD">좋아요</i></a>
+							<a href="#"><i class="fas fa-thumbs-down down_menu_btn" style="background: #8E44AD">싫어요</i></a>
+						</div>
+					
+						<div class="reple_wrap">
+							<span class="textarea_bg">
+								<textarea class="input_reple">텍스트 입력창</textarea>
+							</span>
+							<a href="#"  class="input_reple_btn" >
+								<i class="fas fa-comment"></i>댓글등록</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				
+			</div><!-- 달린 리플 출력하는곳 종료-->
+			
+	</body>
+</html>

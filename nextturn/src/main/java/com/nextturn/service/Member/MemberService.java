@@ -2,7 +2,7 @@ package com.nextturn.service.Member;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.bind.annotation.PostMapping;
+
 
 import com.nextturn.domain.MemberDTO;
 

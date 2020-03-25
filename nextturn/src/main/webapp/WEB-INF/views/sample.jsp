@@ -64,7 +64,7 @@ Get 과 Post는 데이터를 숨기느냐 마느냐의 전송방식
 			<span>동기: ${name}</span>
 		</div>
 		<div>
-			<span>비동기: <span id="ajax_txt"></span>
+			<span>비동기: </span><span id="ajax_txt"></span>
 		</div>
 	</div>
 	
