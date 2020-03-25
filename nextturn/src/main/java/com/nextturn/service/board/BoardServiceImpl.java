@@ -93,14 +93,4 @@ public class BoardServiceImpl implements BoardService{
 		bDao.delBoard(bno);
 	}
 
-
-
-
-
-
-
-	
-	
-	
-
 }

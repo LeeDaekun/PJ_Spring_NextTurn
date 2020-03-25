@@ -78,3 +78,26 @@ SET writer = '이대군';
 
 commit;
 
+SELECT * FROM tbl_board
+WHERE bno = 500;
+
+
+--=======================================================================================
+-- 댓글 테이블 생성
+DROP SEQUENCE seq_reply;
+CREATE SEQUENCE seq_reply
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+    
+DROP TABLE tbl_reply;
+CREATE TABLE tbl_reply(
+    rno NUMBER,
+    type CHAR(4) NOT NULL,
+    content VARCHAR2(2000) NOT NULL,
+    writer VARCHAR2(100) NOT NULL,
+    regdate DATE DEFAULT SYSDATE,
+    bno NUMBER NOT NULL
+);
+ALTER TABLE tbl_reply ADD CONSTRAINT pk_reply
+PRIMARY KEY(rno);

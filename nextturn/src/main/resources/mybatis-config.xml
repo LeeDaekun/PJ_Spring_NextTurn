@@ -6,6 +6,7 @@
 		<typeAlias type="com.nextturn.domain.ProductDTO" alias="ProductDTO"></typeAlias>
 	 	<typeAlias type="com.nextturn.domain.MemberDTO" alias="MemberDTO"></typeAlias>
 	 	<typeAlias type="com.nextturn.domain.BoardDTO" alias="BoardDTO"></typeAlias>
+	 	<typeAlias type="com.nextturn.domain.ReplyDTO" alias="ReplyDTO"></typeAlias>
 	</typeAliases>
 	
 </configuration>

@@ -267,85 +267,14 @@
 				</div>
 			
 			</div> <!-- 컨텐츠공간 닫기 -->
-				
+			
+			
+			
+			<!-- 댓글창 -->
+			<div id=listReply></div>
 
 
-			<!-- 달린 리플 출력하는곳 -->
-			<div class="reple_view">
-
-					<div>
-						<a href="#" class="down_menu_btn" style="background: #3498db">최신 댓글순</a>
-						<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
-						<span>등록된 댓글수 00 개</span>
-					</div>
-				
-				<!-- 달린 댓글들 -->
-					<div class="reple_user_info">
-						<div class="under_line">
-							<i class="fas fa-comment"></i>
-							<a href="#">이대군</a>
-							<a href="#"><i class="far fa-envelope"></i></a>
-							<span>(2020.03.23)</span>
-						</div>
-						
-						<div class="comment_line">
-							<div>
-								하하하<br>
-								안녕하세요. 반갑습니다.<br>
-								열심히 활동하시고, 코로나 조심하세요<br>
-							</div>
-							<div style="display: block; align-self: flex-end;">
-								<a href="#" class="re_reple_btn" style="background: #3498DB"
-								>댓글달기</a>
-							</div>
-						</div>
-					</div> <!-- 댓글 종료 -->
-
-				<!-- 달린 댓글들 -->
-					<div class="reple_user_info">
-						<div class="under_line">
-							<i class="fas fa-comment"></i>
-							<a href="#">이대군</a>
-							<a href="#"><i class="far fa-envelope"></i></a>
-							<span>(2020.03.23)</span>
-						</div>
-						
-						<div class="comment_line">
-							<div>
-								하하하<br>
-								안녕하세요. 반갑습니다.<br>
-								열심히 활동하시고, 코로나 조심하세요<br>
-							</div>
-							<div style="display: block; align-self: flex-end;">
-								<a href="#" class="re_reple_btn" style="background: #3498DB"
-								>댓글달기</a>
-							</div>
-						</div>
-					</div> <!-- 댓글 종료 -->
-
-									<!-- 달린 댓글들 -->
-					<div class="reple_user_info">
-						<div class="under_line">
-							<i class="fas fa-comment"></i>
-							<a href="#">이대군</a>
-							<a href="#"><i class="far fa-envelope"></i></a>
-							<span>(2020.03.23)</span>
-						</div>
-						
-						<div class="comment_line">
-							<div>
-								하하하<br>
-								안녕하세요. 반갑습니다.<br>
-								열심히 활동하시고, 코로나 조심하세요<br>
-							</div>
-							<div style="display: block; align-self: flex-end;">
-								<a href="#" class="re_reple_btn" style="background: #3498DB"
-								>댓글달기</a>
-							</div>
-						</div>
-					</div> <!-- 댓글 종료 -->	
-				
-			</div><!-- 달린 리플 출력하는곳 -->
+		
 			
 
 		
@@ -353,16 +282,36 @@
 	</div> <!-- view_wrap -->
 </body>
 <script type="text/javascript">
-	//삭제버튼 클릭시 알림 모달창 열림
-	$(document).on('click', '#delete_btn', function(){
-		$('.basic_modal_wrap').css('display', 'flex');
+	
+	//view 페이지가 실행되면, 댓글.jsp 를 무조건 띄우세요
+	//$(document).ready(function(){			});
+	$(function(){
+		listReply();
+		
+		//삭제버튼 클릭시 알림 모달창 열림
+		//$(document).on('click', '#delete_btn', function(){  도큐먼트는 중복되면 에러
+		$('#delete_btn').on('click', function(){
+			$('.basic_modal_wrap').css('display', 'flex');
+		});
+		
+		// 삭제 알림 모달창에서 '확인'버튼 Click -> 게시글 삭제
+		$('.y_btn').click(function(){
+			alert('test');
+			location.href='${path}/board/delete?bno=${bDto.bno}';
+			
+		});
 	});
 	
-	// 삭제 알림 모달창에서 '확인'버튼 Click -> 게시글 삭제
-	$('.y_btn').click(function(){
-		alert('test');
-		location.href='${path}/board/delete?bno=${bDto.bno}';
-		
-	});
+	// 댓글 목록 출력 함수
+	function listReply(){
+		$.ajax({
+			type: "get",
+			url: "${path}/reply/list?bno=${bDto.bno}",
+			success: function(result){
+				//result : responseText 응답텍스트(html)
+				$("#listReply").html(result);
+			}
+		});
+	}
 </script>
 </html>

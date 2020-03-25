@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.nextturn.domain.BoardDTO;
 
-public interface BoardDAO {
+public interface BoardDAO { 
 	//여기에 처리문이 없으면
 	//맵퍼의 boardList 를 찾아가라
 	
