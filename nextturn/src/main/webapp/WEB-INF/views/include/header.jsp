@@ -5,10 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css"
-	href="${path}/resources/css/common.css">
-<link rel="stylesheet" type="text/css"
-	href="${path}/resources/css/header.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/header.css">
 
 <style type="text/css">
 
@@ -72,9 +70,8 @@
 				<!-- ID PW state button 값 던져주기위해 form사용 -->
 				<!-- 아이디 -->
 				<div class="send_info">
-					<label class="label_placeholder" for="login_id"> <span
-						id="id">아이디</span>
-					</label> <input type="email" id="login_id" class="login_input" required>
+					<label class="label_placeholder" for="login_id"><span id="id">아이디</span></label>
+					<input type="text" id="login_id" class="login_input" required>
 				</div>
 				<!-- 비밀번호 -->
 				<div class="send_info">
@@ -90,8 +87,8 @@
 
 				<!-- 로그인 상태 유지 -->
 				<div class="login_state">
-					<input type="checkbox" id="staySignedIn"> <label
-						for="staySignedIn"> <span class="icon_check"></span>
+					<input type="checkbox" id="staySignedIn">
+					<label for="staySignedIn"> <span class="icon_check"></span>
 						<span>로그인 상태 유지</span>
 					</label>
 				</div>

@@ -29,6 +29,4 @@ public interface BoardDAO {
 	
 	// 게시글 삭제
 	public void delBoard(int bno);
-
-	
 }

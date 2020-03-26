@@ -19,5 +19,5 @@ public class ReplyDTO {
     private String content;
     private String writer;
     private Date regdate;
-    private String bno;
+    private int bno;
 }

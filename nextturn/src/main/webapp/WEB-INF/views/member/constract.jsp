@@ -56,7 +56,7 @@
 			border: 1px solid #ccc;
 		}
 		.lang > select {
-			background: url(../resources/img/naver/sel_arr.gif) 100% 50% no-repeat;
+			background: url(../resources/img/sel_arr.gif) 100% 50% no-repeat;
 			-webkit-appearance: none; /* 삼각형을 지워라 */
 			background-color: white;
 		}

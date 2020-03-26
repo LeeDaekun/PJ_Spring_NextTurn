@@ -35,9 +35,9 @@ public class IndexController {
 	
 		// 개발 종료시 삭제할 것(강제 로그인)
 		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요
-		 log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
-		 session.removeAttribute("userid"); session.removeAttribute("name");
-		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "이대군");
+//		 log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
+//		 session.removeAttribute("userid"); session.removeAttribute("name");
+//		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "이대군");
 	
 			
 		

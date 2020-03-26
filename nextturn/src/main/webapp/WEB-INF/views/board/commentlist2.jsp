@@ -29,7 +29,15 @@
 		    justify-content: space-between;
 	        padding: 10px 0px 5px 0px;
 			}
-		
+	
+		.reply_textarea{
+			width: 100%;
+			height: 100%;
+		    border: 0px;
+	        resize: none;  /* textarea 사이즈 조정 막기 */
+	        outline: none; /* textarea 사이즈 조정 막기 */
+			}
+			
 		.re_reple_btn{
 		    padding: 5px 10px;
 		    border-radius: 5px;
@@ -47,6 +55,9 @@
 			font-weight: bold;
 			cursor: pointer;
 		}
+		
+		
+
 	</style>
 </head>
 
@@ -63,6 +74,7 @@
 						<a href="#" class="down_menu_btn" style="background: #3498db">최신 댓글순</a>
 						<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
 						<span>등록된 댓글수 ${list.size()} 개</span>
+						<input type="hidden" class="replyListCnt" value="${list.size()}">
 					</div>
 
 			<!-- 달린 댓글들 -->
@@ -107,24 +119,36 @@
 							<span class="reply_login_btn">로그인</span>을 하시면 댓글을 등록할 수 있습니다.
 						</div>
 					</c:when>
-					<c:otherwise>	
-						<div>
-							<a href="#" class="down_menu_btn" style="background: #8E44AD">댓글을 남겨주세요</a>
-							<a href="#"><i class="fas fa-thumbs-up down_menu_btn" style="background: #8E44AD">좋아요</i></a>
-							<a href="#"><i class="fas fa-thumbs-down down_menu_btn" style="background: #8E44AD">싫어요</i></a>
-						</div>
 					
-						<div class="reple_wrap">
-							<span class="textarea_bg">
-								<textarea class="input_reple">텍스트 입력창</textarea>
-							</span>
-							<a href="#"  class="input_reple_btn" >
-								<i class="fas fa-comment"></i>댓글등록</a>
-						</div>
+					
+					<c:otherwise>	
+						<form class="frm_reply"><%-- ajax 로 리플 입력데이터를 전송하기 위한 form 태그 (name=""이 전달한다)--%>
+						<input type="hidden" name="bno" class="reply_bno"> <%-- hidden은 태그만 안보이지 값이 있음 ,사용자 접속정보를 전달하기위해 작성 --%>
+						<input type="hidden" name="type" class="reply_type"> <%--view.jsp 에서 ajax가 처리함--%>
+						<input type="hidden" name="writer" class="reply_writer">
+							<div>
+								<a href="#" class="down_menu_btn" style="background: #8E44AD">댓글을 남겨주세요</a>
+								<a href="#"><i class="fas fa-thumbs-up down_menu_btn" style="background: #8E44AD">좋아요</i></a>
+								<a href="#"><i class="fas fa-thumbs-down down_menu_btn" style="background: #8E44AD">싫어요</i></a>
+								
+							</div>
+						
+							<div class="reple_wrap">
+								<span class="textarea_bg">
+									<textarea class="reply_textarea" placeholder="내용을 입력하세요." name="content"></textarea>
+								</span>
+								<a href="#"  class="reply_btn" >
+									<i class="fas fa-comment"></i>댓글등록</a>
+							</div>
+							<div><span class="err_msg">댓글을 입력해주세요</span></div>
+						</form>
 					</c:otherwise>
+					
 				</c:choose>
 				
 			</div><!-- 달린 리플 출력하는곳 종료-->
 			
 	</body>
+	
+	
 </html>

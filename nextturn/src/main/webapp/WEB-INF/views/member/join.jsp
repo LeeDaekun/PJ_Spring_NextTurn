@@ -215,8 +215,7 @@
 	color: #EBA444;
 }
 
-@
-keyframes ani_loading {
+@keyframes ani_loading {
 	from {-webkit-transform: rotate(0deg);
 }
 
@@ -241,8 +240,7 @@ to {
 		<section>
 			<!-- Spring 폼태그 형식의 Form, 세션 어트리뷰트에 자료를 담을때는 스프링폼태그를 써야함 -->
 			<!-- 폼태그 안에 name 값들이 변수로 담길꺼야 -->
-			<form:form id="frm_member" modelAttribute="memberDTO"
-				autocomplete="on">
+			<form:form id="frm_member" modelAttribute="memberDTO" autocomplete="on">
 
 				<div class="container">
 					<div class="join_content">

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.nextturn.domain.MemberDTO;
 import com.nextturn.persistence.LoginDAO;
 
+import lombok.extern.slf4j.Slf4j;
 
 
 @Service
@@ -30,7 +31,6 @@ public class LoginServiceImpl implements LoginService{
 	
 	@Override
 	public int login(MemberDTO mDto, HttpSession session) {
-		
 		// 비즈니스 로직 처리
 		// 1. DB에 가서 회원인지 아닌지 유무체크
 		MemberDTO loginDto = lDao.loginUser(mDto);  //loginUser는 LoginDAO의 메서드이름이자, loginMapper의 아이디와 같음

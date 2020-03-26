@@ -138,14 +138,8 @@
 		    padding: 5px 5px;
 		    border-radius: 10px;
 		}
-		.input_reple{
-			width: 100%;
-			height: 100%;
-		    border: 0px;
-	        resize: none;  /* textarea 사이즈 조정 막기 */
-	        outline: none; /* textarea 사이즈 조정 막기 */
-			}
-		.input_reple_btn {
+
+		.reply_btn {
 		    margin: 0 0 0 10px;
 		    padding: 10px;
 		    height: 90px;
@@ -156,6 +150,19 @@
 		    align-items: center;
 		    background-color: #2b2b2b;
 		    border-radius: 5px;
+		}
+		
+		
+		.err_msg { /*필수 정보입니다  입력안했을때 나오게 할것*/
+			display: block;
+			margin: 9px 0 -2px;
+			font-size: 12px;
+			line-height: 14px;
+			color: red;
+			height: 15px;
+			/*display: none;*/ /*none으로 하면 공간까지 사라지니.hidden 으로*/
+			visibility: hidden;
+			text-align: end;
 		}
 
 </style>
@@ -189,8 +196,8 @@
 
 					<div class="community_icon">
 						<a href="#"><i class="fas fa-comments">${bDto.replycnt}</i></a><!-- 댓글수 -->
-						<a href="#"><i class="fas fa-thumbs-up">0</i></a><!-- 좋아요 -->
-						<a href="#"><i class="fas fa-thumbs-down">10</i></a><!-- 싫어요 -->
+						<a href="#"><i class="fas fa-thumbs-up">-</i></a><!-- 좋아요 -->
+						<a href="#"><i class="fas fa-thumbs-down">-</i></a><!-- 싫어요 -->
 					</div>
 						
 				</div>
@@ -229,7 +236,7 @@
 			
 			
 			<!-- 댓글달린 목록 출력 -->
-			<div id=listReply></div>
+			<div id="listReply"></div>
 
 
 		
@@ -256,20 +263,73 @@
 		$('.y_btn').click(function(){
 			alert('test');
 			location.href='${path}/board/delete?bno=${bDto.bno}';
-			
 		});
-	});
+							
+	});  //도큐먼트 레디 펑션 종료
 	
-	// 댓글 목록 출력 함수
+	
+	
+/* 		$(document).on('click', '.reply_btn', function(){
+			$('.modal_wrap').css('display','flex');
+			alert('modal_wrap이 display flex 됨');
+		});
+		 */
+		
+		$(document).on('click', '.reply_btn', function(){	//문서에서 reply_btn이 클릭되면
+			var reply_text = $('.reply_textarea').val();  //텍스트 에리어에 적은 댓글을 var에 저장
+			alert(reply_text);
+			
+			if(reply_text == '' || reply_text.length == 0) {
+				$('.reply_textarea').focus();  //댓글버튼 누르면 포커스를 에리어로 이동
+				$('.err_msg').css('visibility', 'visible');
+				return false;
+			}
+			
+			$('.reply_bno').val('${bDto.bno}');  //bno태그에 벨류어블 값을 집어넣는다.
+			$('.reply_type').val('${bDto.type}');
+			$('.reply_writer').val('${name}');
+		
+			$.ajax({
+				url: '${path}/reply/insert', // url을 어디로 날릴거냐면 (post 방식으로 URL 호출)
+				type: 'POST',
+				data: $('.frm_reply').serialize(), // serialize()라는 함수를 쓰면 데이터가 직렬해서 날아간다
+				// url갈때 가는 데이터 담아서 보낸다
+				// serialize()라는(직렬화라는) 함수를 쓰면 4차선이 1차선으로 바뀐다고 생각하면된다
+				success: function() {
+					alert('성공!');
+					listReply();  // function listReply(){ 호출함
+				},
+				error: function() {
+					alert('실패');
+				}
+			});
+		});
+		 
+		
+	
+
+
+	
+	// 댓글 목록 출력 함수 (ajax로 URL을 호출하면, 화면전환없이 즉시 바뀜)
 	function listReply(){
 		$.ajax({
 			type: "get",
-			url: "${path}/reply/list?bno=${bDto.bno}",
-			success: function(result){
-				//result : responseText 응답텍스트(html)
-				$("#listReply").html(result);
+			async: false, // 비동기 전송 방식을 동기로 바꿔준다(비동기 방식은 동시에 처리) false 는 순차적처리, ture는 동시처리
+			url: "${path}/reply/list?bno=${bDto.bno}",  //해당 게시물을 다시 출력함
+			success: function(result){  //result : 바로위 url을 실행했을때, 컨트롤러에서 리턴받은 값이 result가 됨 (/board/commentlist2 이것이다)
+				$("#listReply").html(result);  //id="listReply" 에 result인 commentlist.jsp를 출력해라 (인클루드처럼 코멘트리스트를 불러옴)
 			}
 		});
+		
+		// 게시글 댓글수 수정!
+		$('.fa-comments').text($('.replyListCnt').val());  //코맨트리스트에 댓글 작성된 숫자(select로 찾은수만큼) text를 써줌
 	}
+	
+	//commentlist.jsp 에 적용함 로그인 버튼클릭시 모달창 On
+	$(document).on('click', '.reply_login_btn', function(){
+		$('.modal_wrap').css('display', 'flex');
+	});
+	
+	//
 </script>
 </html>

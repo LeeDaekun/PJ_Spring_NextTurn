@@ -27,7 +27,8 @@
 </style>
 </head>
 <body>
-<%-- <%@ include file="include/modal.jsp"%> --%>
+<!-- 회원가입시 최초1회 모달창 띄우는 기능 -->
+<%@ include file="include/modal.jsp"%>
 
 
 
@@ -42,7 +43,7 @@
 			</div>
 		<!-- 최근 플레이한 게임 -->
 			<div>
-				<div><h1>최근 플레이한 게임</h1><div>
+				<div><h1>최근 플레이한 게임</h1></div>
 				<ul class="Recently_played_games_box">
 					
 					<!-- JSTL 자바 코드를 쓴다 -->
@@ -59,7 +60,7 @@
 				</ul>
 			</div>
 		</div> <!-- header_wrap -->
-		
+	
 	</section>
 
 <!--■■■■■■ 푸터(하단부)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
