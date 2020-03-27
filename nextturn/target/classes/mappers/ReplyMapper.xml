@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *
 		FROM tbl_reply
 		WHERE bno = #{bno}
+		ORDER BY rno DESC				
 	</select>
 	
 	<!-- 댓글 입력하기 -->
@@ -20,11 +21,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(seq_reply.NEXTVAL, #{type}, #{content}, #{writer}, #{bno})
 	</insert>
 	
-
-	<update id="replyCntPlus">
+	
+	
+	<!-- 댓글 작성 하면 카운터 1올리기/1빼기 -->
+	<update id="replyCntUpdate">
 		UPDATE tbl_board
 		SET replycnt = replycnt +1
 		WHERE bno = #{bno}
 	</update>
 
+
+
+
+	<delete id="delReply">
+		DELETE FROM tbl_reply
+		WHERE rno = #{rno}
+	</delete>
+
+	
 </mapper>

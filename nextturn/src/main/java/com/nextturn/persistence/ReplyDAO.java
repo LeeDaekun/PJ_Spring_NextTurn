@@ -1,6 +1,8 @@
 package com.nextturn.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +17,12 @@ public interface ReplyDAO {
 	
 	
 	//댓글 카운터 1 올림
-	public void replyCntPlus(int bno);
+	public void replyCntUpdate(Map<String, Object> map);
+
+	//댓글 삭제버튼 눌렀을때 동작
+	public void delReply(int rno);
+	
+	public void replyCntMinus(int bno);  //리플 카운터 마이너스
 }
 
 

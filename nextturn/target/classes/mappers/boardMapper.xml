@@ -83,5 +83,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE bno = #{bno}
 	</update>
 	
+	<!-- Dao에서 해쉬맵을 @param("map") serviceImpl에서 해쉬맵 키값 문자가 tyep 이라고 써진부분 벨류값이 minus 이거나 plus 일때  (동적쿼리)-->
+	<update id="replyCntUpdate">
+		UPDATE tbl_board
+		<if test="map.type == 'plus'">
+		SET replycnt = replycnt + 1
+		</if>
+		<if test="map.type == 'minus'">
+		SET replycnt = replycnt - 1
+		</if>
+		WHERE bno = #{map.bno}
+	</update>
 	
 </mapper>

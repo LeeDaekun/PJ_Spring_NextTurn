@@ -73,24 +73,34 @@
 					<div>
 						<a href="#" class="down_menu_btn" style="background: #3498db">최신 댓글순</a>
 						<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
-						<span>등록된 댓글수 ${list.size()} 개</span>
-						<input type="hidden" class="replyListCnt" value="${list.size()}">
+						<span>등록된 댓글수<span>${Reply_List.size()}</span> 개</span>  <!-- 모델리스트 이름을 직접 지정해야함 -->
+						<input type="hidden" class="replyListCnt" value="${Reply_List.size()}"><!-- 모델리스트 이름을 직접 지정해야함 -->
 					</div>
-
+					
+	
+					
 			<!-- 달린 댓글들 -->
-				<c:forEach items="${list}" var="list">
+				<c:forEach items="${Reply_List}" var="replyDto"> <%-- ReplyController 에서 모델이 전달해준값 --%>
 					<div class="reple_user_info">
 						<div class="under_line">
 							<i class="fas fa-comment"></i>
-							<a href="#"> ${list.writer}</a><!-- 작성자 -->
+							<a href="#"> ${replyDto.writer}</a><!-- 작성자 -->
 							<a href="#"><i class="far fa-envelope"></i></a>
-							<span>${list.regdate}</span><!-- 날짜 -->
+							<span>${replyDto.regdate}</span><!-- 날짜 -->
+							
+							<span>리플번호 ${replyDto.rno} </span>
+
 						</div>
 						
 						<!-- 댓글 내용부 -->
 						<div class="comment_line">
-							<div>${list.content}</div>
+							<div>${replyDto.content}</div>
 							<div style="display: block; align-self: flex-end;">
+							<c:if test="${name == replyDto.writer}">
+								&nbsp;
+								<%-- <input type="text" class="del_rno" value="${replyDto.rno}"> --%>
+								<button class="reply_del_btn" data_num="${replyDto.rno}">삭제 ${replyDto.rno}</button>
+							</c:if>
 								<a href="#" style="background: #3498DB" class="re_reple_btn">댓글달기</a>
 							</div>
 							
@@ -100,7 +110,7 @@
 				
 				
 				<!-- 리플 갯수가 0개이면 띄움 -->
-				<c:if test="${list.size() == 0}">
+				<c:if test="${replyDto.size() == 0}">
 					<div class="reple_user_info">
 						<div>
 							<span>${regdate}</span><!-- 날짜 -->
@@ -120,8 +130,7 @@
 						</div>
 					</c:when>
 					
-					
-					<c:otherwise>	
+					<c:otherwise>
 						<form class="frm_reply"><%-- ajax 로 리플 입력데이터를 전송하기 위한 form 태그 (name=""이 전달한다)--%>
 						<input type="hidden" name="bno" class="reply_bno"> <%-- hidden은 태그만 안보이지 값이 있음 ,사용자 접속정보를 전달하기위해 작성 --%>
 						<input type="hidden" name="type" class="reply_type"> <%--view.jsp 에서 ajax가 처리함--%>
@@ -138,7 +147,8 @@
 									<textarea class="reply_textarea" placeholder="내용을 입력하세요." name="content"></textarea>
 								</span>
 								<a href="#"  class="reply_btn" >
-									<i class="fas fa-comment"></i>댓글등록</a>
+									<i class="fas fa-comment"></i>댓글등록
+								</a>
 							</div>
 							<div><span class="err_msg">댓글을 입력해주세요</span></div>
 						</form>

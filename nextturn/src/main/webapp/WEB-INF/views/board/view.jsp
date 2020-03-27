@@ -186,8 +186,8 @@
 						<span class="view_title">${bDto.title}</span> <!-- 게시글제목 -->
 						<div class="padding">
 							<div>${bDto.bno}</div><!-- 게시글번호 -->
-							<div>${bDto.writer}</div><!-- 작성자 -->
-							<div>${bDto.viewcnt}</div><!-- 조회수 -->
+							<div>작성자 ${bDto.writer}</div><!-- 작성자 -->
+							<div>조회수 ${bDto.viewcnt}</div><!-- 조회수 -->
 							<fmt:formatDate value="${bDto.updateDate}" pattern="yyyy-MM-dd HH:MM:SS" var="regdate"/>
 							<div>${regdate}</div><!-- 시간 -->
 							
@@ -218,7 +218,7 @@
 						<a href="${header.referer}" class="down_menu_btn" style="background: #27AE60">목록</a> <!-- referer은 방금 전페이지로 되돌림 (비정상 페이지로 되돌아가기도함)-->
 						<a href="#" class="down_menu_btn" style="background: #3498DB">답변</a>
 					
-					<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
+							<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
 					<c:if test="${name == bDto.writer}">	
 						<a href="#" class="down_menu_btn" style="background: #F39C12">수정</a>
 						<a href="#" class="down_menu_btn" id="delete_btn" style="background: #C0392B">삭제</a>
@@ -268,12 +268,6 @@
 	});  //도큐먼트 레디 펑션 종료
 	
 	
-	
-/* 		$(document).on('click', '.reply_btn', function(){
-			$('.modal_wrap').css('display','flex');
-			alert('modal_wrap이 display flex 됨');
-		});
-		 */
 		
 		$(document).on('click', '.reply_btn', function(){	//문서에서 reply_btn이 클릭되면
 			var reply_text = $('.reply_textarea').val();  //텍스트 에리어에 적은 댓글을 var에 저장
@@ -305,6 +299,37 @@
 			});
 		});
 		 
+	
+		 /* 댓글 삭제버튼 눌렀을때 동작(댓글 삭제하기) */
+ 		$(document).on('click','.reply_del_btn',function(){
+ 			var rno = $(this).attr('data_num');  //이 클래스에 있는 data_num에 들어있는 값을 rno에 담음
+ 			var bno = ${bDto.bno};
+ 			alert(rno+"///"+bno);
+ 			
+ 			$.ajax({
+ 				type: "POST",
+ 				url: '${path}/reply/delReply',  //컨트롤러 호출
+ 				data: {'rno':rno, 'bno':bno },
+ 				success: function() {
+ 					listReply(); //댓글창 ajax로 새로고침
+ 				}
+			});
+ 		});
+ 			
+ 		
+		 /* 처음에 이렇게 했었음 댓글 삭제하는 코드
+		 $(document).on('click', '.reply_del_btn', function(){
+ 			var rno = $(this).prev().val(); 
+ 		 
+			alert('삭제버튼 동작 '+rno);
+			$.ajax({
+				type: "POST",
+				url: '${path}/reply/delReply?rno='+rno,
+				success: function() {
+					listReply();
+				}
+			});
+ 		 }); */
 		
 	
 

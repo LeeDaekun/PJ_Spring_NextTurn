@@ -30,7 +30,7 @@ public class ReplyController {
 	public String list(int bno, Model model) {
 		
 		log.info("리플 리스트 페이지 띄움");
-		model.addAttribute("list", rService.list(bno));
+		model.addAttribute("Reply_List", rService.list(bno));
 		
 		return "/board/commentlist2";
 	}
@@ -44,6 +44,16 @@ public class ReplyController {
 				
 		rService.insert(rDto); //리턴이 없으니까, 리스폰스 바디 써주고
 	}
-	
+
+	//댓글 삭제부
+	@ResponseBody
+	@PostMapping("/delReply")
+	public void delete(int rno, int bno) {
+		log.info(">>>>포스트방식으로 Reply컨트롤러의  /delReply 호출됨");
+		log.info("컨트롤러 rno: "+rno);
+		log.info("컨트롤러 bno: "+bno);
+		rService.deleteReply(rno,bno);
+	}
+
 	
 }
