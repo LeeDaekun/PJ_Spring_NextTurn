@@ -251,7 +251,17 @@
 	//view 페이지가 실행되면, 댓글.jsp 를 무조건 띄우세요
 	//$(document).ready(function(){			});
 	$(function(){
-		listReply();
+		var refresh_sec = 30000;
+		setInterval(refreshReply, refresh_sec); // setInterval = JS에 내장된함수
+		
+		function refreshReply() {
+			console.log('댓글 자동 새로고침 간격: '+refresh_sec/1000+'초');
+			listReply();  //댓글 출력함수
+		}
+		
+		
+//		alert('이전 URL: ${header.referer}');
+		listReply(); // 페이지가 시작되자마자 이녀석을 호출하세요
 		
 		//삭제버튼 클릭시 알림 모달창 열림
 		//$(document).on('click', '#delete_btn', function(){  도큐먼트는 중복되면 에러
@@ -264,6 +274,8 @@
 			alert('test');
 			location.href='${path}/board/delete?bno=${bDto.bno}';
 		});
+		
+		
 							
 	});  //도큐먼트 레디 펑션 종료
 	
@@ -286,9 +298,12 @@
 			$.ajax({
 				url: '${path}/reply/insert', // url을 어디로 날릴거냐면 (post 방식으로 URL 호출)
 				type: 'POST',
-				data: $('.frm_reply').serialize(), // serialize()라는 함수를 쓰면 데이터가 직렬해서 날아간다
-				// url갈때 가는 데이터 담아서 보낸다
-				// serialize()라는(직렬화라는) 함수를 쓰면 4차선이 1차선으로 바뀐다고 생각하면된다
+				data: $('.frm_reply').serialize(),	// serialize()라는 함수를 쓰면 데이터가 직렬해서 날아간다
+													// url갈때 가는 데이터 담아서 보낸다
+													// serialize()라는(직렬화라는) 함수를 쓰면 4차선이 1차선으로 바뀐다고 생각하면된다
+				//seriallize 를 안쓴다면 어떻게 데이터를 써야하나?
+				//data: {"bno"bno, "type":type, "writer: name, "content}
+													
 				success: function() {
 					alert('성공!');
 					listReply();  // function listReply(){ 호출함
@@ -299,6 +314,10 @@
 			});
 		});
 		 
+		// 새로운 댓글 확인하기 버튼 클릭시
+		$(document).on('click', '.reply_refresh_btn', function(){
+			listReply();
+		});	
 	
 		 /* 댓글 삭제버튼 눌렀을때 동작(댓글 삭제하기) */
  		$(document).on('click','.reply_del_btn',function(){
@@ -355,6 +374,8 @@
 		$('.modal_wrap').css('display', 'flex');
 	});
 	
-	//
+	
+
+	
 </script>
 </html>

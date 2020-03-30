@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nextturn.domain.ReplyDTO;
 import com.nextturn.persistence.BoardDAO;
@@ -36,14 +37,16 @@ public class ReplyServiceImpl implements ReplyService {
 	public List<ReplyDTO> list(int bno) {
 		return rDao.list(bno);
 	}
-
+	
+	@Transactional
 	@Override
 	public void insert(ReplyDTO rDto) {
 		// 비즈니스 로직
 		// 1.댓글 등록
 		rDao.insert(rDto);					// 해당 게시글에 댓글을 등록하고,
 		
-		Map<String, Object> map = new HashMap<>();//2. 게시글에 댓글카운터 -1
+		//2. 게시글에 댓글카운터 -1
+		Map<String, Object> map = new HashMap<>();
 		map.put("bno", rDto.getBno()); //변수이름 bno를 맵이름bnoMap에 담는다
 		map.put("type", "plus");  //minus라는 글자를 맵이름type 으로 불러올수 있게 준비
 		bDao.replyCntUpdate(map);	// 해당 게시글의 reply_cnt를 +1 해준다

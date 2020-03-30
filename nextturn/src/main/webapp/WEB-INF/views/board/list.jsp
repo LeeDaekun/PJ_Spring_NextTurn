@@ -280,7 +280,7 @@
 
 		<table class="board_table">
 			<tr>
-				<td style="width: 8%">번호</td>
+				<td style="width: 8%">글번호</td>
 				<td >제목</td>
 				<td style="width: 4%">조회수</td>
 				<td style="width: 10%">작성자</td>

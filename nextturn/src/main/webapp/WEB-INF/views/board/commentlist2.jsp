@@ -16,7 +16,7 @@
 		    margin: 20px 0px;
 		    padding: 15px 10px;
 		}
-				
+						
 		.reple_user_info {
 		    margin: 20px 10px;
 		    border: 1px solid #3498db;
@@ -75,6 +75,13 @@
 						<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
 						<span>등록된 댓글수<span>${Reply_List.size()}</span> 개</span>  <!-- 모델리스트 이름을 직접 지정해야함 -->
 						<input type="hidden" class="replyListCnt" value="${Reply_List.size()}"><!-- 모델리스트 이름을 직접 지정해야함 -->
+					
+						<div class="reply_refresh_btn_box">
+							<button class="reply_refresh_btn">
+								<i class="fas fa-sync-alt"></i>
+								<span>새로운 댓글 확인하기</span>
+							</button>
+						</div>
 					</div>
 					
 	
@@ -110,7 +117,7 @@
 				
 				
 				<!-- 리플 갯수가 0개이면 띄움 -->
-				<c:if test="${replyDto.size() == 0}">
+				<c:if test="${Reply_List.size() == 0}">  <%-- size 를 쓸때는 모델에서 넘어온 이름을 그대로 써야됨 . --%> 
 					<div class="reple_user_info">
 						<div>
 							<span>${regdate}</span><!-- 날짜 -->
