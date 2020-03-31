@@ -58,7 +58,6 @@
 		display: flex;
 		justify-content: space-between;  /*양쪽 정렬*/
 		align-items: center;	         /* 상하 가운데 정렬*/
-		border-bottom: 3px solid black;
 		}
 	.orderby_btn {
 	    padding: 4px 10px;
@@ -222,6 +221,22 @@
 		    border-radius: 50px;
 		    border: 2px solid #dedede;
 		}
+		
+/*■■■■ 폰트 애니메이션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/	
+	.ani {
+	  /*-webkit-animation-name: movingPara;
+        -webkit-animation-duration: 1s; */
+        animation-name: movingPara;
+        animation-duration: 1s;
+        }
+     @keyframes movingPara {
+        from {	transform: translateX(500px);
+	        	color:#00000000;} 
+	        
+        to {	transform: translateX(0px);
+        		color: black;}
+    }
+    
 
 </style>
 
@@ -238,7 +253,7 @@
 
 		<div class="board_wrap">
 			<div class="board_head">
-			<span>자유게시판</span>
+			<span class="ani">자유게시판</span>
 				<!-- 검색창 -->
 				<div>
 					<div class="list_content_search">
@@ -273,10 +288,11 @@
 					<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">댓글순</a>
 					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
 				</div>
-			<div>
-				<a href="" class="insert_btn ani_underline" >게시글등록</a>
-			</div>
-		</div><!-- orderby_row -->
+				
+				<div>
+					<a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a>
+				</div>
+			</div><!-- orderby_row -->
 
 		<table class="board_table">
 			<tr>

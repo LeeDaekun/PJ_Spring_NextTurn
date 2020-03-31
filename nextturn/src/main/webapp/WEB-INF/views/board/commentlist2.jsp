@@ -55,6 +55,11 @@
 			font-weight: bold;
 			cursor: pointer;
 		}
+		.align_between {
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		}
 		
 		
 
@@ -70,21 +75,20 @@
 		
 	<!-- 달린 리플 출력하는곳 -->
 			<div class="reple_view">
-					<div>
-						<a href="#" class="down_menu_btn" style="background: #3498db">최신 댓글순</a>
-						<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
-						<span>등록된 댓글수<span>${Reply_List.size()}</span> 개</span>  <!-- 모델리스트 이름을 직접 지정해야함 -->
-						<input type="hidden" class="replyListCnt" value="${Reply_List.size()}"><!-- 모델리스트 이름을 직접 지정해야함 -->
-					
-						<div class="reply_refresh_btn_box">
+					<div class="align_between">
+						<div>
+							<a href="#" class="down_menu_btn" style="background: #3498db">최신 댓글순</a>
+							<a href="#" class="down_menu_btn" style="background: #3498db">댓글 등록순</a>
+							<span>등록된 댓글수<span>${Reply_List.size()}</span> 개</span>  <!-- 모델리스트 이름을 직접 지정해야함 -->
+							<input type="hidden" class="replyListCnt" value="${Reply_List.size()}"><!-- 모델리스트 이름을 직접 지정해야함 -->
+						</div>
+						<div>
 							<button class="reply_refresh_btn">
 								<i class="fas fa-sync-alt"></i>
 								<span>새로운 댓글 확인하기</span>
 							</button>
 						</div>
 					</div>
-					
-	
 					
 			<!-- 달린 댓글들 -->
 				<c:forEach items="${Reply_List}" var="replyDto"> <%-- ReplyController 에서 모델이 전달해준값 --%>

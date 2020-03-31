@@ -6,10 +6,8 @@
 <html>
 <head>
 <title>join_input</title>
-<link rel="stylesheet" type="text/css"
-	href="${path}/resources/css/common.css">
-<link rel="stylesheet" type="text/css"
-	href="${path}/resources/css/footer.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/footer.css">
 <!-- 푸터 CSS추가 -->
 
 <link rel="icon" type="image/png" href="..">

@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/header.css">
 
 <style type="text/css">
-
 /*■■■■■■■■■■■■■■■■■■■■■■■■■■■모달 로그인 창 css■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 .modal_wrap { /* 회색 클릭방지화면 */
 	top: 0px;

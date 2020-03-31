@@ -215,8 +215,9 @@
 			
 					<div>
 						<!-- <a href="${path}/board/list" class="down_menu_btn" style="background: #27AE60">목록</a> -->
-						<a href="${header.referer}" class="down_menu_btn" style="background: #27AE60">목록</a> <!-- referer은 방금 전페이지로 되돌림 (비정상 페이지로 되돌아가기도함)-->
-						<a href="#" class="down_menu_btn" style="background: #3498DB">답변</a>
+						<!-- <a href="${header.referer}" class="down_menu_btn" style="background: #27AE60">목록</a> --%> <!-- referer은 방금 전페이지로 되돌림 (비정상 페이지로 되돌아가기도함)-->
+						<button type=button class="down_menu_btn" id="list_btn" style="background: #27AE60">목록</button>>
+						<a href="" class="down_menu_btn" style="background: #3498DB">답변</a>
 					
 							<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
 					<c:if test="${name == bDto.writer}">	
@@ -251,7 +252,7 @@
 	//view 페이지가 실행되면, 댓글.jsp 를 무조건 띄우세요
 	//$(document).ready(function(){			});
 	$(function(){
-		var refresh_sec = 30000;
+		var refresh_sec = 600000;  //60000=1분  , 600000 = 10분, 6000000=1시간
 		setInterval(refreshReply, refresh_sec); // setInterval = JS에 내장된함수
 		
 		function refreshReply() {
@@ -375,6 +376,27 @@
 	});
 	
 	
+	
+	//리퍼럴이 비정상경로일 경우 대처방법 (다른 페이지에서 들어와서 목록을 누를경우 작동 안하는경우 대처)
+	$(document).on('click', '#list_btn', function(){  
+		var referer = '${header.referer}';  //크롬에서 방금전에 왔던 url 주소를 저장함
+		alert("referer:"+referer);
+		console.log('이전 URL: '+referer);
+		
+		var index = referer.indexOf('/board/list');  //이러한 주소가 있었는지 검사
+		alert("index:"+index);
+		console.log('index: '+referer.indexOf('/board/list'));
+		
+		if(index == '-1') {
+			location.href = '${path}/board/list';  //인덱스가 -1이면 여기로 경로를 이동시킨다(location.href는 a태그 버튼으로는 안먹혔음)
+			alert("-1 버정상경로이므로 강제로 리스트로 이동");
+		} else {
+			alert("정상이므로"+referer+"여기로 빠꾸");
+			location.href = '${header.referer}';  //-1이 아니면, 바로이전의 리퍼럴로 이동시킴(location.href는 a태그 버튼으로는 안먹혔음)
+			
+			
+		}
+	});
 
 	
 </script>

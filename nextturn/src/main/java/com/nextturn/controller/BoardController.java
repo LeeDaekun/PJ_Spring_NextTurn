@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -111,8 +112,22 @@ public class BoardController {
 			return "redirect:/board/list";
 		}
 		
-	
-	
+	//리스트에서 게시글등록 눌렀을때
+		@GetMapping("/write")
+		public String write() {
+			log.info("@Get맵핑 /write");
+			return "/board/register";
+		}
+		
+		@PostMapping("/write")
+		public String write(BoardDTO bDto) {
+			log.info("@Post맵핑 /write (bDto)");
+			log.info(bDto.toString());
+			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			return "redirect:/board/list";
+		}
 	
 
 }// class 종료
