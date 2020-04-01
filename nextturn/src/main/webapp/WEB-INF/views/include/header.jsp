@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
-<link rel="stylesheet" type="text/css" href="${path}/resources/css/header.css">
 
 <style type="text/css">
 /*■■■■■■■■■■■■■■■■■■■■■■■■■■■모달 로그인 창 css■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
@@ -42,6 +41,463 @@
 	font-size: 13px;
 	padding: 6px 6px 0;
 }
+
+
+
+		div.header_wrap {
+			width: 100%;
+			background-color: black;
+			
+			z-index: 999;
+			box-shadow: 0 0 1px -3px rgba(20, 23, 28, 0.1), 0 3px 1px 0 rgba(20,23,28,0.1);
+		}
+	
+		div.header_content{
+			/*공사 가이드라인*/
+			/*border-left: 3px solid white; 
+			border-right: 3px solid white;*/
+			width: 1400px; /* 모니터 좌우 1400 안에서 웹을 보여주겠다*/
+			margin: 0 auto;
+			height: 100px;
+			box-sizing: border-box;
+			display: flex;
+			justify-content: space-between; /*여백을 똑같이 맞추겠다*/
+			align-items: center; /* 수평 가운데 정렬*/
+			
+		}
+		.header_content_search_group {
+			display: flex;  /*인라인이나 블록, 인라인블록 등을 보여주는것이 디스플레이 : flex는 정렬방법인데 */
+			align-items: center;
+			background-color: #f2f3f5;
+			border-radius: 2px;
+			
+		}
+
+/*■■■■ 로그인 버튼 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+		button.btn-basic {
+			background-color: #686f7a;  /*로그인 버튼 색상 (노 호버)*/
+			border: 1px solid #939393;
+			color: white;
+		}
+		button.btn-basic:hover {
+			color: white;
+			background-color: #2B2B2B; /*호버시 회원가입 버튼 색상*/
+		}
+
+/*■■■■ 회원가입 버튼 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+		button.btn-primary { /* 나중에 자기가 정한 시그니쳐 색깔로 바꾸기 */
+
+			background-color: #686f7a; /*회원가입 버튼 색상*/
+			border: 1px solid #939393;
+			color: white;
+		}
+		button.btn-primary:hover {
+		background-color: #2B2B2B; /*호버시 회원가입 버튼 색상*/
+		border: 1px solid #0f4c81; /*호버시 회원가입 버튼 테두리 색상*/
+		}
+
+
+		button.btn-support {
+		background-color: #EBA444;
+		color: white;
+		}
+		button.btn-support:hover {
+			background-color: #CA8420;
+			border-color: transparent;
+		}
+
+
+		
+/*■■■■■■서치바,검색바■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+		.header_content_search_input {
+			background-color: transparent;
+			border-color: transparent;
+			height: 44px;
+			font-size: 13px;
+			border-radius: 2px;
+			padding: 10px 12px;
+			outline: none; /*input테그 클릭했을때 안쪽에 테두리 생기는거 지움*/
+		}
+		.header_content_search_btn {
+			border-color: transparent; /*트렌스 페어런트는 투명색*/
+			background-color: transparent; /*트렌스 페어런트는 투명색*/
+			width: 44px;
+			height: 44px;
+			cursor: pointer;
+			color: black; /*서치박스 안에 돋보기 색깔*/
+			border-top-right-radius: 2px; /*테두리 오른쪽 위쪽만 둥글게*/
+			border-bottom-right-radius: 2px; /*테두리 오른쪽 아랫쪽만 둥글게 둥글게*/
+			outline: none;
+		}
+		.header_content_search_btn:hover {
+			background-color: #3c3c3c;
+			color: white;
+			outline: none;
+		}
+
+		.header_content_nav {
+		    align-items: center;
+		    width: 240px;
+		    display: flex;
+		    justify-content: space-between;
+		    
+		}
+		/*드랍다운 메뉴 열리는 범위*/
+		.header_content_nav > div {
+			padding: 20px 4px 20px;
+			border: 1px solid red;
+
+		}
+
+		.header_content_member {
+		    width: 350px;
+		    height: 50px;
+		    display: flex;
+		    text-align: center;
+		    align-items: center;
+		    justify-content: space-between;
+		    /* margin으로 미는것보다 flex로 미는게 더 쉽다 */
+			
+		}
+		/*드랍다운 메뉴 열리는 범위*/
+		.header_content_member > div {
+			padding: 20px 4px 20px;
+
+		}
+		.header_content_dropdown_group{
+			position: relative; /*기본값 위치*/
+			width: 100%px;
+		}
+		.header_content_dropdown_wrap:hover .header_dropdown {
+			display: block;
+		}
+
+		.header_content_dropdown_group > a {
+			display: inline-block;
+			padding: 12px 15px;
+			font-weight: 400;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			height: 45px;
+			color: #c7c7c7;
+			line-height: 19px; /* 45px - (12px x 2) - (1px x 1) = 19px */
+		}
+		.header_content_dropdown_wrap:hover > div > a,
+		.header_content_member_cart > a:hover {
+/*			background-color: rgba(20,23,28,.05);
+			border-color: rgba(20,23,28,.05);*/
+			background-color: white;
+		}	
+		.header_content_member_cart > a {
+			display: inline-block;
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			color: #c7c7c7;
+			border: 1px solid transparent;
+			text-align: center;
+			padding: 12px;
+			line-height: 19px;
+		}
+
+	/*-- start 밑줄효과 메뉴-----------------------------------------*/
+		div.container{
+			position: relative;
+			transform: translate(0%, 9px);
+		}
+		div.container > ul > li{
+			display: inline-block;
+		}
+		div.container > ul > li a {
+			text-decoration: none;
+			display: inline-block;
+			font-weight: 100; /*글자두께*/
+			color: #c7c7c7;  /*글자 색상 공지사항 게임후기 자유게시판 중고거래*/
+			font-size: 15px;
+			padding: 10px 20px;
+		}
+
+		/*밑줄 애니메이션 효과*/
+		a.cool_link:after {   /*밑줄효과 after 니까 부모 뒤에 오니까 밑으로 내려가서 밑줄이 된다 //before 였으면 윗줄이 된다*/
+			content: '';
+			display: block;
+			width: 0%; /*가로라인 0% 길이만큼 (호버했을때 길게 늘릴 예정)*/
+			height: 2px;  /*두께*/
+			background-color: white;
+			transition: width 0.2s;  /*라인이 0.2초만에 그려짐*/
+		}
+		a.cool_link:hover:after { /*쿨링크에 호버했을때 효과 width 100% 까지 라인 생성*/
+			width:100%;
+		}
+	/*▲▲▲▲▲▲▲▲▲▲ end 밑줄효과 메뉴 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲*/
+
+
+
+
+		.header_content_logo_img {
+			max-width: 500px;
+			height: 65px;
+			vertical-align: middle;
+		}
+		.header_content_logo_text {
+			font-size: 35px;
+			font-weight: bold;
+			vertical-align: middle;
+		}
+		
+		/* 드랍다운 메뉴 */
+		.header_dropdown_menu {
+			position: relative; /*값을 주지 않으면 주나 안주나 똑같은것처럼 기본 위치에 고정되있음*/
+			border-bottom-left-radius: 2px;
+			border-bottom-right-radius: 2px;
+			box-shadow: 0 4px 16px rgba(20,23,28,.25);
+			background-color: white;
+			padding: 10px 0; /*상하 10   좌우0*/
+			
+		}
+		.header_dropdown_menu a {
+			display: inline-block;
+			font-size: 15px;
+			color: #505763;
+			text-align: center;
+			padding: 5px 15px;
+			font-weight: 400;
+			width: 130px;
+			position: relative;
+			z-index: 100;
+		}
+
+		.header_dropdown_menu a:hover { 
+			color: #007791;
+			background-color: #f2f3f5;
+		}
+		.header_dropdown{
+			position: absolute; /*부모꺼 기준으로 탑0 레프트0*/
+			top:53px; /*0을 쓸때는 px를 생략해도 됨, 숫자가 들어갈때는 */
+			left:0px;
+			display: none; /*메뉴바를 숨김*/
+		}
+
+		.arrow {
+			position: absolute;
+			top: -4px;
+			left: 15px;
+			width: 15px;
+			height: 15px;
+			transform: rotate(45deg);
+			background-color: white;
+			border-color: transparent transparent #fff transparent;
+			z-index: 99; /*포지션이 있어야 z인덱스를 적용할 수 있음*/
+
+		}
+		
+		/*글자에 밑줄 애니메이션 긋는 CSS효과================-*/
+		.magicline:after {   /*밑줄효과 after 니까 부모 뒤에 오니까 밑으로 내려가서 밑줄이 된다 //before 였으면 윗줄이 된다*/
+			content: '';
+			display: block;
+			width: 0%; /*가로라인 0% 길이만큼 (호버했을때 길게 늘릴 예정)*/
+			height: 3px;  /*두께*/
+			background-color: #506763;
+			transition: width 0.2s;  /*라인이 0.2초만에 그려짐*/
+		}
+		.magicline:hover:after { /*쿨링크에 호버했을때 효과 width 100% 까지 라인 생성*/
+			width:100%;
+		}
+
+
+
+		a#btn_login {
+			background-color: #1fbc02;
+			display: block; /*DIV 공간 독점 사용*/
+			line-height: 55px; /*DIV 세로 공간 확정*/
+
+			font-size: 22px;
+			color: white;
+			text-align: center;
+			
+
+			/*width: 460px;
+			height: 59px;*/
+			/*text-decoration: none;*/
+				
+			/*padding-top: 2px;*/
+			/*margin: 30px 0px 13px 0px;*/
+		}
+	/*-----------------------------------------------------------------*/
+		.modal_logo{
+	       height: 81px;
+		   background: url(../resources/img/logos.png) 16px -3px;
+		   background-size: 280px;
+		   background-repeat: no-repeat;
+
+		}
+	
+		.wrap_form {
+			font-size: 30px;       /*글자크기*/
+			font-weight: bold;	   /*글자 굵게*/
+			text-align: left;
+			margin: 50px 40px;
+			/*border:  3px solid red; /*테두리*/*/
+		}
+		.wrap_form2{
+			font-size: 12px;
+			border: 1px solid red;
+			padding: 20px 20px;
+
+		}
+		
+		.info_user{
+			font-size: 12px;
+			text-align: center;
+			display: flex;
+			justify-content: space-between;
+
+		}
+		.inputbox {
+			display: block;
+			width: 80%;
+			height: 30px;
+			border-width: 0 0 2px 0; /*인풋박스의 경계선 폭을 조정함*/
+		}
+		.check_login{
+			font-size: 12px;
+			display: flex; /*컨텐츠를 한줄에 나오게함*/
+
+		}
+		.checkimg{
+			background-image: url(../../../img/kakao.png);
+			background-position: -30px -30px; /*가로0 -30   세로 */
+			display: block; /*일정 공간을 가짐*/
+			width: 25px;
+			height: 25px;
+		}
+		check_login > input {  /*체크 로그인의 인풋태그에 */
+			visibility: hidden;
+
+		}
+
+		.check_login > input:checked +label{   /*check login의 인풋이 '체크'되면, 라벨에 배경을 띄움*/
+			background-image: url(../../../img/kakao.png);
+			background-position: 0px -30px; /*가로0 -30   세로 */
+		}
+	/*-----------------------------------------------------------------*/
+	/*■■■■모달창 안에 떴을때 X 버튼■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+		.login_close{
+			position: absolute;
+			top: 7px;
+			right: 7px;
+		}
+		.login_close > button{
+			color: rgb(142,142,142);
+			border: none;
+			background: white;
+			font-size: 30px;
+			cursor: pointer;
+			outline: none;
+		}
+		.login_close > button:hover {
+			color: #EBA444;
+		}
+		
+		.input_div{
+			position: relative;
+			display: flex;
+		}
+		.pw_eye{  /*------------------눈그림에 효과*/
+			position: absolute;
+			top: 15px;
+		    right: 5px;
+		    cursor: pointer;
+			color: #aaa;
+		/* height: 40px;    인풋창 사이즈만큼
+			line-height: 40px; 인풋창 사이즈만큼
+			width: 30px;
+			text-align: center;
+			
+			font-size: 15px; */
+		}
+
+
+	/*■■■■폼 (아이디 비번 입력창)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/	
+		.send_info {
+				position: relative;
+			}
+		.label_placeholder {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 47px;
+				line-height: 47px;
+				font-size: 15px;
+				color: #adadad;
+				cursor: pointer;
+			}
+		.login_input {
+				width: 100%;
+				height: 48px;
+				padding: 11px 70px 11px 0;
+				border-width: 0 0 2px 0;
+				border-color: #ebebeb;
+				box-sizing: border-box;
+				outline: none;
+			}
+
+	/* 로그인체크 박스(로그인상태 유지 아이콘)■■■■■■■■■■■■■■■■■■■■■■■*/
+		div.login_state {  /* 로그인 상태 유지 (메인div)*/
+		    height: 28px;
+		    margin: 10px 0;
+		    line-height: 29px;
+		}
+		#staySignedIn { 	/*원본 체크박스 숨김기기*/
+			visibility: hidden;
+			float: right;
+		}
+		/* 로그인 상태 유지 아이콘 gif */
+		span.icon_check {
+		    float: left;
+		    width: 25px;
+		    height: 25px;
+		    margin: 1px 8px 0 0;
+		    background: url(../img/check_off.gif)no-repeat;
+
+		}
+		div.login_state > input:checked +label > .icon_check {
+			/*div login state 하위에 input을 체크하면 (+ 는 적용대상)
+			하위에 있는 라벨에서 icon check 에 다음 명령어를 실행*/
+			background: url(../img/check_on.png)no-repeat;
+
+		}
+
+	/* 로그인 버튼■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+		.btn_confirm {
+			/*color: #252525;*/
+			color: white;
+			background-color: #171717;
+			width: 100%;
+			height: 50px;
+			padding: 0;
+			border: 0;
+			border-radius: 4px;
+			font-weight: bold;
+		}
+
+	/* 로그인 footer ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+		.login_footer {
+			font-size: 12px;
+			margin-top: 30px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+
+	
+
+
+
+
+
+
 </style>
 <title>Next Turn Games</title>
 </head>
@@ -223,15 +679,16 @@
 <script type="text/javascript">
     // $(document).ready(function() {
 	// $(function(){   위에꺼랑 같은거
+
 		
 		//인터셉터로 인한 기능 (로그인 안됐을때 로그인모달 띄우기)
 	$(function(){
 		var message = '${message}';  //flashMap 의 값
+		var uri = '${uri}';
 		if(message == 'nologin'){
 			$('.modal_wrap').css('display','flex');  //모달웹을 보이게한다
 			$('#login_id').focus();
 			$('.modal_error_next_box')
-									/* .css('dispaly','block') */
 									.css('visibility','visible')
 									.text('로그인이 필요한 기능입니다')
 		}
@@ -239,44 +696,6 @@
 
 
 
-		
-		/* 로고 클릭시 index로 이동 [a href 를 대신하는 ajax] */
-		$(document).on('click', '.header_content_logo_img', function() {
-				location.href = "${path}/"; //컨트롤러 호출
-		});
-			
-		/* 마이페이지로 이동 [a href 를 대신하는 ajax] */
-		$(document).on('click', '#header_dropdown_btn_mypage', function() {
-				location.href = "${path}/member/mypage"; //컨트롤러 호출
-		});
-		
-		/* 게시판으로 이동 [a href 를 대신하는 ajax] */
-		$(document).on('click', '#header_menu_list', function() {
-				location.href = "${path}/board/list"; //컨트롤러 호출
-		});
-		
-		
-		
-		
-		
-	/* [회원가입] 버튼 클릭시 동의 페이지 이동 (앵커a테그를 사용하면 경로가 유출되니까 제이쿼리로 경로를 바꿔준다) */
-	$(document).on('click', '#header_btn_join', function() {
-			location.href = "${path}/member/constract";
-			/* 이 경로가 작동하려면 MemberController 에 셋팅이 되있어야함 */
-			/* 이렇게 get post 명시를 안하면 Get 방식이다 . @GetMapping("/constract") 를 찾아서 실행해라
-			   ( @Controller 애들중에서 /member 를 처리하는 애를 찾아봐)*/
-	});
-
-	/* 비번변경 버튼[a href 를 대신하는 ajax] */
-	$(document).on('click', '#header_dropdown_btn_pwupdate', function() {
-			location.href = "${path}/member/pwupdate";
-	});
-
-	/* 탈퇴하기 버튼[a href 를 대신하는 ajax] */
-	$(document).on('click', '#header_dropdown_btn_drop', function() {
-			location.href = "${path}/member/drop"; //컨트롤러 호출
-		});
-	});
 
 //로그인 모달창 켜고/X눌러서 끄기
 	jQuery(document).on('click', '.login_open', function() { //login_open을 클릭하면, 기능하라(){
@@ -286,8 +705,9 @@
 	$(document).on('click', '.login_close', function() {
 		$('.modal_wrap').css('display', 'none'); //display none 으로 바꿔서 숨김
 		$('.frm_login')[0].reset(); //택스트 입력하고, 화면을 닫았을때, 기록했던 정보를 지움
-		$('.pw_eye').html('<i class="fas fa-eye-slash"></i>')
+		$('.pw_eye').html('<i class="fas fa-eye-slash"></i>');
 		// $('.login_input').val('');
+		uri = '';
 	});
 
 //로그인 input(id,pw)에 focus 되면 테두리색 변경
@@ -356,12 +776,10 @@
 
 	
 	
-	
-	
 	// LOGIN 버튼 클릭시 AJAX 동작
 	$(document).on('click', '#btn_login',function() {
 
-		// id와 pw 값 받아와서 null이면 작동X
+		// id와 pw 값 받아와서 null이면 작동하지 않음
 		var id = $('#login_id').val();
 		var pw = $('#login_pw').val();
 		
@@ -375,12 +793,16 @@
 				success : function(data) {
 					console.log(data);
 					if (data == 0 || data == 3) {
-						$('.modal_error_next_box')
-						.css('visibility', 'visible')
-						.text('아이디 또는 비밀번호를 확인해주세요.');
+						$('.modal_error_next_box').css('visibility', 'visible')
+												  .text('아이디 또는 비밀번호를 확인해주세요.');
+						alert('아이디또는 비번을 확인해주세요');
 					} else if (data == 1) {
 						console.log('로그인 성공');
-						location.reload(); // 새로고침
+						if(uri == ''){  //uri가 비어있다면
+							location.reload(); // 새로고침	
+						}else{
+							location.href = uri;  //uri를 타고 왔다면, 그 uri로 이동
+						}
 					} else if (data == 2) {
 						$('.modal_error_next_box')
 						.css('visibility', 'visible')
@@ -390,10 +812,13 @@
 				error : function() {
 					alert('System Error:/');
 				}
+				
 			});
 		}
-				
+		alert('왜 자동으로 꺼지나');		
 	});
+	
+
 		/* 로그아웃 기능 */
 		$(document).on('click', '#header_btn_logout', function(){
 			$.ajax({
@@ -410,7 +835,43 @@
 		});
 		
 		
-		
+	
+	
+	
+		//링크 이동용
+		$(document).ready(function() {
+			/* 로고 클릭시 index로 이동 [a href 를 대신하는 ajax] */
+			$(document).on('click', '.header_content_logo_img', function() {
+					location.href = "${path}/"; //컨트롤러 호출
+			});
+				
+			/* 마이페이지로 이동 [a href 를 대신하는 ajax] */
+			$(document).on('click', '#header_dropdown_btn_mypage', function() {
+					location.href = "${path}/member/mypage"; //컨트롤러 호출
+			});
+			
+			/* 게시판으로 이동 [a href 를 대신하는 ajax] */
+			$(document).on('click', '#header_menu_list', function() {
+					location.href = "${path}/board/list"; //컨트롤러 호출
+			});
+			/* [회원가입] 버튼 클릭시 동의 페이지 이동 (앵커a테그를 사용하면 경로가 유출되니까 제이쿼리로 경로를 바꿔준다) */
+			$(document).on('click', '#header_btn_join', function() {
+					location.href = "${path}/member/constract";
+					/* 이 경로가 작동하려면 MemberController 에 셋팅이 되있어야함 */
+					/* 이렇게 get post 명시를 안하면 Get 방식이다 . @GetMapping("/constract") 를 찾아서 실행해라
+					   ( @Controller 애들중에서 /member 를 처리하는 애를 찾아봐)*/
+			});
+			/* 비번변경 버튼[a href 를 대신하는 ajax] */
+			$(document).on('click', '#header_dropdown_btn_pwupdate', function() {
+					location.href = "${path}/member/pwupdate";
+			});
+
+			/* 탈퇴하기 버튼[a href 를 대신하는 ajax] */
+			$(document).on('click', '#header_dropdown_btn_drop', function() {
+					location.href = "${path}/member/drop"; //컨트롤러 호출
+				});
+			});
+		});//도큐먼트 레디펑션 종료		
 </script>
 </html>
 

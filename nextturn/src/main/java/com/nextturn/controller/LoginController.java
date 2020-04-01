@@ -29,7 +29,14 @@ public class LoginController {
 		log.info(mDto.toString());
 		// 로그인
 		int result = lService.login(mDto, session);  //성공하면 리턴1이 된
-		log.info("★★★★★★★★★★★★★★★ 결과는 " + result);
+			
+		if(result == 0) {
+			log.info("결과0 : 회원정보가 없음");
+		}else if(result == 2){
+			log.info("결과2 : 인증되지 않은회원 ");
+		}else if(result == 3){
+			log.info("결과3 : 비밀번호가 틀렸음");
+		}
 		
 		return result;
 	}

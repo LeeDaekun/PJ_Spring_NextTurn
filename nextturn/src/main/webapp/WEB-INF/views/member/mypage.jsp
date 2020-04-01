@@ -92,7 +92,7 @@
 	<section>
 		<div class="section_wrap">
 			<div class="myinfo">
-				<h1>내 정보
+				<h1>내 정보</h1>
 			</div>
 			<div class="flex">
 				<div class="photo">사진</div>

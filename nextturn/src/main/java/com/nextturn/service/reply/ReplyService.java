@@ -3,7 +3,6 @@ package com.nextturn.service.reply;
 import java.util.List;
 
 import com.nextturn.domain.ReplyDTO;
-import com.nextturn.persistence.BoardDAO;
 
 public interface ReplyService {
 	//작성된 리플목록 출력

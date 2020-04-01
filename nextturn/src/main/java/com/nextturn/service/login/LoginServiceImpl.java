@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.nextturn.domain.MemberDTO;
 import com.nextturn.persistence.LoginDAO;
 
-import lombok.extern.slf4j.Slf4j;
-
 
 @Service
 public class LoginServiceImpl implements LoginService{

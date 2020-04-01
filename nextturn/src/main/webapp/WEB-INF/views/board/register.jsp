@@ -277,7 +277,7 @@
 				<table class="table_wrap"><%--name="" 에 들어가는건 DTO에도 있는 변수여야 한다--%>
 					<tr>
 						<td>작성자</td>
-						<td><div class="user_name">${name}<div>
+						<td><div class="user_name">${name}</div>
 							<input type="hidden" value="${name}" name="writer">
 						</td> <%-- 작성자도 스프링폼이 가져갈수 있는 태그로 바꿔야함 --%>
 						

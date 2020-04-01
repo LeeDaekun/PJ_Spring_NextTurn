@@ -185,8 +185,6 @@
 					</div>
 					
 					<div class="content"><p>비밀번호는 소문자 대문자 특수문사 숫자를 넣어서 10글자 이상으로 만들어주세요
-					</span>
-					
 					</div>
 				</div><!-- section_box -->
 
