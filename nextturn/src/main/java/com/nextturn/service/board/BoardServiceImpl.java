@@ -93,4 +93,11 @@ public class BoardServiceImpl implements BoardService{
 		bDao.delBoard(bno);
 	}
 
+
+	//게시글 등록
+	@Override
+	public void write(BoardDTO bDto) {
+		bDao.write(bDto);
+	}
+
 }

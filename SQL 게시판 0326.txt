@@ -24,11 +24,9 @@ CREATE TABLE tbl_board(
     goodcnt NUMBER DEFAULT 0,  --좋아요
     regdate DATE DEFAULT SYSDATE,  -- 작성일
     updatedate DATE DEFAULT SYSDATE,  --수정일
-    show CHAR(1) DEFAULT 'y',  -- 로그인해야 보여주는거
-    ref NUMBER NOT NULL,  
-    re_step NUMBER NOT NULL,
-    re_level NUMBER NOT NULL
+    show CHAR(1) DEFAULT 'y'  -- 로그인해야 보여주는거
 );
+commit;
 -- 게시판 테이블 PK Key 추가
 ALTER TABLE tbl_board ADD CONSTRAINT pk_board
 PRIMARY KEY(bno);
@@ -36,39 +34,26 @@ PRIMARY KEY(bno);
 --                                               게시판 타입
 -- 게시물 총 15건 추가! ref=1, re_step=1, re_level=0 type, writer=가입한 유저
 
--- 게시물 총 15건 추가! ref=1, re_step=1, re_level=0 type=free
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글1', '게시글1', '가가', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글2', '게시글2', '나나', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글3', '게시글3', '조보훈', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글4', '게시글4', '오동선', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글5', '게시글5', '김종희', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글6', '게시글6', '이대군', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글7', '게시글7', '고재훈', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글8', '게시글8', '이승주', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글9', '게시글9', '백진주', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글10', '게시글10', '이정화', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글11', '게시글11', '진미경', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글12', '게시글12', '동비', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글13', '게시글13', '동비', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글14', '게시글14', '동비', '1', '1', '0');
-INSERT INTO tbl_board(bno, type, title, content, writer, ref, re_step, re_level)
-VALUES(seq_board.NEXTVAL, 'free', '테스트 게시글15', '게시글15', '동비', '1', '1', '0');
+-- 게시물 총 15건 추가! 
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트1', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트2', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트3', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트4', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트5', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트6', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트7', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트8', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트9', '게시글6', '이대군');
 commit;
-
 
 SELECT * FROM tbl_board;
 SELECT * FROM tbl_member;
@@ -99,6 +84,7 @@ CREATE TABLE tbl_reply(
     regdate DATE DEFAULT SYSDATE,
     bno NUMBER NOT NULL
 );
+commit;
 
 -- tbl_reply에 PK 제약조건 추가
 ALTER TABLE tbl_reply

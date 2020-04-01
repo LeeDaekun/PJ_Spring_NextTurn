@@ -368,9 +368,12 @@
 			} else {
 				// 서버로 전송
 				alert('서버로전송!!!');
+				 // 에디터의 내용이 textarea에 적용된다.
+				 oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
 				$('#frm_board').submit();  //스프링 폼태그 전송
 			}
 		});
+	
 	
 		$(document).on('keyup', '#board_title', function(){
 			var len = $(this).length;
@@ -378,8 +381,12 @@
 			if(len != 0) {
 				$('.err_msg').css('display', 'none');
 			}
+
 		});
 	</script>
+ 
+ 
+ 
  
  <!-- 네이버 텍스트 에디터 -->
 	 <script type="text/javascript">

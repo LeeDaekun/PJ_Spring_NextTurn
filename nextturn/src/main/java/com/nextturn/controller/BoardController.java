@@ -125,9 +125,13 @@ public class BoardController {
 			log.info(bDto.toString());
 			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			
+			bService.write(bDto);
+			
 			return "redirect:/board/list";
 		}
+		
+		
 	
 
 }// class 종료

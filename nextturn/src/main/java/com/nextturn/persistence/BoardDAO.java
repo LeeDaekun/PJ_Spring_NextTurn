@@ -32,5 +32,10 @@ public interface BoardDAO {
 	
 	// 댓글 수 업데이트			//파라메타1 파라메타2 는 읽을수 있는데, 맵은 못읽는다? 그래서 써준다고 하는데, 자세히 알아봐야함 
 	public void replyCntUpdate(@Param("map") Map<String, Object> map);
-/*  public void replyCntUpdate(Map<String, Object> map);   원래는 이렇게 쓰는거 */
+  //public void replyCntUpdate(Map<String, Object> map);   원래는 이렇게 쓰는거
+
+	//게시글 등록
+	public void write(BoardDTO bDto);
+	
+	
 }
