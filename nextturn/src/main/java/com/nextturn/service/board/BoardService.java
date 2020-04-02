@@ -18,6 +18,7 @@ public interface BoardService {
 	//게시글 갯수 계산
 	public int countArticle(String search_option, String keyword);
 
+	//게시글 출력
 	public BoardDTO boardView(int bno);
 	// 리턴은 DTO로          받는건 int bno
 	
@@ -27,8 +28,11 @@ public interface BoardService {
 	//게시글 삭제할때
 	public void delBoard(int bno);
 
-	//게시글 등록
+	//게시글 등록 (sql insert)
 	public void write(BoardDTO bDto);
+
+	//게시글 수정 (sql update)
+	public void update(BoardDTO bDto);
 
 	
 	

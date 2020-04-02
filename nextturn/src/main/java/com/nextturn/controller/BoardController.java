@@ -119,6 +119,7 @@ public class BoardController {
 			return "/board/register";
 		}
 		
+		//게시글 등록후 , 게시글목록 띄움
 		@PostMapping("/write")
 		public String write(BoardDTO bDto) {
 			log.info("@Post맵핑 /write (bDto)");
@@ -131,7 +132,27 @@ public class BoardController {
 			return "redirect:/board/list";
 		}
 		
+		//수정 버튼 눌렀을때, register.jsp 를 수정페이지로 변경해서 동작
+		@GetMapping("/update")
+		public String updateBoard(int bno, Model model) {
+			log.info(">>>>>>>>>>GET: Board update View Page");
+			log.info("bno: "+bno);
+			bService.boardView(bno);
+			
+			// 수정을 원하는 게시글의 정보를(1줄) 원함
+			model.addAttribute("bDto", bService.boardView(bno));  //뷰단의 키값 bDto
+			return "/board/register";
+		}
 		
+		//register 페이지에서 수정 완료 버튼을 눌렀을때, 업데이트문 실행하고, 게시글목록을 띄움
+		@PostMapping("/update")
+		public String update(BoardDTO bDto) {
+			log.info(">>>>>>>>>@PostMapping /update (bDto) 게시글이 수정되었습니다");
+			log.info(bDto.toString());
+			bService.update(bDto);
+			return "redirect:/board/list";
+		}
+
 	
 
 }// class 종료

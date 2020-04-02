@@ -89,6 +89,7 @@
 		    border-radius: 5px;
 		    color: white;
 		    font-weight: bold;
+		    border: 0; /*버튼의 속성을 죽이기 위해서 사용*/
 	    }
 	    .button_align{
 	        padding: 20px 00px;
@@ -252,17 +253,23 @@
 
 	<div class="board_wrap">
 		<div class="board_head">
-		<span class="ani">게시글등록</span>
+<%-- 	<c:choose>  JSTL 로 하면 이런 방법으로 함
+			<c:when test="${empty bDto}">
+				<span class="ani">게시글등록</span>
+			</c:when>
+			<c:otherwise>
+				<span class="ani" style="color:orange">게시글수정</span>
+			</c:otherwise>
+		</c:choose> --%>
+		<span class="ani" id="bno_modify">게시글등록</span>
+		
+		
 		</div>	
 	
 	<div class="orderby_row">
 		<div>
 		<a href="#" class="orderby_btn ani_underline ani" id="sort_new">게시글을 작성 해주세요</a>
-<!-- 		<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">최신순</a>
-			<a href="${path}/board/list?sort_option=cnt&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_cnt">조회순</a>
-			<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">댓글순</a>
-			<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
- -->		</div>
+ 		</div>
 		
 		<div>
 			<a href="${path}/board/list" class="insert_btn ani_underline">뒤로가기</a>
@@ -287,10 +294,10 @@
 						<td>게시판 선택</td>
 						<td>
 							<div class="input_wrap"> <%-- 스프링 폼태그가 벨류값에 있는 글자를 가져감 --%>
-								<input type="radio" id="ra_a" name="type" value="free" checked=""><label for="ra_a">자유게시판</label>
-								<input type="radio" id="ra_b" name="type" value="qna" ><label for="ra_b">문의하기</label>
-								<input type="radio" id="ra_c" name="type" value="trade" ><label for="ra_c">중고거래</label>
-								<input type="radio" id="ra_d" name="type" value="review" ><label for="ra_d">게임후기</label>
+								<input type="radio" id="ra_a" name="type" value="free"><label for="ra_a">자유게시판</label>
+								<input type="radio" id="ra_b" name="type" value="qna"  checked><label for="ra_b">문의하기</label>
+								<input type="radio" id="ra_c" name="type" value="trad" ><label for="ra_c">중고거래</label>
+								<input type="radio" id="ra_d" name="type" value="revi" ><label for="ra_d">게임후기</label>
 							</div>
 						</td>
 					</tr>
@@ -298,14 +305,14 @@
 						
 					<tr>
 						<td>제목</td>
-						<td><input type="text" placeholder="제목을 입력하세요" name="title" id="board_title"> </td>
+						<td><input type="text" placeholder="제목을 입력하세요" id="board_title" name="title" value="${bDto.title}"> </td>
 					</tr>
 		
 					<tr>
 						<td class="align_top">내용</td>
 						<td>
 							<script type="text/javascript" src="${path}/resources/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-	 						<textarea id="board_content" name="content" style="width:100%; height:270px;"></textarea>
+	 						<textarea id="board_content" name="content" style="width:100%; height:270px;">${bDto.content}</textarea>
 						</td>
 					</tr>
 		
@@ -323,9 +330,7 @@
 						<button type="button" class="write_btn" id="n_btn" style="background: #e44444;">취소</button>
 						<%-- 기본타입이 서브밋이기 때문에 취소는 속성을 바꿔야한다. 안그러면 이것도 전송기능이 되버림 --%>
 					</span>
-					<span>
-						<button type="button" class="write_btn" id="y_btn" style="background: #15ad6e;">등록</button>
-					</span>
+					<span><button type="button" class="write_btn" id="y_btn" style="background: #15ad6e;">등록</button></span>
 				</div>
 			</form:form>
 	
@@ -336,7 +341,22 @@
  	
 	<script type="text/javascript">
 		$(function(){
+			// register ==> 게시글 등록과 게시글 수정
+			// ${bDto}에 값이 있으면 수정페이지 로딩!
+			if('${bDto}' != '') {	//받아온 값이 있으면 수정페이지로
+				$('#bno_modify').text('게시글 수정')
+								.css('color','#F39C12');
+				$('.orderby_row').css('background-color','#F39C12')
+				$('#y_btn').text('수정')
+							.css('background','#F39C12')
+				     		
+                //라디오 버튼 값 불러오기
+              	$("input:radio[name='type']:radio[value='${bDto.type}']").prop('checked', true);
+				//인풋의 라디오에서 [이름이 type 인것]
+  			}
 		});
+		
+		
 		
 	//리퍼럴이 비정상경로일 경우 대처방법
 		$(document).on('click', '#n_btn', function(){  //write_btn 클릭시 동작
@@ -367,10 +387,9 @@
 				return false;
 			} else {
 				// 서버로 전송
-				alert('서버로전송!!!');
 				 // 에디터의 내용이 textarea에 적용된다.
 				 oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
-				$('#frm_board').submit();  //스프링 폼태그 전송
+				$('#frm_board').submit();  //스프링 폼태그 전송 (PostMapping으로)
 			}
 		});
 	

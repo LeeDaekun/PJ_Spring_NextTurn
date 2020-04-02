@@ -100,4 +100,13 @@ public class BoardServiceImpl implements BoardService{
 		bDao.write(bDto);
 	}
 
+
+	//게시글 수정
+	@Override
+	public void update(BoardDTO bDto) {
+		bDao.update(bDto);
+		// TODO Auto-generated method stub
+		
+	}
+
 }

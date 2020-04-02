@@ -305,28 +305,16 @@
 		}
 
 
-
-		a#btn_login {
-			background-color: #1fbc02;
-			display: block; /*DIV 공간 독점 사용*/
-			line-height: 55px; /*DIV 세로 공간 확정*/
-
+		#btn_login{
 			font-size: 22px;
 			color: white;
 			text-align: center;
-			
-
-			/*width: 460px;
-			height: 59px;*/
-			/*text-decoration: none;*/
-				
-			/*padding-top: 2px;*/
-			/*margin: 30px 0px 13px 0px;*/
 		}
-	/*-----------------------------------------------------------------*/
+	
+	
 		.modal_logo{
 	       height: 81px;
-		   background: url(../resources/img/logos.png) 16px -3px;
+		   background: url(${path}/resources/img/logos.png) 16px -3px;
 		   background-size: 280px;
 		   background-repeat: no-repeat;
 
@@ -337,7 +325,6 @@
 			font-weight: bold;	   /*글자 굵게*/
 			text-align: left;
 			margin: 50px 40px;
-			/*border:  3px solid red; /*테두리*/*/
 		}
 		.wrap_form2{
 			font-size: 12px;
@@ -365,7 +352,7 @@
 
 		}
 		.checkimg{
-			background-image: url(../../../img/kakao.png);
+			background-image: url(${path}/resources/img/kakao.png);
 			background-position: -30px -30px; /*가로0 -30   세로 */
 			display: block; /*일정 공간을 가짐*/
 			width: 25px;
@@ -377,10 +364,10 @@
 		}
 
 		.check_login > input:checked +label{   /*check login의 인풋이 '체크'되면, 라벨에 배경을 띄움*/
-			background-image: url(../../../img/kakao.png);
+			background-image: url(${path}/resources/img/kakao.png);
 			background-position: 0px -30px; /*가로0 -30   세로 */
 		}
-	/*-----------------------------------------------------------------*/
+
 	/*■■■■모달창 안에 떴을때 X 버튼■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 		.login_close{
 			position: absolute;
@@ -436,7 +423,7 @@
 		.login_input {
 				width: 100%;
 				height: 48px;
-				padding: 11px 70px 11px 0;
+				padding: 10px 70px 10px 20px;
 				border-width: 0 0 2px 0;
 				border-color: #ebebeb;
 				box-sizing: border-box;
@@ -459,13 +446,13 @@
 		    width: 25px;
 		    height: 25px;
 		    margin: 1px 8px 0 0;
-		    background: url(../img/check_off.gif)no-repeat;
+		    background: url(${path}/resources/img/check_off.gif)no-repeat;
 
 		}
 		div.login_state > input:checked +label > .icon_check {
 			/*div login state 하위에 input을 체크하면 (+ 는 적용대상)
 			하위에 있는 라벨에서 icon check 에 다음 명령어를 실행*/
-			background: url(../img/check_on.png)no-repeat;
+			background: url(${path}/resources/img/check_on.png)no-repeat;
 
 		}
 
@@ -490,14 +477,6 @@
 			justify-content: space-between;
 		}
 
-
-	
-
-
-
-
-
-
 </style>
 <title>Next Turn Games</title>
 </head>
@@ -521,7 +500,7 @@
 
 
 			<!-- 폼 -->
-			<form action="" class="frm_login">
+			<form action="" class="frm_login" onsubmit="return false;"> <!-- 서브밋이 자동으로 작동하지 않게 바꿔준다 -->
 				<!-- ID PW state button 값 던져주기위해 form사용 -->
 				<!-- 아이디 -->
 				<div class="send_info">
@@ -550,6 +529,7 @@
 				<!-- 로그인 버튼 -->
 				<div>
 					<button type="submit" class="btn_confirm" id="btn_login">로그인</button>
+					<!-- 서브밋이 자동으로 작동하지 폼태그에  onsubmit="return false;" 를 넣어줘야한다 -->
 				</div>
 			</form>
 
@@ -815,7 +795,6 @@
 				
 			});
 		}
-		alert('왜 자동으로 꺼지나');		
 	});
 	
 
