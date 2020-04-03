@@ -32,76 +32,73 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		log.info("인터셉터 실행중");
 		
 	// Session 객체 생성
-		HttpSession session = request.getSession();
-
-		String referer = request.getHeader("referer");
-		log.info("인터셉터★★★★ 이전 url : " + referer);
+		HttpSession session = request.getSession(); 
+		String referer = request.getHeader("referer"); //이동하기 전에 있었던, 이전페이지 URL (/board/list)
+		log.info("인터셉터★★★★ 이전 url : " + referer); //이동하려고 했던 Page URL
+	
+		// 구별하기
+		// referer = [http://localhost:8081/nextturn/board/list]
 		
+		//url uri 의 차이는, url은 풀주소이고 		//uri 는 컨텍스트 루트 다음부터를 말함 (8081 다음부터)
+		String uri = request.getRequestURI(); 	       // uri = [/nextturn/board/write]   //URI 는 내가 가려고하는 페이지, 다음페이지 URL (
+		String ctx = request.getContextPath(); 		   // ctx = [/metop]   (ctx는 Context-root 를 의미함, ctx= /nextturn)
+		String nextUrl = uri.substring(ctx.length());  //nextUrl = [/board/write]
+		String prevUrl = "";
+		String finalUrl = "http://localhost:8081/nextturn/";  //비정상 접근일 경우 index 페이지로 보내려고 이 변수를 만듬
 		
-	// Login NO==============================================================
-		if(session.getAttribute("userid") == null) { 
-			log.info("인터셉터>>>>> NOLOGIN:(");
-			System.out.println("노 로그인!!!   log.info 고장나서, 인터페이스 sysout 로 접속됨");
+	//비정상적인 URL 로 접근 했을 경우 (URL을 저장해놨다가 접속한경우)
+		if(referer == null) {	//url을 바로치고 들어왔다면, 리퍼럴은 항상 널이다. (네이버에서 url로 게시글 등록을 시도하는 그런 경우)
+			log.info("WARNING>> 비정상적인 접근 :(");
+			response.sendRedirect(finalUrl);
+			return false;
 			
-			//전에 들어온 페이지 기록
-			String uri = request.getRequestURI();
-			log.info(">>>>> 목적지: " + uri);
+		} else {							       //리퍼럴값이 있을경우 else를 타고.http://localhost:8081/nextturn/board/list 
+			int indexQuery = referer.indexOf("?"); //여기서 물음표를 찾아서 indexQuery 에 넣는다 (없으면-1)
+			if(indexQuery == -1) {
+				prevUrl = referer.substring(finalUrl.length()-1);
+			} else {
+				prevUrl = referer.substring(finalUrl.length()-1, indexQuery);
+			}
+			log.info("PREV URL >>>>> " + prevUrl);
+			log.info("NEXT URL >>>>> " + nextUrl);
 			
-			
-			// 게시글 등록, 수정(로그인이 필요한 View단) 2020.04.01 게시글 등록할때 작성=====================
-			if(referer == null) {
-				referer = "http://localhost:8081/nextturn/";
-				} else {	
-					int index = referer.lastIndexOf("/");   //끝에서부터 / 이게 있는걸 찾는다.   /이것이 뒤에서부터 몇번째에 있는지 찾는거다.
-					int len = referer.length();				//  http://localhost:8081:metop/board/write
-					log.info(">>>>> 인덱스: " + index);		//뒤에서부터 찾으면  "/"는 33번째에 있다.  ~  총39자를 자른다 (/write)  
-					log.info(">>>>> 길이: " + len);
-					String mapWord = referer.substring(index, len);
-					log.info("수정된 URL: " + mapWord);
-					log.info("이전 URL: " + referer);
-					
-					if(mapWord.equals("/write")) {
-						response.sendRedirect(request.getContextPath() + "/board/list");
-						return false;
-					}
+			if(nextUrl.equals("/board/update") || nextUrl.equals("/board/delete")) {
+				log.info("alasdfasdf: " + prevUrl.indexOf("board/view"));
+				if(prevUrl.indexOf("board/view") == -1) {
+					log.info("WARNING >> 비정상적인 접근 :(");
+					response.sendRedirect(finalUrl);
+					return false;
 				}
-				
+			}
+		}
+		
+		
+		// 정상적인 접근일 경우 실행!
+		if(session.getAttribute("userid") == null) { // Login NO
+			if(prevUrl.equals(nextUrl)) {
+				log.info("WARNING >> prevUrl == nextUrl :/");
+				response.sendRedirect(finalUrl);
+				return false;
+			}
 			
 			// 전송하는 방식 FlashMap
-			// JSTL el태그로 모델 꺼내는것처럼 꺼내면된다
-			FlashMap fMap = RequestContextUtils.getOutputFlashMap(request);  //FlashMap 은 1회성으로 보내는것
+			// jstl el태그로 모델 꺼내는것처럼 꺼내면된다
+			FlashMap fMap = RequestContextUtils.getOutputFlashMap(request);
 			fMap.put("message", "nologin");
-			fMap.put("uri", uri);  //사용자가 사용하려고 했던 페이지
-			
-			
-			// URL로 바로 접근한 경우(referer이 없는 경우) 인덱스로
-			
+			fMap.put("uri", uri);
 			RequestContextUtils.saveOutputFlashMap(referer, request, response);
 			response.sendRedirect(referer);
 			
+			// URL만 신경, GET or POST 중요하지 않음..
+			// 회원수정페이지: GET:/member/update
+			// 회원수정DB: POST:/member/update
+			// request(GET, POST) > response(forward, sendRedirect) Ajax제외 request가 오면 response를 해주어야한다
 			
-			
-			//URL만 신경쓰고, GET or POST 는 중요하지 않음
-			//회원수정페이지를 보낸다고 하면:  GET:/member/update
-			//회원수정DB을 한다고 하면       : POST:/member/update
-			
-			//보낼때 request(GET,POST)  >  받을때 response(forward,sendRedirect)
-			
-			return false; // 이동X
-			
-	// Login OK ==============================================================
-		} else { 
-			log.info("인터셉터>>>>> LOGIN:)");
-			return true; //이동 O  원래 처리하던것을 처리할 수 있음. 인터셉터 동작안함?
+			return false; // 이동 X
+		} else { // Login OK
+			log.info(">>>>> LOGIN:)");
+			return true; // 이동 O
 		}
-
 	}//메서드
-
-	/*
-	 * @Override public void postHandle(HttpServletRequest request,
-	 * HttpServletResponse response, Object handler, ModelAndView modelAndView)
-	 * throws Exception { // TODO Auto-generated method stub
-	 * super.postHandle(request, response, handler, modelAndView); }
-	 */
-
-}//class
+}//클래스
+	
