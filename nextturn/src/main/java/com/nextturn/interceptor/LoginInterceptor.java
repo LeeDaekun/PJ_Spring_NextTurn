@@ -63,10 +63,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			log.info("NEXT URL >>>>> " + nextUrl);
 			
 			if(nextUrl.equals("/board/update") || nextUrl.equals("/board/delete")) {
+				// board/delete는 삭제DB Action밖에 없다
+				// board/update는 수정페이지 출력과 수정DB Action이 있다
+				if(request.getParameter("title") == null) { // 보내는 내용에 title 이 없는 경우에만 실행해라, (수정 완료 버튼을 누르면 title이 있다)
 				log.info("alasdfasdf: " + prevUrl.indexOf("board/view"));
-				if(prevUrl.indexOf("board/view") == -1) {
+				if(prevUrl.indexOf("board/view") == -1) {  //보드뷰에서 온것이 아니면 실행. (레퍼럴에 board/view가 없으면 비정상 접근) 
 					log.info("WARNING >> 비정상적인 접근 :(");
-					response.sendRedirect(finalUrl);
+					response.sendRedirect(finalUrl); //센드리다이랙트 방식으로, 인덱스 페이지로 강제로 보내버림
 					return false;
 				}
 			}
