@@ -75,7 +75,8 @@ public class BoardController {
 		map.put("keyword", keyword); // 사용자가 검색한 키워드
 
 		model.addAttribute("map", map); // 해쉬맵 map을, 모델"map"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
-
+		
+		log.info("========================"+map.toString());
 		return "board/list"; // 맵데이터를 리스트로 넘기고, 화면단을 리스트로 결정함
 	} // @GetMapping("/list") 종료
 

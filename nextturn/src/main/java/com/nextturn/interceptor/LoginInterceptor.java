@@ -72,6 +72,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 					response.sendRedirect(finalUrl); //센드리다이랙트 방식으로, 인덱스 페이지로 강제로 보내버림
 					return false;
 				}
+				}
 			}
 		}
 		
@@ -102,6 +103,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			log.info(">>>>> LOGIN:)");
 			return true; // 이동 O
 		}
+		
 	}//메서드
 }//클래스
 	

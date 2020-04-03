@@ -189,8 +189,16 @@
 							<div>${bDto.bno}</div><!-- 게시글번호 -->
 							<div>작성자 ${bDto.writer}</div><!-- 작성자 -->
 							<div>조회수 ${bDto.viewcnt}</div><!-- 조회수 -->
-							<fmt:formatDate value="${bDto.updateDate}" pattern="yyyy-MM-dd HH:MM:SS" var="regdate"/>
-							<div>${regdate}</div><!-- 시간 -->
+							
+							
+							
+							<div>
+								<fmt:formatDate value="${bDto.regdate}" pattern="yyyy-MM-dd HH:mm:ss" var="regdate"/>작성일: ${regdate}
+							</div><!-- 시간 -->
+							
+							<c:if test="${bDto.regdate != bDto.updateDate}">
+								 <fmt:formatDate value="${bDto.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/> 수정됨
+							</c:if>
 							
 						</div>
 					</div>

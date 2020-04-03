@@ -307,14 +307,15 @@
 		
 			
 			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
-			<fmt:formatDate value="${showDTO.updateDate}" pattern="yyyy-MM-dd" var="regdate"/>
 			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
 			<c:forEach items="${map.list}" var="showDTO">
+			<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
+			
 			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
 					<tr>
 						<td>${showDTO.bno}</td>
-						
+					
 						<td>
 							<a href="${path}/board/view/${showDTO.bno}">${showDTO.title} <span style="color:red">[${showDTO.replycnt}]</span></a>
 							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
@@ -331,10 +332,10 @@
 						<c:choose>
 							<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
 							<c:when test="${today == regdate}">
-								<fmt:formatDate value="${showDTO.updateDate}" pattern="HH:mm:ss"/>
+								<fmt:formatDate value="${showDTO.regdate}" pattern="HH:mm:ss"/>
 							</c:when>
 							<c:otherwise>
-								<fmt:formatDate value="${showDTO.updateDate}" pattern="yyyy-MM-dd"/>
+								<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd"/>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -397,6 +398,8 @@
 <script type="text/javascript">
 	$(function(){
 		var sort_option = '${map.sort_option}';  /* 해쉬맵을 받아옴 */
+		
+		alert("regdate확인: " + ${map.list});
 		
 		if(sort_option != null) {
 			$('#sort_' + sort_option).css('color', '#f3ca00');
