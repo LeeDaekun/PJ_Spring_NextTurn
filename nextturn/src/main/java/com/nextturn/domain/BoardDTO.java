@@ -19,6 +19,8 @@ public class BoardDTO {
     private String type;	//게시글 타입
     private String title;	//게시글 제목
     private String content;	//게시글 내용
+    private String view_content;   //게시글내용 (에디터 태그 추가)
+    private String search_content; //게시글 내용 (순수 text만 검색될 수 있게)
     private String writer;	//게시글 작성자 아이디
     private int viewcnt;	//조회수
     private int replycnt;	//댓글수

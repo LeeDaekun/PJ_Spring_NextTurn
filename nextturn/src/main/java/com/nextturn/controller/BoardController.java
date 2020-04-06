@@ -120,11 +120,9 @@ public class BoardController {
 	public String write(BoardDTO bDto, Model model) {
 		log.info("@Post맵핑 /write (bDto)");
 		log.info(bDto.toString());
-		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		bService.write(bDto);
 		
-		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■currval:"+bDto.getBno());
+		//log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■currval:"+bDto.getBno());  //방금 등록한 게시글 번호를 확인하기 위한것 CURRVAL
 		
 		//int bno=bDto.getBno();
 		//model.addAttribute("bno",bno);

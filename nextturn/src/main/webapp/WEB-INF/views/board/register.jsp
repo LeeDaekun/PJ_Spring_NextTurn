@@ -294,10 +294,10 @@
 						<td>게시판 선택</td>
 						<td>
 							<div class="input_wrap"> <%-- 스프링 폼태그가 벨류값에 있는 글자를 가져감 --%>
-								<input type="radio" id="ra_a" name="type" value="free"><label for="ra_a">자유게시판</label>
-								<input type="radio" id="ra_b" name="type" value="qna"  checked><label for="ra_b">문의하기</label>
-								<input type="radio" id="ra_c" name="type" value="trad" ><label for="ra_c">중고거래</label>
-								<input type="radio" id="ra_d" name="type" value="revi" ><label for="ra_d">게임후기</label>
+								<input type="radio" id="ra_a" name="type" value="free" checked><label for="ra_a">자유게시판</label>
+								<input type="radio" id="ra_b" name="type" value="qna"><label for="ra_b">문의하기</label>
+								<input type="radio" id="ra_c" name="type" value="trad"><label for="ra_c">중고거래</label>
+								<input type="radio" id="ra_d" name="type" value="revi"><label for="ra_d">게임후기</label>
 							</div>
 						</td>
 					</tr>
@@ -312,7 +312,7 @@
 						<td class="align_top">내용</td>
 						<td>
 							<script type="text/javascript" src="${path}/resources/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-	 						<textarea id="board_content" name="content" style="width:100%; height:270px;">${bDto.content}</textarea>
+	 						<textarea id="board_content" name="view_content" style="width:100%; height:270px;">${bDto.view_content}</textarea>
 						</td>
 					</tr>
 		
@@ -386,10 +386,24 @@
 				alert('값 입력해라!!!');
 				return false;
 			} else {
-				// 서버로 전송
 				 // 에디터의 내용이 textarea에 적용된다.
 				 oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
-				$('#frm_board').submit();  //스프링 폼태그 전송 (PostMapping으로)
+
+				var view_content = $('#board_content').val();
+				
+				
+				
+				//검색어 정규식 (게시글 검색시 태그는 검색할 수 없게함)
+				var search_content = view_content.replace(/(<([^>]+)>)/ig, "").replace("&nbsp;", ""); //태그가 들어간값의 내용을 다 지워주세요 (태그를 제거하는 정규식)
+				
+				
+				//append 는 폼태그가 끝나는 지점에 이것을 넣어준다.
+				$('#frm_board').append('<textarea id="search_content" name="search_content"></textarea>');  //사용자가 입력한 폼값에, 택스트에리어를 붙인다.
+				$('#search_content').val(search_content);
+
+				
+				// 서버로 전송
+				$('#frm_board').submit();	//스프링 폼태그 전송 (PostMapping으로)
 			}
 		});
 	

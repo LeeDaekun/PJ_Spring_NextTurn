@@ -216,7 +216,7 @@
 			<!-- 컨텐츠 -->
 			<div class="view_content">
 				<div>
-					${bDto.content}
+					${bDto.view_content}
 				</div>
 
 			

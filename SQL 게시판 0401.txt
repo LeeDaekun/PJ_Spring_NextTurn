@@ -11,12 +11,16 @@ CREATE SEQUENCE seq_board
     START WITH 1
     INCREMENT BY 1
     NOCYCLE;
-    
+--=====================================
 DROP TABLE tbl_board CASCADE CONSTRAINTS;
 CREATE TABLE tbl_board(
     bno NUMBER(10, 0),  --
     type CHAR(4) NOT NULL,  --게시판 타입
     title VARCHAR2(200) NOT NULL, --제목
+    
+    view_content VARCHAR2(4000) NOT NULL,  --========== 04.06 추가
+    search_content VARCHAR2(4000) NOT NULL, --========= 04.06 추가
+    
     content VARCHAR2(4000) NOT NULL, --내용
     writer VARCHAR2(50) NOT NULL,  --작성자
     viewcnt NUMBER DEFAULT 0,  --조회수
@@ -27,6 +31,10 @@ CREATE TABLE tbl_board(
     show CHAR(1) DEFAULT 'y'  -- 로그인해야 보여주는거
 );
 commit;
+--==========================================
+
+
+--=============================================================
 -- 게시판 테이블 PK Key 추가
 ALTER TABLE tbl_board ADD CONSTRAINT pk_board
 PRIMARY KEY(bno);
@@ -128,3 +136,25 @@ WHERE bno = 406;
 SELECT *
 FROM tbl_board
 WHERE bno = 406;
+
+
+--==========================================
+-- 게시판 Table 생성
+DROP TABLE tbl_board CASCADE CONSTRAINTS;
+CREATE TABLE tbl_board(
+    bno NUMBER(10, 0),
+    type CHAR(4) NOT NULL,
+    title VARCHAR2(200) NOT NULL,
+    view_content VARCHAR2(4000) NOT NULL,
+    search_content VARCHAR2(4000) NOT NULL,
+    writer VARCHAR2(50) NOT NULL,
+    viewcnt NUMBER DEFAULT 0,
+    replycnt NUMBER DEFAULT 0,
+    goodcnt NUMBER DEFAULT 0,
+    regdate DATE DEFAULT SYSDATE,
+    updatedate DATE DEFAULT SYSDATE,
+    show CHAR(1) DEFAULT 'y'
+   -- ref NUMBER DEFAULT 1,
+   -- re_step NUMBER DEFAULT 1,
+   -- re_level NUMBER DEFAULT 0
+);

@@ -399,8 +399,6 @@
 	$(function(){
 		var sort_option = '${map.sort_option}';  /* 해쉬맵을 받아옴 */
 		
-		alert("regdate확인: " + ${map.list});
-		
 		if(sort_option != null) {
 			$('#sort_' + sort_option).css('color', '#f3ca00');
 			$('#sort_' + sort_option).css('font-weight', 'bold');
