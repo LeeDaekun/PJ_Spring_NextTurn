@@ -105,7 +105,27 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void update(BoardDTO bDto) {
 		bDao.update(bDto);
+	}
+
+
+	//답글기능 인터페이스
+	@Override
+	public void answer(BoardDTO bDto) {
+		// 답글 알고리즘
+		// Current Status bDto:
+		// answer: title, writer, type, content
+		// main: bno, ref, re_level, re_step
 		
+		// 1) re_step을 수정
+		//  : ref가 같은 row중에 메인 게시글의
+		//    re_step보다 크기가 큰 값을 찾아
+		//    전부 +1 => updateStep()
+		bDao.updateStep(bDto);
+		
+		// 2) 답글 DB에 INSERT
+		bDto.setRe_level(bDto.getRe_level()+1);
+		bDto.setRe_step(bDto.getRe_step()+1);
+		bDao.answer(bDto);
 	}
 
 }

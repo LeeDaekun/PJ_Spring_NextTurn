@@ -226,8 +226,9 @@
 						<!-- <a href="${path}/board/list" class="down_menu_btn" style="background: #27AE60">목록</a> -->
 						<!-- <a href="${header.referer}" class="down_menu_btn" style="background: #27AE60">목록</a> --%> <!-- referer은 방금 전페이지로 되돌림 (비정상 페이지로 되돌아가기도함)-->
 						<button type=button class="down_menu_btn" id="list_btn" style="background: #27AE60">목록</button>
-						<a href="" class="down_menu_btn" style="background: #3498DB">답변</a>
-	
+					
+						<a href="${path}/board/answer?bno=${bDto.bno}" class="down_menu_btn answer" style="background: #3498DB">답변</a>
+						
 							<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
 					<c:if test="${name == bDto.writer}">	
 						<a href="${path}/board/update?bno=${bDto.bno}" class="down_menu_btn" style="background: #F39C12">수정</a>
@@ -247,12 +248,6 @@
 			
 			<!-- 댓글달린 목록 출력 -->
 			<div id="listReply"></div>
-
-
-		
-			
-
-		
 
 	</div> <!-- view_wrap -->
 </body>

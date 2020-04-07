@@ -29,9 +29,9 @@ public class BoardDTO {
     private Date updateDate;//수정일자
     private String show;	//게시글 삭제하면  실제 삭제하는게 아니고 show 를 n 으로 바꾼다
     private String[] files;
-//    private int ref;  		//답변그룹 번호
-//    private int re_step;	//답변 출력 순번
-//    private int re_level;	//답변 단계 (계층형)
+    private int ref;  		//답변그룹 번호
+    private int re_step;	//답변 출력 순번
+    private int re_level;	//답변 단계 (계층형)
     
     private String name;    //작성자 이름 이름은 조인에서 가져온다 DB에는 이칼럼이 없어도됨
 }

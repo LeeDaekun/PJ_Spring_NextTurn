@@ -120,13 +120,13 @@ public class BoardController {
 	public String write(BoardDTO bDto, Model model) {
 		log.info("@Post맵핑 /write (bDto)");
 		log.info(bDto.toString());
-		bService.write(bDto);
-		
+				
 		//log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■currval:"+bDto.getBno());  //방금 등록한 게시글 번호를 확인하기 위한것 CURRVAL
 		
 		//int bno=bDto.getBno();
 		//model.addAttribute("bno",bno);
 		//return "redirect:/board/view/{bno}
+		bService.write(bDto);
 		return "redirect:/board/view/" + bDto.getBno();
 	}
 
@@ -141,16 +141,75 @@ public class BoardController {
 
 		// 수정을 원하는 게시글의 정보를(1줄) 원함
 		model.addAttribute("bDto", bService.boardView(bno)); // 뷰단의 키값 bDto
+		model.addAttribute("flag", "update");
+		
 		return "/board/register";
 	}
 
-	// register 페이지에서 수정 완료 버튼을 눌렀을때, 업데이트문 실행하고, 게시글목록을 띄움
+	// 수정 postMapping      register 페이지에서 수정 완료 버튼을 눌렀을때, 업데이트문 실행하고, 게시글목록을 띄움
 	@PostMapping("/update")
 	public String update(BoardDTO bDto) {
 		log.info(">>>>>>>>>@PostMapping /update (bDto) 게시글이 수정되었습니다");
 		log.info(bDto.toString());
+		
 		bService.update(bDto);
-		return "redirect:/board/list";
+		return "redirect:/board/view/" + bDto.getBno();
 	}
-
+	
+	
+	
+	//답글 버튼 눌렀을때 동작
+	@GetMapping("/answer")
+	public String answerBoard(BoardDTO bDto, Model model) {
+		log.info("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶GET 답글 (화면단 액션)");
+		bDto = bService.boardView(bDto.getBno());  //bno 를 받아서, 그 값으로 boardView 를 실행
+		
+		String newContent = "<p style='font-size:20px; font-weight:bold;'>====== 이전 게시글내용 ======</p>" +
+				bDto.getView_content() + 
+				"<br><p style='font-size:20px; font-weight:bold;'>=================================================</p>";
+		bDto.setView_content(newContent);
+		
+		// 답글을 원하는 게시글의 정보를(1줄) 원함
+		model.addAttribute("bDto", bDto);
+		model.addAttribute("flag", "answer");
+		return "board/register";
+	}
+	//답글 전부 작성후, 답글 버튼을 눌렀을때
+	@PostMapping("/answer")
+	public String answerBoard(BoardDTO bDto) {
+		log.info("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶@PostMapping(/answer) 답글 (데이터 액션)");
+		
+		// 현재상태: 답글(bno(메인게시글), 타입, 제목, 내용, 작성자)
+		log.info("답글DTO: " + bDto.toString());
+		
+		// 현재상태: 메인(ALL, ref, re_level, re_step)
+		BoardDTO prevDto = bService.boardView(bDto.getBno());
+		log.info("메인DTO: " + prevDto.toString());
+		
+		// 현재상태: 답글(bno(메인게시글), 타입, 제목, 내용, 작성자,
+		//				  ref(메인), re_level(메인), re_step(메인))
+		bDto.setRef(prevDto.getRef());
+		bDto.setRe_level(prevDto.getRe_level());
+		bDto.setRe_step(prevDto.getRe_step());
+		
+		bService.answer(bDto);
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		log.info(bDto.toString());
+		
+		// ref, re_step, re_level
+		// ref = 그대로 메인게시글 ref C&P
+		// re_level = 메인게시글 re_level + 1
+		// re_step = 메인게시글 re_step + 1
+		return "redirect:/board/view/" + bDto.getBno();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }// class 종료

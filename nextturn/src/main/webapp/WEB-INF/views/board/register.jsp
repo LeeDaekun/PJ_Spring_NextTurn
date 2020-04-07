@@ -40,6 +40,7 @@
 			padding:10px 10px;
 			width: 100%;
 			outline: none;
+			border: 1px solid #a9a9a9;
 		}
 
 		.align_top{
@@ -204,7 +205,7 @@
 
 
 /* 라디오버튼 꾸미기 */
-	input[type=radio] {display: none;}
+	input[type=radio] {display: none;} /* 원형 라디오 버튼 숨김 */
 	
 	input[type=radio] + label{
   	word-wrap: break-word;
@@ -294,10 +295,10 @@
 						<td>게시판 선택</td>
 						<td>
 							<div class="input_wrap"> <%-- 스프링 폼태그가 벨류값에 있는 글자를 가져감 --%>
-								<input type="radio" id="ra_a" name="type" value="free" checked><label for="ra_a">자유게시판</label>
-								<input type="radio" id="ra_b" name="type" value="qna"><label for="ra_b">문의하기</label>
-								<input type="radio" id="ra_c" name="type" value="trad"><label for="ra_c">중고거래</label>
-								<input type="radio" id="ra_d" name="type" value="revi"><label for="ra_d">게임후기</label>
+								<input type="radio" id="ra_a" name="type" value="free" checked>	<label for="ra_a">자유게시판</label>
+								<input type="radio" id="ra_b" name="type" value="qna">	<label for="ra_b" >문의하기</label>
+								<input type="radio" id="ra_c" name="type" value="trad">	<label for="ra_c">중고거래</label>
+								<input type="radio" id="ra_d" name="type" value="revi">	<label for="ra_d">게임후기</label>
 							</div>
 						</td>
 					</tr>
@@ -340,10 +341,15 @@
 
  	
 	<script type="text/javascript">
+		//답글기능
+		var flag = '${flag}';
+		console.log('flag: ' + flag);
+		//------------------------------------------------
+		
 		$(function(){
 			// register ==> 게시글 등록과 게시글 수정
-			// ${bDto}에 값이 있으면 수정페이지 로딩!
-			if('${bDto}' != '') {	//받아온 값이 있으면 수정페이지로
+				if(flag == 'update') {
+			//수정 눌렀을때 디자인 변경■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				$('#bno_modify').text('게시글 수정')
 								.css('color','#F39C12');
 				$('.orderby_row').css('background-color','#F39C12')
@@ -353,9 +359,28 @@
                 //라디오 버튼 값 불러오기
               	$("input:radio[name='type']:radio[value='${bDto.type}']").prop('checked', true);
 				//인풋의 라디오에서 [이름이 type 인것]
-  			}
+  			
+			//답글 눌렀을때 디자인 변경■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				} else if(flag == 'answer') {
+				
+				$('#bno_modify').text('게시글에 답변달기')  //상단 타이틀 변경
+								.css('color','#3498db');
+				$('.orderby_row').css('background-color','#3498db');  
+				
+				//  라디오버튼창       게시글 제목창  css 회색으로 변경
+				$('.input_wrap, #board_title').css('background','#d8d8d8');
+								
+				$('#board_title').val('└RE:'+'${bDto.title}')  //제목줄에 re: 라고 붙임
+								.attr('readonly', 'readonly');
+				     		
+               //라디오 버튼 값 불러오기  //인풋의 라디오에서 [이름이 type 인것]
+              	$("input:radio[name='type']:radio[value='${bDto.type}']").prop('checked', true);
+              	$("[name='type']:not(:checked)").attr('disabled', 'disabled');  //체크된것 이외에 전부 디서블
+              	
+              //버튼을 답글 버튼으로 변경
+              	$('#y_btn').text('답글').css('background','#3498db');
+			}
 		});
-		
 		
 		
 	//리퍼럴이 비정상경로일 경우 대처방법
@@ -388,14 +413,10 @@
 			} else {
 				 // 에디터의 내용이 textarea에 적용된다.
 				 oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
-
 				var view_content = $('#board_content').val();
-				
-				
 				
 				//검색어 정규식 (게시글 검색시 태그는 검색할 수 없게함)
 				var search_content = view_content.replace(/(<([^>]+)>)/ig, "").replace("&nbsp;", ""); //태그가 들어간값의 내용을 다 지워주세요 (태그를 제거하는 정규식)
-				
 				
 				//append 는 폼태그가 끝나는 지점에 이것을 넣어준다.
 				$('#frm_board').append('<textarea id="search_content" name="search_content"></textarea>');  //사용자가 입력한 폼값에, 택스트에리어를 붙인다.
@@ -417,7 +438,6 @@
 
 		});
 	</script>
- 
  
  
  

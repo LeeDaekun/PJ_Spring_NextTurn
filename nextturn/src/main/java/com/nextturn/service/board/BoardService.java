@@ -33,6 +33,9 @@ public interface BoardService {
 
 	//게시글 수정 (sql update)
 	public void update(BoardDTO bDto);
+	
+	//게시글에 답글 달기
+	public void answer(BoardDTO bDto);
 
 	
 	

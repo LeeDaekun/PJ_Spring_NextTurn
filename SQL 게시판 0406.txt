@@ -17,27 +17,29 @@ CREATE TABLE tbl_board(
     bno NUMBER(10, 0),  --
     type CHAR(4) NOT NULL,  --게시판 타입
     title VARCHAR2(200) NOT NULL, --제목
-    
     view_content VARCHAR2(4000) NOT NULL,  --========== 04.06 추가
     search_content VARCHAR2(4000) NOT NULL, --========= 04.06 추가
-    
-   
     writer VARCHAR2(50) NOT NULL,  --작성자
     viewcnt NUMBER DEFAULT 0,  --조회수
     replycnt NUMBER DEFAULT 0,  -- 댓글수
     goodcnt NUMBER DEFAULT 0,  --좋아요
     regdate DATE DEFAULT SYSDATE,  -- 작성일
     updatedate DATE DEFAULT SYSDATE,  --수정일
-    show CHAR(1) DEFAULT 'y'  -- 로그인해야 보여주는거
+    show CHAR(1) DEFAULT 'y',  -- 로그인해야 보여주는거
+    ref NUMBER DEFAULT 1,            --답글이 달릴 게시글 번호
+    re_step NUMBER DEFAULT 1,        -- 답글의 총갯수 (하나씩 밀려나가기도함)
+    re_level NUMBER DEFAULT 0        -- 답글의 깊이 (답글의 답글인지, 답글의 답글의 답글인지 확인)
 );
+-- 게시판 테이블 PK Key 추가 (pk_board 라는 제약조건을 등록하기위해서 제약조건을 누르면 확인할 수 있음, 나중에 데이터가 복잡할것 같아서 이렇게 해놓는다)
+ALTER TABLE tbl_board ADD CONSTRAINT pk_board
+PRIMARY KEY(bno);
 commit;
+
 --==========================================
 
 
 --=============================================================
--- 게시판 테이블 PK Key 추가
-ALTER TABLE tbl_board ADD CONSTRAINT pk_board
-PRIMARY KEY(bno);
+
 
 --                                               게시판 타입
 -- 게시물 총 15건 추가! ref=1, re_step=1, re_level=0 type, writer=가입한 유저

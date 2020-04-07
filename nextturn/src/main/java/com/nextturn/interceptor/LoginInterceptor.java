@@ -32,9 +32,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		log.info("인터셉터 실행중");
 		
 	// Session 객체 생성
-		HttpSession session = request.getSession(); 
-		String referer = request.getHeader("referer"); //이동하기 전에 있었던, 이전페이지 URL (/board/list)
-		log.info("인터셉터★★★★ 이전 url : " + referer); //이동하려고 했던 Page URL
+		HttpSession session = request.getSession(); //공용저장소를 겟세션으로 생성해준다. 공용세션의 이름은 session 이다.
+		String referer = request.getHeader("referer"); //★이동하기 전★에 있었던, 이전페이지 URL 을 가져오려면 request.getHeader("referer") 이 명령어가 필요
+		log.info("인터셉터★★★★ 이전 url : " + referer); //
+		
+		String qString = request.getQueryString(); //리퀘스트 명령어 getQueryString 은, ★★진행하려고하는 url의 쿼리스트링!!★★ 만 받아오는 명령어
+		log.info(">>>>> queryString: " + qString); //
 	
 		// 구별하기
 		// referer = [http://localhost:8081/nextturn/board/list]
@@ -42,14 +45,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		//url uri 의 차이는, url은 풀주소이고 		//uri 는 컨텍스트 루트 다음부터를 말함 (8081 다음부터)
 		String uri = request.getRequestURI(); 	       // uri = [/nextturn/board/write]   //URI 는 내가 가려고하는 페이지, 다음페이지 URL (
 		String ctx = request.getContextPath(); 		   // ctx = [/metop]   (ctx는 Context-root 를 의미함, ctx= /nextturn)
-		String nextUrl = uri.substring(ctx.length());  //nextUrl = [/board/write]
-		String prevUrl = "";
+		String nextUrl = uri.substring(ctx.length());  //nextUrl = [/board/write]  (uri에서  ctx 길이만큼, 앞주소를 자름) 
+		String prevUrl = "";    //아래에서 쓸력 이전 주소를 초기화시킨다
 		String finalUrl = "http://localhost:8081/nextturn/";  //비정상 접근일 경우 index 페이지로 보내려고 이 변수를 만듬
 		
 	//비정상적인 URL 로 접근 했을 경우 (URL을 저장해놨다가 접속한경우)
 		if(referer == null) {	//url을 바로치고 들어왔다면, 리퍼럴은 항상 널이다. (네이버에서 url로 게시글 등록을 시도하는 그런 경우)
 			log.info("WARNING>> 비정상적인 접근 :(");
-			response.sendRedirect(finalUrl);
+			response.sendRedirect(finalUrl);  //비정상적인 접근했을때 위에 적어둔 주소로 강제로 보냄
 			return false;
 			
 		} else {							       //리퍼럴값이 있을경우 else를 타고.http://localhost:8081/nextturn/board/list 
@@ -89,6 +92,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			// jstl el태그로 모델 꺼내는것처럼 꺼내면된다
 			FlashMap fMap = RequestContextUtils.getOutputFlashMap(request);
 			fMap.put("message", "nologin");
+			
+			if(qString != null) {   //쿼리스트링이 널이 아니면 (값이 있으면)
+				uri = uri + "?" + qString;  //uri에 쿼리스트링을 더함 (uri는 예) /board/list
+				//url : http://localhost:8081/nextturn/board/answer
+				//uri :                      /nextturn/board/answer
+				//ctx :						 /nextturn
+				
+			}
+						
 			fMap.put("uri", uri);
 			RequestContextUtils.saveOutputFlashMap(referer, request, response);
 			response.sendRedirect(referer);
