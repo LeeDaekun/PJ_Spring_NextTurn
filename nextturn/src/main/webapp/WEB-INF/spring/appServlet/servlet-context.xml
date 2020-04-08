@@ -77,5 +77,14 @@
 	<!-- aop의 설정으로 Proxy 객체를 자동으로 생성 -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
-	
+	<!-- 파일 업로드 관련 설정 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 파일업로드 최대 용량(byte) -->
+		<beans:property name="maxUploadSize" value="10485760"/>  <!-- 이건 한번에 올릴수 있는 사이즈 이다 10485760은 10MB 를 말함 -->
+	</beans:bean>
+	<!-- 파일업로드를 위한 디렉토리 설정 -->
+	<!-- String uploadPath=new String("d:/upload"); -->
+	<beans:bean id="uploadPath" class="java.lang.String">  <!-- id="uploadPath"라는 이름으로 가져온다 -->
+		<beans:constructor-arg value="c:/developer/upload"/>  <!-- 업로드된 파일은 여기에 저장된다 Local 경로-->
+	</beans:bean>
 </beans:beans>

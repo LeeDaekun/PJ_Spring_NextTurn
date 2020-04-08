@@ -203,7 +203,6 @@
 			visibility: hidden;
 		}
 
-
 /* 라디오버튼 꾸미기 */
 	input[type=radio] {display: none;} /* 원형 라디오 버튼 숨김 */
 	
@@ -245,6 +244,24 @@
 	text-align: center; 
 	line-height: 13px;
 	} 
+/* 선생님 첨부파일 =================================================================== */
+	.form-group{
+		align-items: flex-start;
+	}
+	
+	.form-group > label {
+		margin-top: 10px;
+	}
+	.form-group .board_div{
+		border: 1.5px dashed #dadada;
+		text-align: center;
+		height: 150px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #515151;
+		font-size: 15px;
+	}
 
 </style>
 
@@ -326,6 +343,14 @@
 					</tr>
 				</table>
 				
+			<!-- 게시글 첨부파일 선생님꺼 -->
+				<div class="input_wrap form-group">
+					<div class="board_div fileDrop">
+						<p><i class="fas fa-paperclip"></i>첨부파일을 드래그 해주세요</p>
+					</div>
+				<ul class="mailbox-attachments clearfix uploadedList"><li></ul>
+				</div>
+				
 				<div class="button_align">
 					<span>
 						<button type="button" class="write_btn" id="n_btn" style="background: #e44444;">취소</button>
@@ -380,7 +405,42 @@
               //버튼을 답글 버튼으로 변경
               	$('#y_btn').text('답글').css('background','#3498db');
 			}
-		});
+			
+			// 1.웹브라우저에 drag&drop시 파일이 열리는 문제(기본 효과)
+			//   : 기본효과 막음!
+
+				$('.fileDrop').on('dragenter dragover', function(e){	//fileDrop 클래스에 드래그 했을때 동작
+					e.preventDefault();
+				});
+			
+				// 2. 사용자가 파일을 drop했을때
+				$('.fileDrop').on('drop', function(e){
+					e.preventDefault();
+				
+					var files = e.originalEvent.dataTransfer.files;	// 드래그에 전달된
+					var file = files[0];	// 그중 하나만 꺼내옴 
+					
+					var formData = new FormData();	// 폼 객체 생성
+						formData.append('file', file);	// 폼에 파일 1개 추가!
+					
+					// 서버에 파일 업로드
+					// 화면단 전환이 없어야해서
+					$.ajax({
+						url:'${path}/upload/uploadAjax',   //첨부파일은 여기를 통해서 간다
+						data: formData,  //위에 var formData를 받아서 전송
+						datatype: 'text',  //서버에서 받는거를 말한다. (이 줄은 지워도 상관없다)
+						processData: false,  //이걸 false 를 하면, 쿼리스트링 방식을 안쓰고 데이터를 보낸다. (쿼리스트링 쓰지말라고 적음)
+						contentType: false,  //화면단에서 서버로 보내는 역할을 한다. false 라고하면 서버에 보낼때 'multipart'라고 하는 타입으로 보낸다
+						type: 'POST',  //get은 url 길이 제한이 있기때문에 post 로 보내야 대용량 전송가능 (첨부파일을 get으로 보내면 바보)
+						success: function(data){
+							console.log(data);
+							// data: 업로드한 파일 정보와 http 상태 코드
+							printFiles(data);	// 첨부파일 출력 메서드 호출
+						}
+					});
+				});
+				
+			});  //$(function(){ 종료
 		
 		
 	//리퍼럴이 비정상경로일 경우 대처방법
