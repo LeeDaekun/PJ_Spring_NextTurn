@@ -14,7 +14,7 @@ import com.nextturn.service.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/login")  //리퀘스트 매핑은 Get Post를 둘다 탄다.. 목적지 가려면 맵핑을 두번 타야하네
 @Slf4j
 @Controller
 public class LoginController {
@@ -22,6 +22,7 @@ public class LoginController {
 	
 	@Autowired
 	LoginService lService;  //서비스단을 만들어야 에러가 사라짐
+	
 	
 	@PostMapping("/in")
 	public Integer logIn(MemberDTO mDto, HttpSession session) {  //httpsession 은 서버에 저장된다 로그인 정보값을 계속 기억하고있음(세션어트리뷰트, 쿠키의 친구)

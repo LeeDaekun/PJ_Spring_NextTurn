@@ -6,7 +6,11 @@
 <html>
 <head>
 	<title>게시글 작성</title>
-		<!-- 서치박스 스크립트 -->
+	
+	<!-- 첨부파일 할때 작성한 스크립트 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+	
+	<!-- 서치박스 스크립트 -->
 	<script src="https://kit.fontawesome.com/1aa6bb9bc2.js" crossorigin="anonymous"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="../../css/common.css"> -->
 
@@ -43,7 +47,7 @@
 			border: 1px solid #a9a9a9;
 		}
 
-		.align_top{
+		.align_top{  /*글자 상단 정렬*/
 			vertical-align: top;
 		    line-height: 40px;
 		}
@@ -73,16 +77,7 @@
 			outline: none;  
 			border-spacing: 0;
 		} */
-		.attach_div{
-		    border: 2px dashed #bbbbbb;
-		    text-align: center;
-		    height: 130px;
-		    display: flex;
-		    align-items: center;
-		    justify-content: center;
-		    color: #515151;
-		    background-color: white;
-		}
+
 		
 /* ======버튼===================================== */
 		.write_btn{
@@ -244,7 +239,7 @@
 	text-align: center; 
 	line-height: 13px;
 	} 
-/* 선생님 첨부파일 =================================================================== */
+/* 첨부파일 =================================================================== */
 	.form-group{
 		align-items: flex-start;
 	}
@@ -336,40 +331,57 @@
 		
 					<tr>
 						<td class="align_top">첨부파일</td>
-						<td><div class="attach_div">
-							<p><i class="fas fa-paperclip"></i> 첨부파일을 드래그 해주세요.</p>
+						<td>
+						<!-- 게시글 첨부파일 선생님꺼 -->
+						<div class="input_wrap form-group">
+							<div class="board_div fileDrop">
+								<p><i class="fas fa-paperclip"></i>첨부파일을 드래그 해주세요</p>
+							</div>
+						<ul class="mailbox-attachments clearfix uploadedList" style="display: flex"><li></ul>
+						</div>
+						
+						<div class="button_align">
+							<span>
+								<button type="button" class="write_btn" id="n_btn" style="background: #e44444;">취소</button>
+								<%-- 기본타입이 서브밋이기 때문에 취소는 속성을 바꿔야한다. 안그러면 이것도 전송기능이 되버림 --%>
+							</span>
+							<span><button type="button" class="write_btn" id="y_btn" style="background: #15ad6e;">등록</button></span>
 						</div>
 						</td>
 					</tr>
 				</table>
 				
-			<!-- 게시글 첨부파일 선생님꺼 -->
-				<div class="input_wrap form-group">
-					<div class="board_div fileDrop">
-						<p><i class="fas fa-paperclip"></i>첨부파일을 드래그 해주세요</p>
-					</div>
-				<ul class="mailbox-attachments clearfix uploadedList"><li></ul>
-				</div>
-				
-				<div class="button_align">
-					<span>
-						<button type="button" class="write_btn" id="n_btn" style="background: #e44444;">취소</button>
-						<%-- 기본타입이 서브밋이기 때문에 취소는 속성을 바꿔야한다. 안그러면 이것도 전송기능이 되버림 --%>
-					</span>
-					<span><button type="button" class="write_btn" id="y_btn" style="background: #15ad6e;">등록</button></span>
-				</div>
+			
 			</form:form>
 	
 	
 		</div>
 	</div>
-
- 	
+</body>
+<!-- 이 스크립트에 {{}} 에 있는데, 여기에 값들이 다 채워지면서, 첨부파일이 올라간 애들이 나오게됨 -->
+ <script id="fileTemplate" type="text/x-handlebars-template">
+		<li>
+			<div class="mailbox-attachment-icon has-img">
+				<center><img src="{{imgSrc}}" alt="Attachment" class="s_img"></center>
+			</div>
+			<div class="mailbox-attachment-info">
+				<a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+					<i class="fa fa-paperclip"></i> {{originalFileName}}
+				</a>
+				<span class="btn btn-default btn-xs pull-right delBtn" data-src="{{basicFileName}}">
+					<i class="fas fa-times"></i>
+				</span>
+			</div>
+		</li>
+	</script>
 	<script type="text/javascript">
-		//답글기능
 		var flag = '${flag}';
 		console.log('flag: ' + flag);
-		//------------------------------------------------
+		
+		//--------------------------------------------------------------------------
+		// Handlebars 파일템플릿 컴파일 (라이브러리, 파일 첨부할때 만듬)
+		var fileTemplate = Handlebars.compile($("#fileTemplate").html());
+		//--------------------------------------------------------------------------
 		
 		$(function(){
 			// register ==> 게시글 등록과 게시글 수정
@@ -410,30 +422,33 @@
 			//   : 기본효과 막음!
 
 				$('.fileDrop').on('dragenter dragover', function(e){	//fileDrop 클래스에 드래그 했을때 동작
-					e.preventDefault();
+					e.preventDefault();  //드래그시 기본동작을 막음 (실행하지 못하게)
 				});
 			
 				// 2. 사용자가 파일을 drop했을때
 				$('.fileDrop').on('drop', function(e){
-					e.preventDefault();
+					e.preventDefault();	//드래그시 기본동작을 막음 (실행하지 못하게)
 				
-					var files = e.originalEvent.dataTransfer.files;	// 드래그에 전달된
-					var file = files[0];	// 그중 하나만 꺼내옴 
+					var files = e.originalEvent.dataTransfer.files;	// 5개의 파일을 드래그 했다면, 배열로 5개 들어간다
+					var file = files[0];	// 그중 0번지 배열만 뽑아온다 
 					
 					var formData = new FormData();	// 폼 객체 생성
-						formData.append('file', file);	// 폼에 파일 1개 추가!
+						formData.append('file', file);	// 폼에 파일 1개 추가! key값 file 로 꺼낼 수 있음
 					
-					// 서버에 파일 업로드
-					// 화면단 전환이 없어야해서
+					// 서버에 파일 업로드(화면단 전환이 없어야 해서 Ajax 사용)
 					$.ajax({
 						url:'${path}/upload/uploadAjax',   //첨부파일은 여기를 통해서 간다
-						data: formData,  //위에 var formData를 받아서 전송
+						data: formData,  //위에 var formData를 받아서 전송 
 						datatype: 'text',  //서버에서 받는거를 말한다. (이 줄은 지워도 상관없다)
 						processData: false,  //이걸 false 를 하면, 쿼리스트링 방식을 안쓰고 데이터를 보낸다. (쿼리스트링 쓰지말라고 적음)
-						contentType: false,  //화면단에서 서버로 보내는 역할을 한다. false 라고하면 서버에 보낼때 'multipart'라고 하는 타입으로 보낸다
-						type: 'POST',  //get은 url 길이 제한이 있기때문에 post 로 보내야 대용량 전송가능 (첨부파일을 get으로 보내면 바보)
-						success: function(data){
-							console.log(data);
+						contentType: false,  //화면단에서 서버로 보내는 역할을 한다. false 라고하면 서버에 보낼때 'multipart'라고 하는 타입으로 바뀐다. (이건 반드시 셋팅 필요)
+											 //멀티파트란? 확장팩 개념 , 첨부파일을 받으려면, multi 파트로 바꿔줘야한다. (첨부파일을 스트링타입이 아니라, 멀티파트 타입으로 바꿈)
+											 //servlet-context 에 멀티파트 리졸버가 빈즈로 등록되있음
+						type: 'POST',  //get은 url 길이 제한이 있기때문에 post 로 보내야 대용량 전송가능(post 강제사항이다) (첨부파일을 get으로는 보낼 수 없음)
+										//get은 헤더에 담에서 보내는데, 헤더는 길이 제한이 있어서 설정값만 보내는거고
+										//post는 바디에 담아서 보내는데, 용량이 큰 파일들을 보낸다
+						success: function(data){  //url 실행되고 리턴된 데이터는 여기로 받음 (위에 데이터 타입을 text 라고 적어놨는데 그걸 받음) 
+							console.log(data); //콘솔에 /2020/04/09/s_alksjfiaef_그림.jpg 이런식으로 들어와야함 (썸네일 이미지)
 							// data: 업로드한 파일 정보와 http 상태 코드
 							printFiles(data);	// 첨부파일 출력 메서드 호출
 						}
@@ -442,6 +457,124 @@
 				
 			});  //$(function(){ 종료
 		
+				
+				
+				
+			// 파일 정보 처리
+			function getFileInfo(fullName) {
+				var originalFileName;	// 화면에 출력할 파일명
+				var imgSrc;				// 썸네일 or 파일아이콘 이미지 파일
+				var originalFileUrl;	// 원본파일 요청 URL
+				var uuidFileName;		// 날짜경로를 제외한 나머지 파일명(UUID)
+				var basicFileName = fullName;	// 삭제시 값을 전달하기 위한 파일
+				
+				// 이미지 파일이면
+				if(checkImageType(fullName)) {
+					imgSrc = "${path}/upload/displayFile?fileName=" + fullName;	// 썸네일 이미지 링크
+					uuidFileName = fullName.substr(14);
+					var originalImg = fullName.substr(0, 12) + fullName.substr(14);
+					// 원본 이미지 요청 링크
+					originalFileUrl = "${path}/upload/displayFile?fileName=" + originalImg;
+				} else {
+					imgSrc = "${path}/resources/img/file-icon.png";	// 파일 아이콘 이미지 링크
+					uuidFileName = fullName.substr(12);
+					// 파일 다운로드 요청 링크
+					originalFileUrl = "${path}/upload/displayFile?fileName=" + fullName;
+				}
+				originalFileName = uuidFileName.substr(uuidFileName.indexOf("_") + 1);
+				// 전체 파일명의 크기가 14보다 작으면 그대로 이름 출력,
+				// 14보다 크면 실행
+				if(originalFileName.length > 14) {
+					// 앞에서부터 11글자 자름
+					var shortName = originalFileName.substr(0, 10);
+					// .을 기준으로 배열 생성
+					var formatVal = originalFileName.split(".");
+					// formatVal = originalFileName.substr(originalFileName.length-3)
+					// 파일명에 .이 여러개 들어가 있을수도 있음
+					// 배열크기를 구해와서 무조건 맨 마지막 확장자부분 출력되게 함
+					var arrNum = formatVal.length - 1;
+					// 맨 처음 문자열 10글자 + ... + 확장자
+					originalFileName = shortName + "..." + formatVal[arrNum];
+				}
+				return {originalFileName: originalFileName, imgSrc: imgSrc, originalFileUrl: originalFileUrl, fullName: fullName, basicFileName: basicFileName}
+			}
+			
+			// 첨부파일 출력
+			function printFiles(data) {
+				// 파일 정보 처리
+				var fileInfo = getFileInfo(data);
+				console.log(fileInfo);  //콘솔에 파일정보를 불러옴
+				// Handlebars 파일 템플릿에 파일 정보들을 바인딩하고 HTML 생성
+				var html = fileTemplate(fileInfo); //파일탬플릿 은, 이미지 올라갔을때 이미지가 뜰공간을 HTML 로 만들어 놓은것
+				html += "<input type='hidden' class='file' value='"	+fileInfo.fullName+"'>";
+				// Handlebars 파일 템플릿 컴파일을 통해 생성된 HTML을 DOM에 주입
+				$(".uploadedList").append(html); //업로드 리스트에 html을 주입시킴
+				// 이미지 파일인 경우 aaaaaaaaaaa파일 템플릿에 lightbox 속성 추가
+				if(fileInfo.fullName.substr(12, 2) === "s_") {
+					// 마지막에 추가된 첨부파일 템플릿 선택자
+					var that = $(".uploadedList li").last();
+					// lightbox 속성 추가
+					that.find(".mailbox-attachment-name").attr("data-lightbox", "uploadImages");
+					// 파일 아이콘에서 이미지 아이콘으로 변경
+					that.find(".fa-paperclip").attr("class", "fa fa-camera");
+				}
+			}
+					
+			function getOriginalName(fileName) {
+				if(checkImageType(fileName)) {	// 이미지 파일이면 skip
+					return;
+				}
+				var idx = fileName.indexOf("_") + 1; // uuid를 제외한 파일이름
+				return fileName.substr(idx);
+			}
+			function getImageLink(fileName) {
+				if(!checkImageType(fileName)) { // 이미지 파일이 아니면 skip
+					return;
+				}
+				var front = fileName.substr(0, 12);	// 연월일 경로
+				var end = fileName.substr(14);	// s_ 제거
+				return front+end;
+			}
+			function checkImageType(fileName) {
+				var pattern=/jpg|gif|png|jpeg/i; // 정규표현식(대소문자 무시)
+				return fileName.match(pattern);	// 규칙에 맞으면 true
+			}
+			
+			// 첨부파일 리스트를 출력하는 함수
+			function listAttach() {
+				var listCnt = 0;
+				$.ajax({
+					type: "post",
+					url: "${path}/board/getAttach/${one.bno}",
+					async: false,
+					success: function(list) {
+						// list : json
+						// console.log(list);
+						listCnt = list.length;
+						
+						/* console.log(list.length); */
+						/*
+							jQuery each()는 반복문
+							i와 e는 index와 element로
+							json에서 { 0: "apple.png" }일 때
+							index는 0, element는 apple.png가 됨
+						*/
+						$(list).each(function(i, e){
+							/* console.log(list) */
+							printFiles(e); // 첨부파일 출력 메서드 호출
+						});
+					}
+				});
+				return listCnt;
+			}
+				
+				
+			
+			
+			
+				
+				
+				
 		
 	//리퍼럴이 비정상경로일 경우 대처방법
 		$(document).on('click', '#n_btn', function(){  //write_btn 클릭시 동작
@@ -460,6 +593,9 @@
 				alert(index);
 			}
 		});
+	
+	
+	
 	
 	//게시글등록 에서 등록버튼을 눌렀을때 유효성체크
 		$(document).on('click', '#y_btn', function(){
@@ -512,5 +648,4 @@
 		});
 	</script>
  
-</body>
 </html>

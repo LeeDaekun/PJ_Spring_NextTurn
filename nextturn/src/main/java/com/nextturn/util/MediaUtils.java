@@ -17,7 +17,8 @@ public class MediaUtils {
 	}
 	public static MediaType getMediaType(String type) {
 		// toUpperCase() 대문자로 변환
-		return mediaMap.get(type.toUpperCase());
+		return mediaMap.get(type.toUpperCase());   //위에 "JPG" "GIF" "PNG" 이런걸 가져옴
+		                        //대문자 변환
 	}
 }
 
