@@ -333,8 +333,8 @@
 						<td class="align_top">첨부파일</td>
 						<td>
 						<!-- 게시글 첨부파일 선생님꺼 -->
-						<div class="input_wrap form-group">
-							<div class="board_div fileDrop">
+						<div class="input_wrap form-group fileDrop">
+							<div class="board_div ">
 								<p><i class="fas fa-paperclip"></i>첨부파일을 드래그 해주세요</p>
 							</div>
 						<ul class="mailbox-attachments clearfix uploadedList" style="display: flex"><li></ul>
@@ -454,6 +454,31 @@
 						}
 					});
 				});
+				
+			//첨부part3. 파일 첨부 후, 첨부파일에서 X 버튼을 눌렀을때
+				$('.uploadedList').on('click', '.delBtn', function(event){
+					var bno = '${one.bno}';
+					var that = $(this);//삭제시 태그 삭제됨
+					
+					if(bno == '') {	// 게시글 등록
+						$.ajax({
+							url: '${path}/upload/deleteFile',
+							type: 'POST',
+							data: {fileName: $(this).attr('data-src')},
+							success: function(data) { // success: data = 'deleted'
+								if(data == 'deleted') {
+									that.parents('li').remove();
+								}
+							}, error: function() {
+								alert('System Error!!!');
+							}
+						});
+					} else {		// 게시글 수정
+						
+					}
+				});
+				
+				
 				
 			});  //$(function(){ 종료
 		

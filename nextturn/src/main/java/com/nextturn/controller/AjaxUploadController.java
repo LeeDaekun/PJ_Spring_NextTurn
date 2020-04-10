@@ -1,5 +1,6 @@
 package com.nextturn.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,9 +74,9 @@ public class AjaxUploadController {
 				HttpHeaders headers = new HttpHeaders();
 				// InputStream 생성
 				in = new FileInputStream(uploadPath + fileName);
-					if(mType != null) { // 이미지 파일이면
-						headers.setContentType(mType);
-					} else { // 이미지가 아니면
+//					if(mType != null) { // 이미지 파일이면
+//						headers.setContentType(mType);
+//					} else { // 이미지가 아니면
 						fileName = fileName.substring(fileName.indexOf("_") + 1);
 						// 다운로드용 컨텐트 타입
 						headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -86,7 +88,7 @@ public class AjaxUploadController {
 									fileName.getBytes("utf-8"), "iso-8859-1") + "\"");
 						// headers.add("Content-Disposition"
 						// ,"attachment; filename='"+fileName+"'");
-					}
+//					}
 				// 바이트배열, 헤더
 				entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
 			} catch (Exception e) {
@@ -99,4 +101,39 @@ public class AjaxUploadController {
 			}
 			return entity;
 		}
+		
+		//첨부파일 part3.
+		@ResponseBody
+		@PostMapping("/upload/deleteFile")
+		public ResponseEntity<String> deleteFile(String fileName) {
+			log.info("fileName: " + fileName);
+			// fileName: /2020/04/10/s_8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg (span태그의 data-src)
+			
+			// 확장자 검사
+			String formatName = fileName.substring(fileName.lastIndexOf(".")+1);  //파일네임에서 뒤에서부터 .을 찾아서 jpg만 남기고 앞에 다 버림
+			
+			//확장자 확인하기 이미지인지 일반파일인지 보려고
+			MediaType mType = MediaUtils.getMediaType(formatName); //클래스확인 MediaUtils.getMediaType(formatName)
+			if(mType != null) { // 확장자가 이미지 파일이면 원본이미지 삭제
+				String front = fileName.substring(0, 12); //0~11번까지 사용하고, 나머지는 버림 _front: /2020/04/10/ 
+				String end = fileName.substring(14);  //14번 이후부터만 사용 (14이전은 버림) ____end: 8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg
+				// File.separatorChar : 유닉스 / 윈도우즈\
+				new File(uploadPath+(front+end).replace('/', File.separatorChar)).delete();
+				// new File   (c://developer/upload/ +  2020/04/10/ + 8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg 
+				// replace 하면  c:\\developer\ upload\2020\04\10\8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg (슬리시를 역슬러시로)
+				// delete >> c:\\developer\ upload\2020\04\10\8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg
+				// .delete 이제 삭제 (원본 이미지가 삭제됨)______윈도우만 역슬러시를 쓰기때문에 이 작업이 필요함
+			}
+			// 원본 파일 삭제(이미지이면 썸네일 삭제)
+			new File(uploadPath+fileName.replace('/', File.separatorChar)).delete();
+			// new File(c://developer/upload/2020/04/10/s_8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg)(썸네일 이미지)
+			// replace >> c:\\developer\ upload\2020\04\10\s_8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg
+			// delete >> c:\\developer\ upload\2020\04\10\s_8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg
+			
+			// 썸네일이미지 삭제 or 이미지가 아닌 첨부파일 삭제
+			return new ResponseEntity<String>("deleted", HttpStatus.OK);
+			// ResponseEntity: response의 설정값들을 디테일하게 바꾸고싶을때 사용
+		}
+		
+		
 }//class 종료
