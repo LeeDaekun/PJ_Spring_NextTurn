@@ -41,4 +41,7 @@ public interface BoardDAO {
 	
 	// re_step 수정
 	public void updateStep(BoardDTO bDto);
+	
+	// 첨부파일 등록
+	public void addAttach(@Param("fullName") String fullName);
 }

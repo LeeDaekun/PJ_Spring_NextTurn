@@ -131,4 +131,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer, ref, re_step, re_level)
 		VALUES(seq_board.NEXTVAL, #{type}, #{title}, #{view_content}, #{search_content}, #{writer}, #{ref}, #{re_step}, #{re_level})
 	</insert>
+	
+	<!-- 첨부파일 저장 -->
+	<insert id="addAttach">
+		INSERT INTO tbl_attach(fullName, bno)
+		VALUES(#{fullName}, seq_board.CURRVAL)
+	</insert>
 </mapper>

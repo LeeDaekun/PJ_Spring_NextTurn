@@ -642,7 +642,30 @@
 				//append 는 폼태그가 끝나는 지점에 이것을 넣어준다.
 				$('#frm_board').append('<textarea id="search_content" name="search_content"></textarea>');  //사용자가 입력한 폼값에, 택스트에리어를 붙인다.
 				$('#search_content').val(search_content);
-
+				
+				//--------------첨부파일 part3----------------------------------------------------------------
+				if(flag == 'answer') {
+					$('#board_title').val('${bDto.title}');
+				}
+				
+				// 첨부파일 목록[배열]도 추가
+				var str = '';
+				// uploadedList 내부의 .file 태그 각각 반복
+				$(".uploadedList .file").each(function(i){ // each = foreach  (.each 앞에 선택자 갯수만큼 반복하라는거)
+					console.log(i);
+					// hidden 태그 구성         //str 에는 첨부파일의 목록이 들어가있다
+					str += "<input type='hidden' name='files["+i+"]' value='" + $(this).val()+"'>";  //첨부파일 하나당 이 태그가 추가됨(숨겨짐)
+					
+				}); 
+				
+				// 로컬드라이브에 저장되어있는 해당 게시글
+				// 첨부파일 삭제
+				/*if(deleteFileList.length > 0) {
+					$.post('${path}/upload/deleteAllFile', {files:deleteFileList}, function(){});
+				}*/
+				
+				// 폼에 hidden 태그들을 붙임 
+				$("#frm_board").append(str); //frm_board 맨 마지막에 str(첨부파일 목록)을 붙여라
 				
 				// 서버로 전송
 				$('#frm_board').submit();	//스프링 폼태그 전송 (PostMapping으로)

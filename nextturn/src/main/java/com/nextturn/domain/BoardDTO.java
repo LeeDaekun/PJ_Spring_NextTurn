@@ -28,7 +28,7 @@ public class BoardDTO {
     private Date regdate;	//작성일자
     private Date updateDate;//수정일자
     private String show;	//게시글 삭제하면  실제 삭제하는게 아니고 show 를 n 으로 바꾼다
-    private String[] files;
+    private String[] files; //첨부파일을 몇개를 올릴지 모르니까 스트링 배열로 만듬
     private int ref;  		//답변그룹 번호
     private int re_step;	//답변 출력 순번
     private int re_level;	//답변 단계 (계층형)
