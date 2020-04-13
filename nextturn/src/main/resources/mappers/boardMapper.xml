@@ -137,4 +137,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO tbl_attach(fullName, bno)
 		VALUES(#{fullName}, seq_board.CURRVAL)
 	</insert>
+	
+	<!-- view에 첨부파일 목록 띄우기 -->
+	<select id="getAttach" resultType="String">
+		SELECT fullName FROM tbl_attach
+		WHERE bno = #{bno}
+		ORDER BY regdate DESC
+	</select>
 </mapper>

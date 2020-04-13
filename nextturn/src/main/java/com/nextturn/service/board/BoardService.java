@@ -36,7 +36,10 @@ public interface BoardService {
 	
 	//게시글에 답글 달기
 	public void answer(BoardDTO bDto);
-
+	
+	//해당 게시글 첨부파일 목록 출력
+	public List<String> getAttach(int bno);
+	
 	
 	
 

@@ -143,4 +143,12 @@ public class BoardServiceImpl implements BoardService{
 		bDao.answer(bDto);
 	}
 
+
+
+	@Override
+	public List<String> getAttach(int bno) {
+		// TODO Auto-generated method stub
+		return bDao.getAttach(bno);
+	}
+
 }

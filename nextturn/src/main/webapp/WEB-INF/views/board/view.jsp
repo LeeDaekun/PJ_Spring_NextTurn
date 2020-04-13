@@ -6,6 +6,9 @@
 <head>
 
 	<title>board</title>
+	<!-- 첨부파일 할때 작성한 스크립트 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
 	 <!-- 폰트어썸 아이콘 사용 스크립트 --> 
 	<script src="https://kit.fontawesome.com/fc5ae9294d.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
@@ -165,7 +168,24 @@
 			visibility: hidden;
 			text-align: end;
 		}
-
+/* 첨부파일 =================================================================== */
+	.form-group{
+		align-items: flex-start;
+	}
+	
+	.form-group > label {
+		margin-top: 10px;
+	}
+	.form-group .board_div{
+		border: 1.5px dashed #dadada;
+		text-align: center;
+		height: 150px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #515151;
+		font-size: 15px;
+	}
 </style>
 
 
@@ -240,9 +260,15 @@
 
 
 
-			
-			
-			</div> <!-- 컨텐츠공간 닫기 -->
+			<!-- 게시글 첨부파일 선생님꺼 -->
+					<div class="input_wrap form-group fileDrop">
+					<p><i class="fas fa-paperclip"></i>첨부파일</p>
+							<div class="board_div ">
+								<ul class="mailbox-attachments clearfix uploadedList" style="display: flex"><li></ul>
+							</div>
+						
+						</div>
+					</div> <!-- 컨텐츠공간 닫기 -->
 			
 			
 			
@@ -251,11 +277,46 @@
 
 	</div> <!-- view_wrap -->
 </body>
+
+
+<!-- 첨부파일 보여주기 (상단에 첨부파일 관련  스크립트가 있어야 사용할 수 있음, var fileTemplate 도 필요함) --> 
+<script id="fileTemplate" type="text/x-handlebars-template">
+		<li class="attachment_li">
+			<div class="mailbox-attachment-icon has-img">
+				<center><img src="{{imgSrc}}" alt="Attachment" class="s_img"></center>
+			</div>
+			<div class="mailbox-attachment-info">
+				<center>
+					<a href="{{originalFileUrl}}" class="mailbox-attachment-name">
+						<i class="fa fa-paperclip"></i> {{originalFileName}}
+					</a>
+				</center>
+			</div>
+		</li>
+	</script>
+<script src="${path}/resources/js/fileAttach.js"></script>
+
 <script type="text/javascript">
+	//--------------------------------------------------------------------------
+	// Handlebars 파일템플릿 컴파일 (라이브러리, 파일 첨부할때 만듬)
+	var fileTemplate = Handlebars.compile($("#fileTemplate").html());
+	//--------------------------------------------------------------------------
+	
+	$(function(){ // 문서가 로드가되면
+	// 첨부파일 목록 불러오기
+		var listCnt = listAttach('${path}','${bDto.bno}');  //출력시 /nextturn , bno
+
+	// 첨부파일 0건일때 '첨부파일 없음' 출력
+		console.log('FILE COUNT: ' + listCnt);
+		if(listCnt == 0) {
+			var text = '<span class="no_attach">첨부파일이 없습니다.</span>';
+			$('.uploadedList').html(text);
+		}
+	
+	
 	
 	//view 페이지가 실행되면, 댓글.jsp 를 무조건 띄우세요
 	//$(document).ready(function(){			});
-	$(function(){
 		var refresh_sec = 600000;  //60000=1분  , 600000 = 10분, 6000000=1시간
 		setInterval(refreshReply, refresh_sec); // setInterval = JS에 내장된함수
 		
