@@ -20,8 +20,13 @@ public class UploadFileUtils {
 		UUID uid = UUID.randomUUID(); // abc.txt 라는 파일이 중복될수 있어서 UUID 를 써서, 16자리 랜덤한값을 만들어서 파일이름을 생성해준다 (중복파일이름 해결)
 		String savedName = uid.toString() + "_" + originalName;
 		// 업로드할 디렉토리 생성
-		String savedPath = calcPath(uploadPath); // calcPath 는 캘린더의 줄임말이고, 파일이 날짜별로 정렬될 수 있게, 오늘날짜 폴더를 만들어준다. 예)20200408
-													// 폴더
+		
+		
+		//폴더작업 메서드
+		String savedPath = calcPath(uploadPath); // calcPath 는 캘린더의 줄임말이고, 아래에 메서드가 만들어져있음
+												 //파일이 날짜별로 정렬될 수 있게, 오늘날짜 폴더를 만들어준다. 예)20200408
+
+		//파일작업 
 		File target = new File(uploadPath + savedPath, savedName); // 파일 껍데기 만든다. (객체생성)
 		// 저장폴더 + 파일이름 조합시킴 ( d:/developer/2020/04/08/asdfe_냐냐냐_abc.txt )
 		// UUID
@@ -37,7 +42,7 @@ public class UploadFileUtils {
 		
 		
 		// 파일의 확장자 검사해서 그림이면 썸내일을 만들어야한다.
-		// a.jpg / aaa.bbb.ccc.jpg
+		// a.jpg / aaa.bbb.ccc.jpg                             라스트인덱스는 0부터 시작
 		String formatName = originalName.substring(originalName.lastIndexOf(".") + 1);
 		// lastIndexOf 는 뒤에서부터 . 이 어디있는지 찾는다. 점을 찾으면 점울 포함하여 .jpg의 값이 남음 (확장자 파악용)
 		String uploadedFileName = null;
@@ -45,30 +50,31 @@ public class UploadFileUtils {
 		if (MediaUtils.getMediaType(formatName) != null) {
 			// 썸네일 생성
 			uploadedFileName = makeThumbnail(uploadPath, savedPath, savedName);
+								//유저 메서드
 		} else {
 			uploadedFileName = makeIcon(uploadPath, savedPath, savedName);
+						      //유저 메서드
 		}
 		return uploadedFileName;
 	}
 
 	private static String calcPath(String uploadPath) {
-		Calendar cal = Calendar.getInstance(); // 오늘날짜 달력을 가져오는 명령어
+		Calendar cal = Calendar.getInstance(); // 오늘날짜 달력을 가져오는 명령어 (자바 지원명령어)
 
 		// \2020                   \
-		String yearPath = File.separator + cal.get(Calendar.YEAR);
+		String yearPath = File.separator + cal.get(Calendar.YEAR);  //오늘날짜에서 년도만 가져와라
 		// File.separator 는 구분자이고 구분할때는 / 슬러시를 쓴다. /2020
 		// yearPath 에는 /2020이 들어온다
 
 		// \2020\04 만드는거
 		String monthPath = yearPath + File.separator // monthPath는 /2020에 + / +
-				+ new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1); // 이번달을 가져오라고 하면 0부터 인식해서 +1을 해줘야 정확한 달이
-																				// 나온다
-
+				+ new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1); // 이번달을 가져오라고 하면 0부터 인식해서 +1을 해줘야 정확한 달이 나온다
+																				// 포맷팅을 00을 해줘야 04 이런식으로 들어온다 (안하면 4만 들어옴)
 		// \2020\04\08 만드는거 위에서부터 계속 받아오면서 여기서 완성됨
 		String datePath = monthPath + File.separator + new DecimalFormat("00").format(cal.get(Calendar.DATE));
 
-		//   
-		makeDir(uploadPath, yearPath, monthPath, datePath); // makeDir 도 메서드이다 아래에 만들어줘라.
+		//우리가 만든 makeDir 클래스    
+		makeDir(uploadPath, yearPath, monthPath, datePath); // makeDir 도 메서드이다 아래에 만들어줘라.년 월일 은 string ... paths 에서 받음
 		//     c:/developer/upload       \2020\04\08   이렇게 하위폴더를 계속 만듬            
 		return datePath;
 
@@ -79,14 +85,20 @@ public class UploadFileUtils {
 																		// 첫번째 매개변수는 uploadPath 이고, 두번째 매개변수는 String 이고배열로 만든다
 		// 디렉토리가 존재하면 skip // 위에서 쓴 여기에 makeDir(uploadPath, yearPath, monthPath,
 		// datePath); 이게 들어온다
-		if (new File(paths[paths.length - 1]).exists()) { // paths 마지막값을 꺼내옴 (0부터 시작하므로 -1해줘야함) .exists 는 파일이 있을때 하라는말.
-															// 폴더가 있으면 스톱
-			return;  //여기서 makeDir 메서드 끝~
+		
+		// 년월일의 [일]이 오늘날짜 폴더가 있는지 체크하는 if문
+		//오늘날짜 폴더가 생성되어 있다면, if를 탄다
+		//                 3-1=2  결과>> paths[2] = datePath(오늘일자)  
+		if (new File(paths[paths.length - 1]).exists()) {
+			// paths 마지막값을 꺼내옴 (0부터 시작하므로 -1해줘야함) .exists 는 파일이 있을때 하라는말.
+			return;  //return을 만나면 아래로 안가고 mkDir 메서드 종료
 		}
-
+		
+		//년 월 일 폴더를 만드는 작업을 하는 포문 (년폴더 만들고 > 월폴더 만들고 > 일폴더 만들고 (3회 반복) String...paths가 3개니까
 		// 여기 포문을 타면 오늘날짜 폴더를 생성함 (있으면 if를 안타서 폴더 생성을 안함) (하루에 처음올린 사람이 첫폴더를 만들고, 그걸 모두가 사용함)
-		for (String path : paths) {  //반복문
-			File dirPath = new File(uploadPath + path);
+		for (String path : paths) {  //반복문  (for int i=0, i<10, i++)
+									 //		for(path가 3개니까 3회반복)
+			File dirPath = new File(uploadPath + path);  //new File 은 경로를 확인하는 녀석
 			if (!dirPath.exists()) {
 				dirPath.mkdir(); // 디렉토리 생성
 			}

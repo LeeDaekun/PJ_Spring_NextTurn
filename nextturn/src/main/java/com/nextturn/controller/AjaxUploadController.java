@@ -31,19 +31,20 @@ public class AjaxUploadController {
 	@Autowired
 	BoardService bService;
 	
-	//업로드 디렉토리 servlet-context.xml에 설정되어 있
-	@Resource(name = "uploadPath")  //리소스는 이름으로 가져온다 (이름에 있는 값을 그대로 갔다주세요)
-	String uploadPath;
+	//업로드 디렉토리 servlet-context.xml에 설정되어 있는 uploadPath 를 가지고 대기중
+	@Resource(name = "uploadPath")  //리소스는 이름으로 가져온다 (이름에 있는 값을 그대로 갔다주세요)  @autowired 는 대상을 특정할수가 없어서 resource를 쓴다
+	String uploadPath;	//String 에는 이게 담긴다 c:/developer/upload 를 어노테이션 바로 밑에 있는 String 에 주입시킨다. 
+	 //c:/developer/upload 스트링은 이 내용을 담고있음
 	
 
 	
 		// Upload File 멀티파트파일에 Save
 		//리퀘스트 맵핑은 Get도 받고 post도 받을수 있다. 리퀘스트 맵핑이 두 맵핑의 업그레이드 버전이다 4버전부터 나왔나
-		@ResponseBody
+		@ResponseBody  //리턴으로 화면단을 정하는것이 아니고, 리턴으로 데이터만 보낼때 리스폰스 바디를씀
 		@RequestMapping(value="/upload/uploadAjax", produces="text/plain;charset=utf-8")  //파일을 utf 8로 받자 produces 문을 안써도 되긴하지만, 깨진다면 써줘야한다
 		  //ResponseEntity
-		public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception{  //멀미파트 파일로 받아야 한다 , throws Exception 은 예외처리를 던진다는말
-			// 업로드한 파일 정보와 Http 상태 코드를 함께 리턴
+		public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception{  //멀티파트 파일로 받아야 한다 , throws Exception 은 예외처리를 던진다는말
+			// 업로드한 파일 정보와 Http 상태 코드200번을 를 함께 리턴  (멀티파트 타입을 쓰니까 이거로 받아야함)
 			
 		                              //UploadFileUtils 클래스의 uploadFile 호출 (스태틱 메서드는 이렇게 호출만으로도 사용가능)
 			return new ResponseEntity<String> (UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.OK);
