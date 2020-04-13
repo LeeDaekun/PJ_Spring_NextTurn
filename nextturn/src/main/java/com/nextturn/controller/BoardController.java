@@ -124,6 +124,14 @@ public class BoardController {
 				
 		//log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■currval:"+bDto.getBno());  //방금 등록한 게시글 번호를 확인하기 위한것 CURRVAL
 		
+	//첨부파일 카운터
+		if(bDto.getFiles() == null) { // 첨부파일 NO
+			bDto.setFilecnt(0);
+		} else { // 첨부파일 YES
+			log.info("첨부파일 수: " + bDto.getFiles().length);
+			bDto.setFilecnt(bDto.getFiles().length);
+		}
+		
 		//int bno=bDto.getBno();
 		//model.addAttribute("bno",bno);
 		//return "redirect:/board/view/{bno}

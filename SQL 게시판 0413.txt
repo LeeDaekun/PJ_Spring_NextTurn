@@ -1,0 +1,144 @@
+-- 자유게시판
+-- QnA게시판
+-- 고객게시판
+-- 공지사항
+-- tbl_board 통합형 게시판
+-- type: free, qna, cs, noti
+
+-- 게시판 Sequence 생성
+DROP SEQUENCE seq_board;
+CREATE SEQUENCE seq_board
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+--=====================================
+DROP TABLE tbl_board CASCADE CONSTRAINTS;
+CREATE TABLE tbl_board(
+    bno NUMBER(10, 0),  --
+    type CHAR(4) NOT NULL,  --게시판 타입
+    title VARCHAR2(200) NOT NULL, --제목
+    view_content VARCHAR2(4000) NOT NULL,  --========== 04.06 추가
+    search_content VARCHAR2(4000) NOT NULL, --========= 04.06 추가
+    filecnt NUMBER DEFAULT 0, --첨부파일 갯수 04.13추가
+    writer VARCHAR2(50) NOT NULL,  --작성자
+    viewcnt NUMBER DEFAULT 0,  --조회수
+    replycnt NUMBER DEFAULT 0,  -- 댓글수
+    goodcnt NUMBER DEFAULT 0,  --좋아요
+    regdate DATE DEFAULT SYSDATE,  -- 작성일
+    updatedate DATE DEFAULT SYSDATE,  --수정일
+    show CHAR(1) DEFAULT 'y',  -- 로그인해야 보여주는거
+    ref NUMBER DEFAULT 1,            --답글이 달릴 게시글 번호
+    re_step NUMBER DEFAULT 1,        -- 답글의 총갯수 (하나씩 밀려나가기도함)
+    re_level NUMBER DEFAULT 0        -- 답글의 깊이 (답글의 답글인지, 답글의 답글의 답글인지 확인)
+);
+-- 게시판 테이블 PK Key 추가 (pk_board 라는 제약조건을 등록하기위해서 제약조건을 누르면 확인할 수 있음, 나중에 데이터가 복잡할것 같아서 이렇게 해놓는다)
+ALTER TABLE tbl_board ADD CONSTRAINT pk_board
+PRIMARY KEY(bno);
+commit;
+
+--==========================================
+
+
+--=============================================================
+
+
+--                                               게시판 타입
+-- 게시물 총 15건 추가! ref=1, re_step=1, re_level=0 type, writer=가입한 유저
+
+-- 게시물 총 15건 추가! 
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트1', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트2', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트3', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트4', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트5', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트6', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트7', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트8', '게시글6', '이대군');
+INSERT INTO tbl_board(bno, type, title, content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '넥스트턴 테스트9', '게시글6', '이대군');
+commit;
+
+SELECT * FROM tbl_board;
+SELECT * FROM tbl_member;
+
+UPDATE tbl_board
+SET writer = '이대군';
+
+commit;
+
+SELECT * FROM tbl_board
+WHERE bno = 500;
+
+
+--=======================================================================================
+-- 댓글 테이블 생성
+DROP SEQUENCE seq_reply;
+CREATE SEQUENCE seq_reply
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+    
+DROP TABLE tbl_reply CASCADE CONSTRAINTS;
+CREATE TABLE tbl_reply(
+    rno NUMBER,
+    type CHAR(4) NOT NULL,
+    content VARCHAR2(2000) NOT NULL,
+    writer VARCHAR2(100) NOT NULL,
+    regdate DATE DEFAULT SYSDATE,
+    bno NUMBER NOT NULL
+);
+commit;
+
+-- tbl_reply에 PK 제약조건 추가
+ALTER TABLE tbl_reply
+ADD CONSTRAINT pk_reply_rno
+PRIMARY KEY(rno);
+
+-- 댓글 FK 게시글과 참조, 게시글 삭제시 참조하고 있는 댓글 연쇄 삭제를 위한 cascade 설정
+ALTER TABLE tbl_reply
+ADD CONSTRAINT fk_reply_bno
+FOREIGN KEY(bno) REFERENCES tbl_board(bno)
+ON DELETE CASCADE;
+
+
+-- 상위 게시글 3건에다가 2건 ~ 3건 댓글
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글1이다', '이대군', 240);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글2이다', '조보훈', 240);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글3이다', '동비', 240);
+
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글1이다', '동비', 239);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글2이다', '조보훈', 239);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글3이다', '이대군', 239);
+
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글1이다', '조보훈', 238);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글2이다', '이대군', 238);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글3이다', '동비', 238);
+
+--========댓글 추가하기
+UPDATE tbl_board
+SET replycnt = replycnt +1
+WHERE bno = 406;
+
+SELECT *
+FROM tbl_board
+WHERE bno = 406;
+
+SELECT *
+FROM dual;

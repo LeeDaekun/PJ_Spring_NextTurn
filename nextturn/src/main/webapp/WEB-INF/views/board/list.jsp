@@ -339,6 +339,20 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
+					
+					
+										
+				 	<td>
+						<c:choose>
+							<c:when test="${showDTO.filecnt == 0}">
+								<span>없음</span>
+							</c:when>
+							<c:otherwise>
+								<span>${showDTO.filecnt}개</span>
+							</c:otherwise>
+						</c:choose>
+					</td>
+					
 				</tr>
 			</c:forEach>
 			

@@ -485,21 +485,7 @@
 		
 				
 				
-			
-			
-		
-					
-		
-			
-			
-				
-				
-			
-			
-			
-				
-				
-				
+	
 		
 	//리퍼럴이 비정상경로일 경우 대처방법
 		$(document).on('click', '#n_btn', function(){  //write_btn 클릭시 동작
