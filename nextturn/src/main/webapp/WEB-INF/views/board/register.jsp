@@ -318,7 +318,9 @@
 						
 					<tr>
 						<td>제목</td>
-						<td><input type="text" placeholder="제목을 입력하세요" id="board_title" name="title" value="${bDto.title}"> </td>
+						<td>
+							<input type="text" placeholder="제목을 입력하세요" id="board_title" name="title" value="${bDto.title}">
+						</td>
 					</tr>
 		
 					<tr>
@@ -385,7 +387,7 @@
 		//--------------------------------------------------------------------------
 		
 		$(function(){
-			// register ==> 게시글 등록과 게시글 수정
+			// register.jsp ==> [게시글 등록]_[게시글 수정]_[게시글 답변]}
 				if(flag == 'update') {
 			//수정 눌렀을때 디자인 변경■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				$('#bno_modify').text('게시글 수정')
@@ -416,7 +418,7 @@
               	$("[name='type']:not(:checked)").attr('disabled', 'disabled');  //체크된것 이외에 전부 디서블
               	
               //버튼을 답글 버튼으로 변경
-              	$('#y_btn').text('답글').css('background','#3498db');
+              	$('#y_btn').text('답글 작성완료').css('background','#3498db');
 			}
 			
 			// 1.웹브라우저에 drag&drop시 파일이 열리는 문제(기본 효과)
@@ -512,7 +514,6 @@
 		$(document).on('click', '#y_btn', function(){
 			// 유효성체크(제목)
 			var title = $('#board_title').val();
-			
 			if(title == '' || title.length == 0) {
 				// 에러메세지 '제목을 입력해주세요.'
 				alert('값 입력해라!!!');
@@ -553,6 +554,7 @@
 				// 폼에 hidden 태그들을 붙임 
 				$("#frm_board").append(str); //frm_board 맨 마지막에 str(첨부파일 목록)을 붙여라
 				
+				alert(title);
 				// 서버로 전송
 				$('#frm_board').submit();	//스프링 폼태그 전송 (PostMapping으로)
 			}

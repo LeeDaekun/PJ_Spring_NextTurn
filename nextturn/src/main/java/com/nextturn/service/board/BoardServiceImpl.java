@@ -15,7 +15,10 @@ import com.nextturn.domain.BoardDTO;
 
 import com.nextturn.persistence.BoardDAO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired  //의존성 주입
@@ -89,9 +92,20 @@ public class BoardServiceImpl implements BoardService{
 
 
 	//뷰에서 게시글 삭제 눌렀을때
+	@Transactional  //한번에 모든 bDao를 처리해야함
 	@Override
 	public void delBoard(int bno) {
-		bDao.delBoard(bno);
+		
+		bDao.delBoard(bno);  //게시글만 삭제함
+		
+		//첨부파일 삭제하는것 (DB에서 지우고, 로컬에서도 지워야함)
+		bDao.deleteAttach(bno);		//DB에서 첨부파일 삭제
+		//기타방법
+		// 예 ) tbl_board와 tbl_attach를 relation을 맺고
+		// Cascade 작업을 통해 tbl_board에서 해당 게시글 삭제하면,
+		// 자동으로 tbl_attach에 해당 게시글 첨부파일 일괄 삭제
+		// 즉 첨부파일 DB에서 삭제하는 코드는 작성 안해도 됨!
+		
 	}
 
 
@@ -124,6 +138,7 @@ public class BoardServiceImpl implements BoardService{
 
 
 	//답글기능 인터페이스
+	@Transactional  //한번에 전부 처리하라고 트랜젝션
 	@Override
 	public void answer(BoardDTO bDto) {
 		// 답글 알고리즘
@@ -141,6 +156,20 @@ public class BoardServiceImpl implements BoardService{
 		bDto.setRe_level(bDto.getRe_level()+1);
 		bDto.setRe_step(bDto.getRe_step()+1);
 		bDao.answer(bDto);
+	
+		
+		
+		// tbl_attach에 해당 게시글 첨부파일 등록
+		String[] files = bDto.getFiles();
+	
+		if(files == null) {
+			log.info("■■■■■■■■■■■■■■ 첨부파일 없음 ■■■■■■■■■■■■■■■");
+			return; // 첨부파일 없음, 종료
+		}
+		for(String name : files) {
+			// tbl_attach 테이블에 첨부파일 1건씩 등록
+			bDao.addAttach(name);
+		}
 	}
 
 

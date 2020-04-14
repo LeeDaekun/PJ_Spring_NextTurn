@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -107,7 +108,7 @@ public class AjaxUploadController {
 		@ResponseBody
 		@PostMapping("/upload/deleteFile")
 		public ResponseEntity<String> deleteFile(String fileName) {
-			log.info("fileName: " + fileName);
+			log.info("■■■■■■■■■■■fileName: " + fileName);
 			// fileName: /2020/04/10/s_8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg (span태그의 data-src)
 			
 			// 확장자 검사
@@ -135,6 +136,36 @@ public class AjaxUploadController {
 			return new ResponseEntity<String>("deleted", HttpStatus.OK);
 			// ResponseEntity: response의 설정값들을 디테일하게 바꾸고싶을때 사용
 		}
+		
+		
+		//첨부파일 삭제시 로컬에서도 파일이 삭제되게
+		@ResponseBody // 뷰가 아닌 데이터를 리턴
+		@PostMapping("upload/deleteAllFile")
+		public ResponseEntity<String> deleteFile(@RequestParam("files[]") String[] files) {
+			log.info(" ■■■■■■■■■■■delete all files: " + files);
+			
+			if(files == null || files.length == 0) {
+				return new ResponseEntity<String>("deleted", HttpStatus.OK);
+			}
+			
+			for(String fileName : files) {
+				String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+				MediaType mType = MediaUtils.getMediaType(formatName);
+				
+				if(mType != null) { // 이미지 파일이면 원본이미지 삭제
+					String front = fileName.substring(0, 12);
+					String end = fileName.substring(14);
+					// File.separatorChar : 유닉스 / 윈도우즈 \
+					new File(uploadPath+(front+end).replace('/', File.separatorChar)).delete();
+				}
+				
+				// 원본 파일 삭제(이미지이면 썸네일 삭제)
+				new File(uploadPath+fileName.replace('/', File.separatorChar)).delete();
+			}
+			return new ResponseEntity<String>("deleted", HttpStatus.OK);
+		}
+
+		
 		
 		
 }//class 종료

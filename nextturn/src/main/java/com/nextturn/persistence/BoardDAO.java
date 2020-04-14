@@ -47,4 +47,7 @@ public interface BoardDAO {
 	
 	// 해당 게시글 첨부파일 목록 출력
 	public List<String> getAttach(@Param("bno") int bno);
+
+	//DB에서 첨부파일 삭제 (로컬에서는 안지워짐)
+    public void deleteAttach(@Param("bno") int bno);
 }

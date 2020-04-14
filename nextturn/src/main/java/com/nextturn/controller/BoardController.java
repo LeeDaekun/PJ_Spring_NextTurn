@@ -49,7 +49,7 @@ public class BoardController {
 			@RequestParam(defaultValue = "all") String search_option, @RequestParam(defaultValue = "") String keyword,
 			Model model) { // DTO에서 자료를 가져와서 list 띄워라
 
-		log.info(">>>> Get: 게시글 목록을 띄움");
+		log.info(" ■■■■■■■■■■■>>>> Get: 게시글 목록을 띄움");
 
 		// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
 		int count = bService.countArticle(search_option, keyword);
@@ -76,7 +76,7 @@ public class BoardController {
 
 		model.addAttribute("map", map); // 해쉬맵 map을, 모델"map"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
 
-		log.info("========================" + map.toString());
+		log.info(" ■■■■■■■■■■■========================" + map.toString());
 		return "board/list"; // 맵데이터를 리스트로 넘기고, 화면단을 리스트로 결정함
 	} // @GetMapping("/list") 종료
 
@@ -90,7 +90,7 @@ public class BoardController {
 	//상세게시글 띄우기 (bno를 받은 게시글을 띄움)
 	@GetMapping("/view/{bno}") // 모델은 뷰단에 데이터를 전달 , HttpSession 공용저장소
 	public String view(@PathVariable(value = "bno") int bno, Model model, HttpSession session) {
-		log.info(">>>>> GET: board/view PAGE 출력");
+		log.info(" ■■■■■■■■■■■>>>>> GET: board/view PAGE 출력");
 
 		bService.increaseViewCnt(session, bno);
 
@@ -102,7 +102,7 @@ public class BoardController {
 	// view에서 게시글 삭제버튼 눌렀을때
 	@GetMapping("delete")
 	public String delete(int bno) {
-		log.info(">>>>GET: Board Delete Action");
+		log.info(" ■■■■■■■■■■■>>>>GET: Board Delete Action");
 
 		bService.delBoard(bno);
 
@@ -112,14 +112,14 @@ public class BoardController {
 	// 리스트에서 게시글등록 눌렀을때
 	@GetMapping("/write")
 	public String write() {
-		log.info("@Get맵핑 /write");
+		log.info(" ■■■■■■■■■■■@Get맵핑 /write");
 		return "/board/register";
 	}
 
 	// 게시글 등록 완료 후 , 등록한 상세게시글을 띄움 (CURRVAL 사용)
 	@PostMapping("/write")
 	public String write(BoardDTO bDto, Model model) {
-		log.info("@Post맵핑 /write (bDto)");
+		log.info(" ■■■■■■■■■■■@Post맵핑 /write (bDto)");
 		log.info(bDto.toString());
 				
 		//log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■currval:"+bDto.getBno());  //방금 등록한 게시글 번호를 확인하기 위한것 CURRVAL
@@ -128,7 +128,7 @@ public class BoardController {
 		if(bDto.getFiles() == null) { // 첨부파일 NO
 			bDto.setFilecnt(0);
 		} else { // 첨부파일 YES
-			log.info("첨부파일 수: " + bDto.getFiles().length);
+			log.info(" ■■■■■■■■■■■첨부파일 수: " + bDto.getFiles().length);
 			bDto.setFilecnt(bDto.getFiles().length);
 		}
 		
@@ -144,8 +144,8 @@ public class BoardController {
 	// 수정 버튼 눌렀을때, register.jsp 를 수정페이지로 변경해서 동작
 	@GetMapping("/update")
 	public String updateBoard(int bno, Model model) {
-		log.info(">>>>>>>>>>GET: Board update View Page");
-		log.info("bno: " + bno);
+		log.info(" ■■■■■■■■■■■>>>>>>>>>>GET: Board update View Page");
+		log.info(" ■■■■■■■■■■■bno: " + bno);
 		bService.boardView(bno);
 
 		// 수정을 원하는 게시글의 정보를(1줄) 원함
@@ -158,7 +158,7 @@ public class BoardController {
 	// 수정 postMapping      register 페이지에서 수정 완료 버튼을 눌렀을때, 업데이트문 실행하고, 게시글목록을 띄움
 	@PostMapping("/update")
 	public String update(BoardDTO bDto) {
-		log.info(">>>>>>>>>@PostMapping /update (bDto) 게시글이 수정되었습니다");
+		log.info(" ■■■■■■■■■■■>>>>>>>>>@PostMapping /update (bDto) 게시글이 수정되었습니다");
 		log.info(bDto.toString());
 		
 		bService.update(bDto);
@@ -167,10 +167,10 @@ public class BoardController {
 	
 	
 	
-	//답글 버튼 눌렀을때 동작
+	//view.jsp에서, 답글 버튼 눌렀을때 동작
 	@GetMapping("/answer")
 	public String answerBoard(BoardDTO bDto, Model model) {
-		log.info("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶GET 답글 (화면단 액션)");
+		log.info(" ■■■■■■■■■■■GET 답글 (화면단 액션)");
 		bDto = bService.boardView(bDto.getBno());  //bno 를 받아서, 그 값으로 boardView 를 실행
 		
 		String newContent = "<p style='font-size:20px; font-weight:bold;'>====== 이전 게시글내용 ======</p>" +
@@ -183,17 +183,27 @@ public class BoardController {
 		model.addAttribute("flag", "answer");
 		return "board/register";
 	}
-	//답글 전부 작성후, 답글 버튼을 눌렀을때
+	//register.jsp 에서 답글 전부 작성후, 답글 버튼을 눌렀을때
 	@PostMapping("/answer")
 	public String answerBoard(BoardDTO bDto) {
-		log.info("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶@PostMapping(/answer) 답글 (데이터 액션)");
+		log.info(" ■■■■■@PostMapping■■■■■■(/answer) 답글 (데이터 액션)");
 		
 		// 현재상태: 답글(bno(메인게시글), 타입, 제목, 내용, 작성자)
-		log.info("답글DTO: " + bDto.toString());
+		log.info(" ■■■■■■답글DTO■■■■■: " + bDto.toString());
 		
 		// 현재상태: 메인(ALL, ref, re_level, re_step)
 		BoardDTO prevDto = bService.boardView(bDto.getBno());
-		log.info("메인DTO: " + prevDto.toString());
+		log.info(" ■■■■■■메인DTO■■■■■: " + prevDto.toString());
+		
+		
+		//첨부파일 출력
+		if(bDto.getFiles() == null) { // 첨부파일 NO
+			bDto.setFilecnt(0);
+		} else { // 첨부파일 YES
+			log.info(" ■■■■■첨부파일 수■■■■■■: " + bDto.getFiles().length);
+			bDto.setFilecnt(bDto.getFiles().length);
+		}
+		
 		
 		// 현재상태: 답글(bno(메인게시글), 타입, 제목, 내용, 작성자,
 		//				  ref(메인), re_level(메인), re_step(메인))
@@ -202,9 +212,7 @@ public class BoardController {
 		bDto.setRe_step(prevDto.getRe_step());
 		
 		bService.answer(bDto);
-		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■");
-		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■");
-		log.info(bDto.toString());
+		log.info("■■■■bDto.toString■■■■"+bDto.toString());
 		
 		// ref, re_step, re_level
 		// ref = 그대로 메인게시글 ref C&P
@@ -218,8 +226,8 @@ public class BoardController {
 	@PostMapping("/getAttach")
 	@ResponseBody
 	public List<String> getAttach(int bno) {
-		log.info("■■■■■■■■■■▶ POST: Board getAttach Action");
-		log.info("■■■■■■■■■■▶ bno: " + bno);
+		log.info("■■■■■POST■■■■■■ : Board getAttach Action");
+		log.info("■■■■■bno■■■■■■ : " + bno);
 		return bService.getAttach(bno);
 	}
 	

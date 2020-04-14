@@ -204,7 +204,15 @@
 				<div class="view_header">
 					
 					<div>
-						<span class="view_title">${bDto.title}</span> <!-- 게시글제목 -->
+						
+                        <c:choose>
+                            <c:when test="${bDto.re_level == 0}">제목:</c:when>
+                        	<c:otherwise>답글:</c:otherwise>
+                        </c:choose>
+                        <span class="view_title">${bDto.title}</span> <!-- 게시글제목 -->
+                        
+						
+						
 						<div class="padding">
 							<div>${bDto.bno}</div><!-- 게시글번호 -->
 							<div>작성자 ${bDto.writer}</div><!-- 작성자 -->
@@ -297,10 +305,13 @@
 <script src="${path}/resources/js/fileAttach.js"></script>
 
 <script type="text/javascript">
-	//--------------------------------------------------------------------------
+//==========================================================================
 	// Handlebars 파일템플릿 컴파일 (라이브러리, 파일 첨부할때 만듬)
 	var fileTemplate = Handlebars.compile($("#fileTemplate").html());
-	//--------------------------------------------------------------------------
+//==========================================================================
+	// 삭제할 첨부파일 목록
+    var deleteFileList = new Array();
+//==========================================================================	
 	
 	$(function(){ // 문서가 로드가되면
 	// 첨부파일 목록 불러오기
@@ -337,16 +348,30 @@
 		
 		// 삭제 알림 모달창에서 '확인'버튼 Click -> 게시글 삭제
 		$('.y_btn').click(function(){
-			alert('test');
+			//1. Ajax로 해당 게시글의 첨부파일을 Local에서 삭제!
+			// uploadedList 내부의 .file 태그 각각 반복
+			$('.uploadedList .file').each(function(i){
+				console.log(i + ", " + $(this).val());
+				deleteFileList[i] = $(this).val();
+			});
+			console.log(deleteFileList);  //삭제할 파일 목록을 콘솔로 찍어봄
+			if(deleteFileList.length > 0){
+				//post ajax
+				$.post('${path}/upload/deleteAllFile',	//url  
+						{files: deleteFileList},		//data
+						function(){}						//success
+				
+				);
+			}
+			
+			//2. 서버단으로 가서 첨부파일 DB에서 삭제!
+			//3. 서버단으로 가서 게시글 삭제
+			alert('삭제 기능 잠시중단됨');
 			location.href='${path}/board/delete?bno=${bDto.bno}';
 		});
-		
-		
-							
+								
 	});  //도큐먼트 레디 펑션 종료
-	
-	
-		
+//===============================================================================================================
 		$(document).on('click', '.reply_btn', function(){	//문서에서 reply_btn이 클릭되면
 			var reply_text = $('.reply_textarea').val();  //텍스트 에리어에 적은 댓글을 var에 저장
 			alert(reply_text);

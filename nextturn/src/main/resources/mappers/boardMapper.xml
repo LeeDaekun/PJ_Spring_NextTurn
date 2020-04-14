@@ -128,8 +128,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<insert id="answer">
-		INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer, ref, re_step, re_level)
-		VALUES(seq_board.NEXTVAL, #{type}, #{title}, #{view_content}, #{search_content}, #{writer}, #{ref}, #{re_step}, #{re_level})
+		INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer,filecnt, ref, re_step, re_level)
+		VALUES(seq_board.NEXTVAL, #{type}, #{title}, #{view_content}, #{search_content}, #{writer}, #{filecnt}, #{ref}, #{re_step}, #{re_level})
 	</insert>
 	
 	<!-- 첨부파일 저장 -->
@@ -144,4 +144,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE bno = #{bno}
 		ORDER BY regdate DESC
 	</select>
+	
+	<!-- 첨부파일 삭제 (DB에서만 삭제함, 로컬에서는 안지워짐) -->
+	<delete id="deleteAttach">
+        DELETE
+        FROM tbl_attach
+        WHERE bno = #{bno}
+	</delete>
+	
+	
 </mapper>
