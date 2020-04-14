@@ -130,12 +130,28 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
-	//게시글 수정
+	//게시글 내용 수정
 	@Override
 	public void update(BoardDTO bDto) {
+		//1. 게시글 내용 수정
 		bDao.update(bDto);
-	}
-
+		
+		//2. 해당 게시글 관련 첨부파일 모두 DB에서 삭제(tbl_attach)
+		bDao.deleteAttach(bDto.getBno());
+		
+		// 3.수정시 존재하는 첨부파일 모두 DB에 등록
+		String[] files = bDto.getFiles();
+		if(files == null) {
+			return;
+		}
+		
+		for(String fullName: files) {
+			bDao.updateAttach(fullName, bDto.getBno());
+		}
+		
+	}//update 메서드 종료
+	
+	
 
 	//답글기능 인터페이스
 	@Transactional  //한번에 전부 처리하라고 트랜젝션
@@ -170,7 +186,7 @@ public class BoardServiceImpl implements BoardService{
 			// tbl_attach 테이블에 첨부파일 1건씩 등록
 			bDao.addAttach(name);
 		}
-	}
+	}//answer 메서드 종료 (답글)
 
 
 

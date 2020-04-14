@@ -350,7 +350,7 @@
 		$('.y_btn').click(function(){
 			//1. Ajax로 해당 게시글의 첨부파일을 Local에서 삭제!
 			// uploadedList 내부의 .file 태그 각각 반복
-			$('.uploadedList .file').each(function(i){
+			$('.uploadedList .file').each(function(i){   //.file(첨부파일)이 있는 만큼 반복문을 돌린다 i는 카운터
 				console.log(i + ", " + $(this).val());
 				deleteFileList[i] = $(this).val();
 			});

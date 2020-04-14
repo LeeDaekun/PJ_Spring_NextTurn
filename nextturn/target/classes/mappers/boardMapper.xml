@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 인클루드 쿼리문 적용 -->
 	<select id="boardList" resultType="BoardDTO">
 		<include refid="paging_header"/>
-		SELECT bno, title, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt
+		SELECT bno, title, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
 		FROM tbl_board b, tbl_member m
 		<include refid="search"/>
 		<if test="map.sort_option == 'new'">
@@ -35,6 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT rownum AS rnum, A.*
 			FROM (
 	</sql>
+<!-- 페이징 푸터 -->	
+	<sql id="paging_footer">
+			) A
+		) WHERE rnum BETWEEN #{map.start} AND #{map.end}
+	</sql>
+	
 
 <!-- 통합검색 하라고 만든 SQL (작성자와,가입한사람이 있는정보중 show가 y인 사람의 글중에 통합검색)-->	
 	<sql id="search">
@@ -45,12 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				  OR name LIKE #{map.keyword})
 	</sql>
 
-<!-- 페이징 푸터 -->	
-	<sql id="paging_footer">
-			) A
-		) WHERE rnum BETWEEN #{map.start} AND #{map.end}
-	</sql>
-	
+
 
 	
 	
@@ -111,10 +112,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+	
 	<update id="update">
 		UPDATE tbl_board
 		SET type = #{type},
 			title = #{title},
+			filecnt = #{filecnt},
 			view_content = #{view_content},
 			search_content = #{search_content},
 			updatedate = SYSDATE
@@ -127,10 +130,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ref = #{ref} AND re_step > #{re_step}
 	</update>
 	
+	
+	
+	
+	
 	<insert id="answer">
 		INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer,filecnt, ref, re_step, re_level)
 		VALUES(seq_board.NEXTVAL, #{type}, #{title}, #{view_content}, #{search_content}, #{writer}, #{filecnt}, #{ref}, #{re_step}, #{re_level})
+		<selectKey keyProperty="bno" resultType="Integer" order="AFTER">
+			SELECT seq_board.CURRVAL FROM dual
+		</selectKey>
 	</insert>
+	<!-- keyProperty="bno" 셀릭트키의 결과값이 bno 에 담긴다  (숫자 리턴해줌)-->
+	<!-- order="AFTER" 는 메인sql이 실행된 후에 작업하겠다 -->
+
+	
 	
 	<!-- 첨부파일 저장 -->
 	<insert id="addAttach">
@@ -151,6 +165,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM tbl_attach
         WHERE bno = #{bno}
 	</delete>
+	
+	<!-- 첨부파일 수정(등록) -->
+	<insert id="updateAttach">
+		INSERT INTO tbl_attach(fullName, bno)
+		VALUES(#{fullName}, #{bno})
+	</insert>
 	
 	
 </mapper>

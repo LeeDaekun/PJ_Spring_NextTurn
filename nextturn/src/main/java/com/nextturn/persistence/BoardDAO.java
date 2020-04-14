@@ -50,4 +50,7 @@ public interface BoardDAO {
 
 	//DB에서 첨부파일 삭제 (로컬에서는 안지워짐)
     public void deleteAttach(@Param("bno") int bno);
+
+    //첨부파일 수정(재등록)
+    public void updateAttach(@Param("fullName") String fullName, @Param("bno") int bno);
 }

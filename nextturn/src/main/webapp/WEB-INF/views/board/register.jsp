@@ -379,12 +379,15 @@
 	<script src="${path}/resources/js/fileAttach.js"></script>
 	<script type="text/javascript">
 		var flag = '${flag}';
-		console.log('flag: ' + flag);
+		console.log('■■■flag: ' + flag);
 		
-		//--------------------------------------------------------------------------
+//==================================================================================================
 		// Handlebars 파일템플릿 컴파일 (라이브러리, 파일 첨부할때 만듬)
 		var fileTemplate = Handlebars.compile($("#fileTemplate").html());
-		//--------------------------------------------------------------------------
+//==================================================================================================
+		// 수정시 로컬에서 삭제할 기존 첨부파일 목록
+		var deleteFileList = new Array();
+//==================================================================================================
 		
 		$(function(){
 			// register.jsp ==> [게시글 등록]_[게시글 수정]_[게시글 답변]}
@@ -399,8 +402,10 @@
                 //라디오 버튼 값 불러오기
               	$("input:radio[name='type']:radio[value='${bDto.type}']").prop('checked', true);
 				//인풋의 라디오에서 [이름이 type 인것]
-  			
-			//답글 눌렀을때 디자인 변경■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+				
+  				listAttach('${path}', '${bDto.bno}');  //첨부파일 출력해주는거
+  				
+			//답변 눌렀을때 디자인 변경■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 				} else if(flag == 'answer') {
 				
 				$('#bno_modify').text('게시글에 답변달기')  //상단 타이틀 변경
@@ -410,15 +415,16 @@
 				//  라디오버튼창       게시글 제목창  css 회색으로 변경
 				$('.input_wrap, #board_title').css('background','#d8d8d8');
 								
-				$('#board_title').val('└RE:'+'${bDto.title}')  //제목줄에 re: 라고 붙임
-								.attr('readonly', 'readonly');
+				$('#board_title').val('RE:'+'${bDto.title}')  //제목줄에 re: 라고 붙임
+				                 .attr('readonly', 'readonly');
+				
 				     		
                //라디오 버튼 값 불러오기  //인풋의 라디오에서 [이름이 type 인것]
               	$("input:radio[name='type']:radio[value='${bDto.type}']").prop('checked', true);
               	$("[name='type']:not(:checked)").attr('disabled', 'disabled');  //체크된것 이외에 전부 디서블
               	
-              //버튼을 답글 버튼으로 변경
-              	$('#y_btn').text('답글 작성완료').css('background','#3498db');
+              //버튼을 답변 버튼으로 변경
+              	$('#y_btn').text('답변 작성완료').css('background','#3498db');
 			}
 			
 			// 1.웹브라우저에 drag&drop시 파일이 열리는 문제(기본 효과)
@@ -458,9 +464,14 @@
 					});
 				});
 				
+				
+				
+				
+				
+				
 			//첨부part3. 파일 첨부 후, 첨부파일에서 X 버튼을 눌렀을때
 				$('.uploadedList').on('click', '.delBtn', function(event){
-					var bno = '${one.bno}';
+					var bno = '${bDto.bno}';
 					var that = $(this);//삭제시 태그 삭제됨
 					
 					if(bno == '') {	// 게시글 등록
@@ -477,7 +488,17 @@
 							}
 						});
 					} else {		// 게시글 수정
+						var arr_size = deleteFileList.length;
+	                    deleteFileList[arr_size] = $(this).attr('data-src');
 						
+						//첨부파일을 디자인만 지워야됨 (수정완료 버튼을 누르기 전까지는)
+						 $(this).parents('li').next('input').remove();
+	                    $(this).parents('li').remove();
+	                    for(var i=0; i<deleteFileList.length; i++) {
+	                        console.log(i+', '+deleteFileList[i]);
+	                    }
+						
+	                   
 					}
 				});
 				
@@ -488,7 +509,7 @@
 				
 				
 	
-		
+//==================================================================================================
 	//리퍼럴이 비정상경로일 경우 대처방법
 		$(document).on('click', '#n_btn', function(){  //write_btn 클릭시 동작
 			var referer = '${header.referer}';
@@ -506,11 +527,8 @@
 				alert(index);
 			}
 		});
-	
-	
-	
-	
-	//게시글등록 에서 등록버튼을 눌렀을때 유효성체크
+//==================================================================================================	
+	//register.jsp에서 [등록]버튼을 눌렀을때 유효성체크
 		$(document).on('click', '#y_btn', function(){
 			// 유효성체크(제목)
 			var title = $('#board_title').val();
@@ -530,9 +548,12 @@
 				$('#frm_board').append('<textarea id="search_content" name="search_content"></textarea>');  //사용자가 입력한 폼값에, 택스트에리어를 붙인다.
 				$('#search_content').val(search_content);
 				
-				//--------------첨부파일 part3----------------------------------------------------------------
+				
+				//--------------첨부파일 part3---------------------
 				if(flag == 'answer') {
-					$('#board_title').val('${bDto.title}');
+					$('#board_title').val(title);
+                    
+                    
 				}
 				
 				// 첨부파일 목록[배열]도 추가
@@ -551,16 +572,20 @@
 					$.post('${path}/upload/deleteAllFile', {files:deleteFileList}, function(){});
 				}*/
 				
+				// 삭제 첨부파일 목록에 있는 첨부파일들 Local에서 삭제
+				if(deleteFileList.length > 0) {
+					$.post('${path}/upload/deleteAllFile', {files:deleteFileList}, function(){});
+				}
+				
+				
 				// 폼에 hidden 태그들을 붙임 
 				$("#frm_board").append(str); //frm_board 맨 마지막에 str(첨부파일 목록)을 붙여라
 				
-				alert(title);
 				// 서버로 전송
 				$('#frm_board').submit();	//스프링 폼태그 전송 (PostMapping으로)
 			}
 		});
-	
-	
+//==================================================================================================	
 		$(document).on('keyup', '#board_title', function(){
 			var len = $(this).length;
 			

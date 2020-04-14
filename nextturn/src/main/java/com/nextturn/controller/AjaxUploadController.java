@@ -65,6 +65,7 @@ public class AjaxUploadController {
 		@ResponseBody // view가 아닌 data 리턴
 		@RequestMapping("/upload/displayFile")
 		public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
+			
 			// 서버의 파일을 다운로드하기 위한 스트림
 			InputStream in = null; // java.io
 			ResponseEntity<byte[]> entity = null;

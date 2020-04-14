@@ -317,7 +317,18 @@
 						<td>${showDTO.bno}</td>
 					
 						<td>
-							<a href="${path}/board/view/${showDTO.bno}">${showDTO.title} <span style="color:red">[${showDTO.replycnt}]</span></a>
+							<a href="${path}/board/view/${showDTO.bno}">
+								<c:if test="${showDTO.re_level != 0}">
+									<c:forEach begin="1" end="${showDTO.re_level}">
+										<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									</c:forEach>
+									<span style="font-weight: bold; color:green;">└답변▶:&nbsp;</span> 
+								</c:if>				
+							<span>${showDTO.title}</span>
+							<span style="color:red">[${showDTO.replycnt}]</span>
+							</a>
+								
+							
 							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
 							<c:if test="${today == regdate}">
 								<span class="new_color new">New!</span>
