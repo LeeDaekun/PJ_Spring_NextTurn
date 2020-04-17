@@ -177,5 +177,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM tbl_attach
         WHERE #{ydate} = TO_CHAR(regdate, 'YYYYMMDD')
     </select>
-	
+	<!-- ydate의 날짜로된 첨부파일을 검색함 -->
 </mapper>

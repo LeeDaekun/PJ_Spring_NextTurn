@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor  //생성자
+@AllArgsConstructor  //유징필드
 @Getter
 @Setter
 @ToString
-public class AttachDTO {
+public class AttachDTO { 
 	private String fullname;
 	private int bno;
 	private Date regdate;
