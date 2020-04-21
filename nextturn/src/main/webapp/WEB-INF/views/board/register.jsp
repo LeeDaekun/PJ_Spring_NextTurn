@@ -80,7 +80,7 @@
 
 		
 /* ======버튼===================================== */
-		.write_btn{
+		.btn_style{
 	        padding: 10px 40px;
 		    border-radius: 5px;
 		    color: white;
@@ -105,6 +105,7 @@
 		display: flex;
 		align-items: flex-end;
 		justify-content: space-between;
+		height: 60px;
 	}
 	
 	.board_head span {/*자유게시판 글자*/
@@ -137,41 +138,27 @@
 		justify-content: space-between;  /*양쪽 정렬*/
 		align-items: center;	         /* 상하 가운데 정렬*/
 		}
-	.orderby_btn {
+	.flag_text {
 	    padding: 4px 10px;
    		font-size: 13px;
    		color: #f1f1f1;
 	}
 /*■■■■ 언더라인 애니메이션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
-	.orderby_btn, .insert_btn{
+	.flag_text, .c_back_btn{
 		display: inline-block;
 
 	}
 	
-	.ani_underline:after {   /*밑줄효과 after 니까 부모 뒤에 오니까 밑으로 내려가서 밑줄이 된다 //before 였으면 윗줄이 된다*/
-			content: '';  /* 내용없는상태로 대기 */
-			display: block;
-			width: 0%; /*가로라인 0% 길이만큼 (호버했을때 길게 늘릴 예정)*/
-			height: 1px;  /*두께*/
-			background-color: #fff;  /*#fff 흰색*/
-			transition: width 0.2s;  /*라인이 0.2초만에 그려짐*/
-		    margin: 3px 0px 0px 0px;  /*라인의 위치 수정*/
-	}
-   
-	.ani_underline:hover:after { /*쿨링크에 호버했을때 효과 width 100% 까지 라인 생성*/
-			width:100%;
-			
-	}
 
-
-/*■■■■ 게시글 등록 버튼 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
-	.insert_btn{
+/*■■■■ 뒤로가기 버튼 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+	.c_back_btn{
 	    padding: 4px 10px;
    		font-size: 15px;
-   		color: #f1f1f1;
    		font-weight: lighter;
-   		/*background-color: #2080b3;*/
     	border-radius: 10px;
+    	border: 0;
+    	background-color: white;
+    	color: #424242;
 		}
 /*■■■■ 폰트 애니메이션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■	*/
 	.board_wrap * {
@@ -184,8 +171,7 @@
         from {	transform: translateX(2000px);
 	        	color:#00000000;} 
 	        
-        to {	transform: translateX(0px);
-        		}
+        to {transform: translateX(0px);}
     }
     
 /*======== 에러메시지 ==============*/
@@ -274,18 +260,18 @@
 				<span class="ani" style="color:orange">게시글수정</span>
 			</c:otherwise>
 		</c:choose> --%>
-		<span class="ani" id="bno_modify">게시글등록</span>
+		<span id="bno_modify">게시글등록</span>
 		
 		
 		</div>	
 	
 	<div class="orderby_row">
 		<div>
-		<a href="#" class="orderby_btn ani_underline ani" id="sort_new">게시글을 작성 해주세요</a>
+			<a href="#" class="flag_text" >게시글을 작성 후 [등록하기] 버튼을 눌러주세요</a>
  		</div>
 		
 		<div>
-			<a href="${path}/board/list" class="insert_btn ani_underline">뒤로가기</a>
+			<button type=button class="c_back_btn" id="back_btn">뒤로가기</button>
 		</div>
 	</div><!-- orderby_row -->
 
@@ -311,6 +297,7 @@
 								<input type="radio" id="ra_b" name="type" value="qna">	<label for="ra_b" >문의하기</label>
 								<input type="radio" id="ra_c" name="type" value="trad">	<label for="ra_c">중고거래</label>
 								<input type="radio" id="ra_d" name="type" value="revi">	<label for="ra_d">게임후기</label>
+								<input type="radio" id="ra_e" name="type" value="noti">	<label for="ra_e">공지사항</label>
 							</div>
 						</td>
 					</tr>
@@ -344,10 +331,10 @@
 						
 						<div class="button_align">
 							<span>
-								<button type="button" class="write_btn" id="n_btn" style="background: #e44444;">취소</button>
+								<button type="button" class="btn_style" id="n_btn" style="background: #e44444;">취소</button>
 								<%-- 기본타입이 서브밋이기 때문에 취소는 속성을 바꿔야한다. 안그러면 이것도 전송기능이 되버림 --%>
 							</span>
-							<span><button type="button" class="write_btn" id="y_btn" style="background: #15ad6e;">등록</button></span>
+							<span><button type="button" class="btn_style" id="y_btn" style="background: #15ad6e;">등록하기</button></span>
 						</div>
 						</td>
 					</tr>
@@ -396,8 +383,9 @@
 				$('#bno_modify').text('게시글 수정')
 								.css('color','#F39C12');
 				$('.orderby_row').css('background-color','#F39C12')
-				$('#y_btn').text('수정')
+				$('#y_btn').text('수정완료')
 							.css('background','#F39C12')
+				$('.flag_text').text('게시글 수정 후 [수정 완료] 버튼을 눌러주세요')
 				     		
                 //라디오 버튼 값 불러오기
               	$("input:radio[name='type']:radio[value='${bDto.type}']").prop('checked', true);
@@ -417,6 +405,7 @@
 								
 				$('#board_title').val('RE:'+'${bDto.title}')  //제목줄에 re: 라고 붙임
 				                 .attr('readonly', 'readonly');
+				$('.flag_text').text('답변 작성 후 [답변 작성완료] 버튼을 눌러주세요')
 				
 				     		
                //라디오 버튼 값 불러오기  //인풋의 라디오에서 [이름이 type 인것]
@@ -508,25 +497,26 @@
 		
 				
 				
-	
+
 //==================================================================================================
-	//리퍼럴이 비정상경로일 경우 대처방법
-		$(document).on('click', '#n_btn', function(){  //write_btn 클릭시 동작
+	// 취소버튼, 뒤로가기 버튼 눌렀을때 (리퍼럴이 비정상경로일 경우 대처방법)
+		$(document).on('click', '#n_btn, #back_btn', function(){  //btn 클릭시 동작
 			var referer = '${header.referer}';
-			console.log('이전 URL: '+referer);
+			//console.log('이전 URL: '+referer);
 			
-			var index = referer.indexOf('/board/list');  //indexOf는 글자를 찾아주는거
-			alert(index);
-			console.log('index: '+referer.indexOf('/board/list'));
+			var index = referer.indexOf('/board/');  //indexOf는 글자를 찾아주는거
+			//alert(index);
+			//console.log('index: '+referer.indexOf('/board/list'));
 			
 			if(index == '-1') {
 				location.href = '${path}/board/list';  //인덱스가 -1이면 여기로 경로를 이동시킨다
-				alert(index);
+				//alert(index);
 			} else {
-				location.href = '${header.referer}';  //-1이 아니면, 바로이전의 리퍼럴로 이동시킴
-				alert(index);
+				location.href = '${header.referer}';  /* -1이 아니면, 바로이전의 리퍼럴로 이동시킴 */
+				//alert(index);
 			}
 		});
+			
 //==================================================================================================	
 	//register.jsp에서 [등록]버튼을 눌렀을때 유효성체크
 		$(document).on('click', '#y_btn', function(){
@@ -582,7 +572,7 @@
 				$("#frm_board").append(str); //frm_board 맨 마지막에 str(첨부파일 목록)을 붙여라
 				
 				// 서버로 전송
-				$('#frm_board').submit();	//스프링 폼태그 전송 (PostMapping으로)
+				$('#frm_board').submit();	//스프링 폼태그 전송 (PostMapping("/write") 로 이동)
 			}
 		});
 //==================================================================================================	
@@ -594,6 +584,10 @@
 			}
 
 		});
+		
+		
+		
+
 	</script>
  
  

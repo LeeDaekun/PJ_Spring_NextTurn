@@ -7,6 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 계정이 있는 사용자의 게시글만 띄우기 -->
 	<!-- 보드와 회원가입한 사람의 이름이 같고, 보드에서 show가 y인 게시글만 출력하라-->
 	<!-- 정렬방법에 동적쿼리 if문 적용 -->
+	
+	<!-- 페이징 헤더  -->		
+	<sql id="paging_header">
+		SELECT *
+		FROM (
+			SELECT rownum AS rnum, A.*
+			FROM (
+	</sql>
 	<!-- 인클루드 쿼리문 적용 -->
 	<select id="boardList" resultType="BoardDTO">
 		<include refid="paging_header"/>
@@ -28,13 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="paging_footer"/>
 	</select>
 	
-<!-- 페이징 헤더  -->		
-	<sql id="paging_header">
-		SELECT *
-		FROM (
-			SELECT rownum AS rnum, A.*
-			FROM (
-	</sql>
+
 <!-- 페이징 푸터 -->	
 	<sql id="paging_footer">
 			) A
@@ -42,13 +44,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 
-<!-- 통합검색 하라고 만든 SQL (작성자와,가입한사람이 있는정보중 show가 y인 사람의 글중에 통합검색)-->	
+<!-- 통합검색(게시글 출력용) 하라고 만든 SQL (작성자와,가입한사람이 있는정보중 show가 y인 사람의 글중에 통합검색)-->	
 	<sql id="search">
 		WHERE b.writer = m.name
 				  AND b.show = 'y'
 				  AND (title LIKE #{map.keyword}
 				  OR search_content LIKE #{map.keyword}
 				  OR name LIKE #{map.keyword})
+  			
+  			<if test="map.list_type == 'noti'">
+				AND type = 'noti'
+			</if>
+			<if test="map.list_type == 'free'">
+				AND type = 'free'
+			</if>
+			<if test="map.list_type == 'revi'">
+				AND type = 'revi'
+			</if>
+
 	</sql>
 
 

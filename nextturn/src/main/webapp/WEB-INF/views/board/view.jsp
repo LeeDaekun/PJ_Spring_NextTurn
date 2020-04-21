@@ -21,25 +21,49 @@
 	.view_wrap {
 		width: 900px;
 		height: 800px;
-		margin: 30px auto;
-	}
-
-
-/*■■■■■■ 상단부 (자유게시판 타이틀■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
-	.board_title{
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		background-color: #151515;
-		color: white;
-		padding: 5px 15px;
-		font-size: 15px;
+		margin: 0px auto;
+		
 	}
 	
-	.board_head span {/*자유게시판 글자*/
-	    font-size: 35px;
-	    font-weight: bold;
+	/*■■■■■■ 상단부 (자유게시판 타이틀■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+	.board_head{
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+	    height: 60px;
 	}
+	
+	
+	/*■■■■ 폰트 애니메이션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■	*/
+	.board_name {
+    	font-weight: bold;
+    	
+	    font-size: 20px;
+	    padding: 0px 0px 25px 0px;
+        animation-name: size;
+        animation-duration: 1s;
+        }
+        
+     @keyframes size {
+			0% { font-size: 35px; width: 500px; padding: 20px 10px 5px 0px;}  /*from{} 로 쓸 수 있음*/
+			50% { font-size: 35px; width: 500px; padding: 20px 10px 5px 0px;}
+			100% { font-size: 20px; width: 500px; padding: 0px 0px 25px 0px;} /*to{} 로 쓸수 있음*/
+      }/* keyframes end */ 
+      
+/*■■■■ 폰트 애니메이션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■	*/
+	.animove {
+        animation-name: movingPara;
+        animation-duration: 1.5s;
+        display: inline-table;
+        }
+     @keyframes movingPara {
+      	0% { transform: translateX(-2000px);}   /*from{} 로 쓸 수 있음*/
+		50% { transform: translateX(-2000px);} 
+		100% { transform: translateX(0px);}  /*to{} 로 쓸수 있음*/
+    }
+  
+    
+    
 
 /*■■■■ 호버버튼들 스타일 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 	.hover_btn {
@@ -54,8 +78,21 @@
 		outline: none; /* 파란색 테두리 사라짐 */
 	}
 
-
-
+	
+/*■■■■ 최신순 조회순 댓글순 추천순 div영역 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+	.orderby_row{
+		background-color: #131313;
+		padding: 15px 15px;
+		margin-top: 5px;
+		display: flex;
+		justify-content: space-between;  /*양쪽 정렬*/
+		align-items: center;	         /* 상하 가운데 정렬*/
+		}
+	.orderby_btn {
+	    padding: 4px 10px;
+   		font-size: 13px;
+   		color: #f1f1f1;
+	}
 /*■■■■ 언더라인 애니메이션 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 	.orderby_btn, .insert_btn{
 		display: inline-block;
@@ -63,24 +100,43 @@
 	}
 	
 	.ani_underline:after {   /*밑줄효과 after 니까 부모 뒤에 오니까 밑으로 내려가서 밑줄이 된다 //before 였으면 윗줄이 된다*/
-			
-			content: '';
+			content: '';  /* 내용없는상태로 대기 */
 			display: block;
 			width: 0%; /*가로라인 0% 길이만큼 (호버했을때 길게 늘릴 예정)*/
 			height: 1px;  /*두께*/
-			background-color: #fff;
+			background-color: #fff;  /*#fff 흰색*/
 			transition: width 0.2s;  /*라인이 0.2초만에 그려짐*/
+		    margin: 3px 0px 0px 0px;  /*라인의 위치 수정*/
 	}
+   
 	.ani_underline:hover:after { /*쿨링크에 호버했을때 효과 width 100% 까지 라인 생성*/
 			width:100%;
-
+			
 	}
 
 
-	/*제목부=================================================*/
+/*■■■■ 게시글 등록 버튼 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+	.insert_btn{
+	    padding: 4px 10px;
+   		font-size: 15px;
+   		color: #f1f1f1;
+   		font-weight: lighter;
+   		/*background-color: #2080b3;*/
+    	border-radius: 10px;
+		}
+		
+		
+		
+	
+
+
+/*제목부=================================================*/
 		.view_title{
-		    font-size: 26px;
+ 		    width: 750px;
+ 		    font-size: 20px;
 		    font-weight: bold;
+		    overflow: hidden;
+	       							
 		}
 		.community_icon{
 		    display: flex;
@@ -98,6 +154,9 @@
 		    padding: 5px 25px 0px 0px;
 		}
 
+		
+
+    
 
 	/* 내용부================================================ */
 		.view_header{
@@ -168,6 +227,11 @@
 			visibility: hidden;
 			text-align: end;
 		}
+		
+		
+		
+		
+		
 /* 첨부파일 =================================================================== */
 	.form-group{
 		align-items: flex-start;
@@ -186,6 +250,10 @@
 		color: #515151;
 		font-size: 15px;
 	}
+	
+
+	
+	
 </style>
 
 
@@ -197,22 +265,40 @@
 		<div class="view_wrap">
 			<!-- 상단부 -->
 			<div class="view_head">
-				<a href="${path}/board/list"><span class="board_title">자유게시판</span></a>
-			</div>
+				<div class="board_head">
+					
+					<div style="display: flex;">
+						<div class="board_name">자유게시판▶</div>
+						            
+						<%-- <c:choose>
+			              	<c:when  test="${bDto.re_level == 0}">제목:</c:when>
+			           		<c:otherwise>답글:</c:otherwise>
+				      	</c:choose> --%>
+			            <div class="view_title "><span class="animove">${bDto.title}</span></div> <!-- 게시글제목 -->
+					</div>
+	
+				</div>
+		
+			
+			<div class="orderby_row">
+				<div>
+					<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">뒤로가기</a>
+					<a href="${path}/board/list?sort_option=cnt&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_cnt">조회순</a>
+					<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">댓글순</a>
+					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
+					
+
+				</div>
+				
+				<div>
+					<a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a>
+				</div>
+			</div><!-- orderby_row -->
 		
 			<div>
 				<div class="view_header">
 					
 					<div>
-						
-                        <c:choose>
-                            <c:when test="${bDto.re_level == 0}">제목:</c:when>
-                        	<c:otherwise>답글:</c:otherwise>
-                        </c:choose>
-                        <span class="view_title">${bDto.title}</span> <!-- 게시글제목 -->
-                        
-						
-						
 						<div class="padding">
 							<div>${bDto.bno}</div><!-- 게시글번호 -->
 							<div>작성자 ${bDto.writer}</div><!-- 작성자 -->
@@ -238,7 +324,6 @@
 					</div>
 						
 				</div>
-				
 			</div>	
 
 			<!-- 컨텐츠 -->
@@ -254,7 +339,7 @@
 						<!-- <a href="${path}/board/list" class="down_menu_btn" style="background: #27AE60">목록</a> -->
 						<!-- <a href="${header.referer}" class="down_menu_btn" style="background: #27AE60">목록</a> --%> <!-- referer은 방금 전페이지로 되돌림 (비정상 페이지로 되돌아가기도함)-->
 						<button type=button class="down_menu_btn" id="list_btn" style="background: #27AE60">목록</button>
-					
+											
 						<a href="${path}/board/answer?bno=${bDto.bno}" class="down_menu_btn answer" style="background: #3498DB">답변</a>
 						
 							<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
@@ -282,7 +367,7 @@
 			
 			<!-- 댓글달린 목록 출력 -->
 			<div id="listReply"></div>
-
+		</div>
 	</div> <!-- view_wrap -->
 </body>
 
@@ -467,7 +552,7 @@
 	
 	
 	
-	//리퍼럴이 비정상경로일 경우 대처방법 (다른 페이지에서 들어와서 목록을 누를경우 작동 안하는경우 대처)
+	//목록 버튼 눌렀을때 (리퍼럴이 비정상경로일 경우 대처방법 (다른 페이지에서 들어와서 목록을 누를경우 작동 안하는경우 대처))
 	$(document).on('click', '#list_btn', function(){  
 		var referer = '${header.referer}';  //크롬에서 방금전에 왔던 url 주소를 저장함
 		alert("referer:"+referer);

@@ -254,7 +254,7 @@
 
 		<div class="board_wrap">
 			<div class="board_head">
-			<span class="header_text">자유게시판</span>
+			<span class="header_text">공지사항</span>
 				<!-- 검색창 -->
 				<div>
 					<div class="list_content_search">
