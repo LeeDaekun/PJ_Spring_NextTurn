@@ -4,6 +4,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nextturn.persistence.BoardDAO">
 		
+	<select id="iboardList" resultType="BoardDTO">
+		SELECT bno, title, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
+		FROM tbl_board b, tbl_member m
+		WHERE type = #{map.type} AND 5 >=rownum
+		ORDER BY ref DESC, re_step ASC
+	</select>	
+	<!-- rownum 쓸때 AND 5 <=rownum 이렇게 꺽쇠 방향이 바뀌면 mapper에서 에러가 납니다-->
+		
+		
 	<!-- 계정이 있는 사용자의 게시글만 띄우기 -->
 	<!-- 보드와 회원가입한 사람의 이름이 같고, 보드에서 show가 y인 게시글만 출력하라-->
 	<!-- 정렬방법에 동적쿼리 if문 적용 -->

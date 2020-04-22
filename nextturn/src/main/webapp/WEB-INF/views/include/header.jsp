@@ -9,38 +9,38 @@
 
 <style type="text/css">
 /*■■■■■■■■■■■■■■■■■■■■■■■■■■■모달 로그인 창 css■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
-.modal_wrap { /* 회색 클릭방지화면 */
-	top: 0px;
-	position: fixed;
-	z-index: 1000; /*높을수록 상위*/
-	background-color: rgba(0, 0, 0, 0.8);
-	/*overflow: auto;*/
-	width: 100%;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-	display: none; /*디스 플레이 none끄기    기존flex */
-}
+		.modal_wrap { /* 회색 클릭방지화면 */
+			top: 0px;
+			position: fixed;
+			z-index: 1000; /*높을수록 상위*/
+			background-color: rgba(0, 0, 0, 0.8);
+			/*overflow: auto;*/
+			width: 100%;
+			height: 100%;
+			justify-content: center;
+			align-items: center;
+			display: none; /*디스 플레이 none끄기    기존flex */
+		}
 
-.modal_content {
-	padding: 30px 30px;
-	position: relative; /*부모가 포지션이 있어야 하위에서 absolute 를 쓸수 있다*/
-	width: 400px;
-	height: 400px;
-	background-color: white;
-	box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0
-		rgba(0, 0, 0, 0.19);
-	overflow: hidden; /*모달창을 벗어나는 것들을 숨김*/
-	color: black;
-	border: 1px solid blue;
-}
-
-.modal_error_next_box {
-	visibility: hidden;
-	color: rgb(217, 83, 57);
-	font-size: 13px;
-	padding: 6px 6px 0;
-}
+		.modal_content {
+			padding: 30px 30px;
+			position: relative; /*부모가 포지션이 있어야 하위에서 absolute 를 쓸수 있다*/
+			width: 400px;
+			height: 400px;
+			background-color: white;
+			box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0
+				rgba(0, 0, 0, 0.19);
+			overflow: hidden; /*모달창을 벗어나는 것들을 숨김*/
+			color: black;
+			border: 1px solid blue;
+		}
+		
+		.modal_error_next_box {
+			visibility: hidden;
+			color: rgb(217, 83, 57);
+			font-size: 13px;
+			padding: 6px 6px 0;
+		}
 
 
 

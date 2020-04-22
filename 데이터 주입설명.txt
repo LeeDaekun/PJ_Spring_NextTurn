@@ -1,0 +1,7 @@
+1. 오토와이어드 인젝트
+	주입 DI 의존성주입 Dependency Injection
+2. IOC(Inversion Of Controller) 제어의 역전
+	제어의 역전을 하려면 *-context.xml 에서 component scan 에서 package를 읽어주어
+	스프링이 제어를 관리할 패키지들의 제어를 가져온다.
+3. web.xml
+	

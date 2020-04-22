@@ -1,7 +1,7 @@
 package com.nextturn.service.board;
 
 public class Pager {
-	public static final int PAGE_SCALE=10;	// 페이지당 최대 게시물수 10개 고정 (상수)
+	public static final int PAGE_SCALE=10;	// 한 페이지내에 출력할 게시물 수 15개 고정 (상수)
 	public static final int BLOCK_SCALE=10;	// 화면당 최대 페이지수   10개 고정(상수)
 	
 	private int curPage;		// 현재 페이지

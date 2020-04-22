@@ -45,11 +45,12 @@ public class BoardController {
 	// 선생님이 알려준방법
 	@GetMapping("/list") // 게시판 띄우기
 	public String list(@RequestParam(defaultValue = "1") int curPage, // 게시판은 기본적으로 페이지1부터 시작한다
-			@RequestParam(defaultValue = "new") String sort_option, // 게시판은 최신순 정렬을 기본으로 함 (쿼리스트링 ?sort_option=new
-			@RequestParam(defaultValue = "all") String search_option, 
-			@RequestParam(defaultValue = "") String keyword, String type, Model model) { // DTO에서 자료를 가져와서 list 띄워라
+						@RequestParam(defaultValue = "new") String sort_option, // 게시판은 최신순 정렬을 기본으로 함 (쿼리스트링 ?sort_option=new
+						@RequestParam(defaultValue = "all") String search_option, 
+						@RequestParam(defaultValue = "") String keyword, String type, Model model) { // DTO에서 자료를 가져와서 list 띄워라
+		//@RequestParam은 값이 안넘어와도 기본값을 셋팅해주는것
 		type = "free";
-		log.info(" ■■■■■GET■■■■■■: 게시글 목록을 띄움");
+		log.info(" ■■■■■■GET■■■■■■: 게시글 목록을 띄움");
 
 		// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
 		int count = bService.countArticle(search_option, keyword);

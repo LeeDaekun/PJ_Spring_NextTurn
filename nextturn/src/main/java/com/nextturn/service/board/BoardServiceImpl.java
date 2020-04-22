@@ -42,13 +42,13 @@ public class BoardServiceImpl implements BoardService{
 		map.put("search_option",search_option);  //키워드 검색에 필요함
 		map.put("keyword","%"+keyword+"%");		 //키워드 검색에 필요함
 		
-		map.put("list_type",type);	
+		map.put("list_type",type);	//게시글 카테고리
 		//DAO의 boardList 에서 작업을 처리하고, 리턴하라
 		return bDao.boardList(map);
 	}
 
 
-
+	//셀렉트된 게시글들을 갯수로(count)로 표시해줌
 	@Override
 	public int countArticle(String search_option, String keyword) {
 		Map<String, String> map = new HashMap<>();

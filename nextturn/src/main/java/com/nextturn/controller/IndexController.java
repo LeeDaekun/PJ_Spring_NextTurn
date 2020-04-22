@@ -1,12 +1,18 @@
 package com.nextturn.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nextturn.domain.BoardDTO;
+import com.nextturn.service.board.Pager;
 import com.nextturn.service.index.IndexService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,26 +27,53 @@ public class IndexController {
 	// 타입으로 가져오기때문에 IndexService 이 부분이 중요하지 iService는 중요x
 	// IndexService는 인터페이스... IndexService, IndexServiceImpl도 가능함 왜냐면 타입으로 의존해서
 	// @Resource는 변수명으로 의존성 주입
-	
+		
 	@Autowired
 	IndexService iService;
 	// iService에 indexServiceImpl Beans가 들어가있는것
 	
 	@RequestMapping("/")  //localhost:8081/ <컨텍스트 루트 라고 부르고, 하위에 /를 리퀘스트 맵핑이 처리하는것
-	public String indexView(Model model,  HttpSession session) {  //전송방식은 model (컨트롤러에서 뷰단으로 갈때 데이터를 모델로 전달)
-	
+	public String indexView(@RequestParam(defaultValue = "1") int curPage, // 게시판은 기본적으로 페이지1부터 시작한다
+							@RequestParam(defaultValue = "new") String sort_option, // 게시판은 최신순 정렬을 기본으로 함 (쿼리스트링 ?sort_option=new
+							@RequestParam(defaultValue = "all") String search_option, 
+							@RequestParam(defaultValue = "") String keyword, String type, Model model,HttpSession session) {
+							// DTO에서 자료를 가져와서 list 띄워라
+							
 		log.info("★★★★★★★★ INDEX PAGE 출력");
-	
-			
-	
-		// 개발 종료시 삭제할 것(강제 로그인)
-		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요
-//		 log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
-//		 session.removeAttribute("userid"); session.removeAttribute("name");
-//		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "이대군");
-	
-			
 		
+		// 개발 종료시 삭제할 것(강제 로그인)===================================================================
+		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요
+		 log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
+		 session.removeAttribute("userid"); session.removeAttribute("name");
+		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "이대군");
+		//============================================================================================
+	
+			
+		//-------------------------------------------------------------------------------------------	
+		 
+		 type = "free";
+			log.info(" ■■■■■■인덱스 컨트롤러■■■■■■");
+
+			List<BoardDTO> list = iService.iboardList(sort_option, search_option, keyword, type); // 서비스작업 처리한 결과를 list
+			log.info(" ■■■■■■잘 다녀옴■■■■■■");
+																										// 에 담음
+
+			HashMap<String, Object> map = new HashMap<>(); // 보내야될 데이터가 많아서, 바로 보내지않고 해쉬맵을 쓴다
+			map.put("list", list); // <BoardDTO> list를 ▶ 해쉬맵 "list"에 담는다
+
+			map.put("sort_option", sort_option); // 스트링 sort_option을 ▶ 해쉬맵 "sort_option"에 담는다
+			// 정렬 옵션 (정렬 옵션은 페이지가 넘어갈때마다 항상 따라다녀야한다. 안그러면 첫페이지만 정렬되고 말아버리니까)
+			map.put("search_option", search_option); // 나는 안만들었으므로, 이건 필요없음 검색할때 세부 옵션 설정하려고 만든거
+			map.put("keyword", keyword); // 사용자가 검색한 키워드
+
+			model.addAttribute("map", map); // 해쉬맵 map을, 모델"map"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
+
+			log.info(" ■■■■■■■■■■■map.toString" + map.toString());
+		//-------------------------------------------------------------------------------------------
+		
+		 
+		 
+		 
 		model.addAttribute("NewPdt", iService.newPdtList());  //모델은 컨트롤러에서 뷰단으로 전달 (newPdt에는 1~5순위 값이 담겨져서 돌아온다)
 		// iService.newPdtList 를 호출하면
 		// IndexService -> IndexServiceImpl -> ProductDAO -> ProductMapper SQL문 실행후 결과를 가지고 순서대로 빠꾸
@@ -54,4 +87,8 @@ public class IndexController {
 		// >>> index.jsp 화면단으로 Model(BestPdt) 전송
 		return "index";  //리턴타입이 위에보면 String 인데, 어떤화면을 띄울지 결정한다
 	}
-}
+	
+	
+
+
+}//class

@@ -29,7 +29,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>> <!-- url경로에 /(슬러시)가 오면 무조건 서블릿을 거친다? 페이지를 왔다갔다해야하니-->
+		<url-pattern>/</url-pattern> <!-- url경로에 /(슬러시)가 오면 무조건 서블릿을 거친다? 페이지를 왔다갔다해야하니-->
 	</servlet-mapping>
 	
 			<!-- 한글 처리를 위한 인코딩 필터 -->

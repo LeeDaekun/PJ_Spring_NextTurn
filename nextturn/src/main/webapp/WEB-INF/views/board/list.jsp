@@ -305,8 +305,6 @@
 				<td style="width: 6%">첨부파일</td>
 			</tr>
  		
-		
-			
 			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
 			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
@@ -316,7 +314,6 @@
 			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
 					<tr>
 						<td>${showDTO.bno}</td>
-					
 						<td>
 							<a href="${path}/board/view/${showDTO.bno}">
 								<c:if test="${showDTO.re_level != 0}">
@@ -328,7 +325,6 @@
 							<span>${showDTO.title}</span>
 							<span style="color:red">[${showDTO.replycnt}]</span>
 							</a>
-								
 							
 							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
 							<c:if test="${today == regdate}">

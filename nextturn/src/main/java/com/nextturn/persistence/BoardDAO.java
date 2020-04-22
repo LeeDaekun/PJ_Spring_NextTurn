@@ -16,7 +16,10 @@ public interface BoardDAO {
 	public List<BoardDTO> boardList(@Param("map") Map<String, Object> map);  //스트링과 오브젝트를 받는 맵
 	//@param ("map")을 BoardMapper의 boardList를 호출한다
 	//boardList안에 paging_footer 도 포함되어있어서 start.end 를 쓸수 있음
-
+	
+	public List<BoardDTO> iboardList(@Param("map") Map<String, Object> map);  //스트링과 오브젝트를 받는 맵
+	//@param ("map")을 BoardMapper의 boardList를 호출한다
+	//boardList안에 paging_footer 도 포함되어있어서 start.end 를 쓸수 있음
 	
 	// 게시글 조회수 +1 증가
 	public void increaseViewCnt(@Param("bno") int bno);
