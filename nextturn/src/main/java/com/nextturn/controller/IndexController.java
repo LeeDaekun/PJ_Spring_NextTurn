@@ -43,37 +43,45 @@ public class IndexController {
 		
 		// 개발 종료시 삭제할 것(강제 로그인)===================================================================
 		// 이거 삭제할때  이 메서드의 HttpSession session 매개변수를 함께 지우세요
-		 log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
-		 session.removeAttribute("userid"); session.removeAttribute("name");
-		 session.setAttribute("userid", "logintest"); session.setAttribute("name", "이대군");
+		// log.info("★★개발자 자동로그인중★★ HttpSession session 사용중"); 
+		// session.removeAttribute("userid"); session.removeAttribute("name");
+		// session.setAttribute("userid", "logintest"); session.setAttribute("name", "이대군");
 		//============================================================================================
 	
 			
 		//-------------------------------------------------------------------------------------------	
-		 
-		 type = "free";
-			log.info(" ■■■■■■인덱스 컨트롤러■■■■■■");
-
-			List<BoardDTO> list = iService.iboardList(sort_option, search_option, keyword, type); // 서비스작업 처리한 결과를 list
-			log.info(" ■■■■■■잘 다녀옴■■■■■■");
-																										// 에 담음
-
-			HashMap<String, Object> map = new HashMap<>(); // 보내야될 데이터가 많아서, 바로 보내지않고 해쉬맵을 쓴다
-			map.put("list", list); // <BoardDTO> list를 ▶ 해쉬맵 "list"에 담는다
-
-			map.put("sort_option", sort_option); // 스트링 sort_option을 ▶ 해쉬맵 "sort_option"에 담는다
-			// 정렬 옵션 (정렬 옵션은 페이지가 넘어갈때마다 항상 따라다녀야한다. 안그러면 첫페이지만 정렬되고 말아버리니까)
-			map.put("search_option", search_option); // 나는 안만들었으므로, 이건 필요없음 검색할때 세부 옵션 설정하려고 만든거
-			map.put("keyword", keyword); // 사용자가 검색한 키워드
-
-			model.addAttribute("map", map); // 해쉬맵 map을, 모델"map"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
-
-			log.info(" ■■■■■■■■■■■map.toString" + map.toString());
-		//-------------------------------------------------------------------------------------------
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		type = "free";
+		List<BoardDTO> listFree = iService.iboardList(sort_option, type); // 서비스작업 처리한 결과를 list
+		log.info(" ■■■■■■ 자유게시판 글목록 listFree 에 수집완료 ■■■■■■");
 		
-		 
-		 
-		 
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		type = "noti";
+		List<BoardDTO> listNoti = iService.iboardList(sort_option, type); // 서비스작업 처리한 결과를 list
+		log.info(" ■■■■■■ 공지게시판 글목록 listNoti에 수집완료  ■■■■■■");
+
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		type = "revi";
+		List<BoardDTO> listRevi = iService.iboardList(sort_option, type); // 서비스작업 처리한 결과를 list
+		log.info(" ■■■■■■ 리뷰게시판 글목록 listRevi에 수집완료  ■■■■■■");
+		
+		
+		HashMap<String, Object> map = new HashMap<>(); // 보내야될 데이터가 많아서, 바로 보내지않고 해쉬맵을 쓴다
+		map.put("listFree", listFree); // <BoardDTO> list를 ▶ 해쉬맵 "listFree"에 담는다
+		map.put("listNoti", listNoti); // <BoardDTO> list를 ▶ 해쉬맵 "listNoti"에 담는다
+		map.put("listRevi", listRevi); // <BoardDTO> list를 ▶ 해쉬맵 "listRevi"에 담는다
+
+		map.put("sort_option", sort_option); // 스트링 sort_option을 ▶ 해쉬맵 "sort_option"에 담는다
+		// 정렬 옵션 (정렬 옵션은 페이지가 넘어갈때마다 항상 따라다녀야한다. 안그러면 첫페이지만 정렬되고 말아버리니까)
+
+		model.addAttribute("viewMap", map); // 해쉬맵 map을, 모델"viewMap"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
+											// 화면단에서 출력할때
+
+		log.info(" ■■■■■■■■■■■ViewMap.toString■■■■■■■■■■■" + map.toString());
+
+		
+		
+		//----최근플레이게임 목록 출력--------------------------------------------------------------------------------------
 		model.addAttribute("NewPdt", iService.newPdtList());  //모델은 컨트롤러에서 뷰단으로 전달 (newPdt에는 1~5순위 값이 담겨져서 돌아온다)
 		// iService.newPdtList 를 호출하면
 		// IndexService -> IndexServiceImpl -> ProductDAO -> ProductMapper SQL문 실행후 결과를 가지고 순서대로 빠꾸

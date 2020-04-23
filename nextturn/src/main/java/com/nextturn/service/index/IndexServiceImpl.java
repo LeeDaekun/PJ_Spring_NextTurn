@@ -53,16 +53,17 @@ public class IndexServiceImpl implements IndexService{
 
 	//인덱스에 미니게시판 띄울때 생성
 	@Override
-	public List<BoardDTO> iboardList(String sort_option, String search_option, String keyword, String type) {
+	public List<BoardDTO> iboardList(String sort_option, String type) {
 		Map<String, Object> map = new HashMap<>();
-		log.info("■■■■indesService Impl ■■ iboardList 접속■■■■■");
+		log.info("■■■■■ indesService Impl ■■■■■ iboardList 접속■■■■■");
 		map.put("sort_option", sort_option);//매개변수를 "sort_option" 맵에 담는다.
-		map.put("search_option",search_option);  //키워드 검색에 필요함
 		map.put("type",type);	//게시글 카테고리
 		//DAO의 boardList 에서 작업을 처리하고, 리턴하라
 
-		log.info("type:" + map.get("list_type"));  //로그인포는 "" 문자열로 시작해야한다.
-		log.info("sort_opation" + map.get("sort_option"));
+		log.info("■■■■■■ type:" + map.get("type"));  //로그인포는 "" 문자열로 시작해야한다.
+		log.info("■■■■■■ sort_opation:" + map.get("sort_option"));
+
+		
 		return bDao.iboardList(map);
 	}
 

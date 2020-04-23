@@ -5,12 +5,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.nextturn.persistence.BoardDAO">
 		
 	<select id="iboardList" resultType="BoardDTO">
-		SELECT bno, title, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
+		SELECT bno, title, type, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
 		FROM tbl_board b, tbl_member m
-		WHERE type = #{map.type} AND 5 >=rownum
+		<if test="map.type == 'free'">
+			WHERE type = 'free' AND 5 >=rownum
+		</if>
+		<if test="map.type == 'noti'">
+			WHERE type = 'noti' AND 5 >=rownum
+		</if>
+		<if test="map.type == 'revi'">
+			WHERE type = 'revi' AND 5 >=rownum
+		</if>
+				
 		ORDER BY ref DESC, re_step ASC
 	</select>	
 	<!-- rownum 쓸때 AND 5 <=rownum 이렇게 꺽쇠 방향이 바뀌면 mapper에서 에러가 납니다-->
+		
+		
+		
+		
 		
 		
 	<!-- 계정이 있는 사용자의 게시글만 띄우기 -->

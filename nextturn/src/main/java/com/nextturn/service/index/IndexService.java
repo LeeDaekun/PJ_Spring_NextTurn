@@ -11,7 +11,7 @@ public interface IndexService {
 	
 
 	//목록 (페이지 나누기, 검색 기능 포함)
-	public List<BoardDTO> iboardList(String sort_option, String search_option, String keyword, String type);
+	public List<BoardDTO> iboardList(String sort_option, String type);
 	//셀랙트라 양이 많으니까 리턴을 리스트로 해야함 (오버라이딩에도 boardList를 써야함)
 	//BoardServiceImpl 오버라이딩 해서 사용가능 
 	//sort_option = 정렬옵션(

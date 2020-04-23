@@ -143,6 +143,7 @@
 		justify-content: space-between;  /*양쪽 정렬*/
 		align-items: center;	         /* 상하 가운데 정렬*/
 		border-radius: 10px 10px 0 0;
+		cursor: pointer; /*링크 걸꺼니까 손가락 모양으로*/
 		}
 	.orderby_btn {
 	    padding: 4px 10px;
@@ -277,9 +278,9 @@
 	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today"/>
 								<!-- mm을 대문자로 써야한다 -->
 		<div class="mini_board_all">						
-			<!-- ============================================================================================== -->
+<!-- ============================================================================================== -->
 			<div class="board_wrap">
-				<div class="board_title sg_color">
+				<div class="board_title sg_color" id="noti_board_btn">
 						<div class="header_text">공지사항</div>
 						<div><a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a></div>
 				</div><!-- board_title -->
@@ -290,13 +291,13 @@
 							<td>제목</td>
 						
 							<td style="width: 10%">작성자</td>
-							<td style="width: 8%">작성일</td>
+							<td style="width: 10%">작성일</td>
 						</tr>
 								 		
 						<!-- formatDate 포맷해서 regdate 를 만들었음 -->
 						<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 						<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
-						<c:forEach items="${map.list}" var="showDTO">
+						<c:forEach items="${viewMap.listNoti}" var="showDTO">
 						<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
 						
 						<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
@@ -319,9 +320,9 @@
 											<span class="new_color new">New!</span>
 										</c:if>
 									</td>
-									<td style="width: 10%">${showDTO.writer}</td>
+									<td>${showDTO.writer}</td>
 								<%--<td>${regdate}</td>	 --%>
-							 		<td style="width: 10%">
+							 		<td>
 										<c:choose>
 											<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
 											<c:when test="${today == regdate}">
@@ -340,9 +341,9 @@
 				
 			</div> <!-- board_wrap 게시판 -->
 			
-			<!-- ============================================================================================== -->
+<!-- ============================================================================================== -->
 			<div class="board_wrap">
-				<div class="board_title sg_color">
+				<div class="board_title sg_color" id="free_board_btn">
 						<div class="header_text">자유게시판</div>
 						<div><a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a></div>
 				</div><!-- board_title -->
@@ -353,13 +354,13 @@
 							<td>제목</td>
 						
 							<td style="width: 10%">작성자</td>
-							<td style="width: 8%">작성일</td>
+							<td style="width: 10%">작성일</td>
 						</tr>
 								 		
 						<!-- formatDate 포맷해서 regdate 를 만들었음 -->
 						<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 						<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
-						<c:forEach items="${map.list}" var="showDTO">
+						<c:forEach items="${viewMap.listFree}" var="showDTO">
 						<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
 						
 						<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
@@ -382,9 +383,9 @@
 											<span class="new_color new">New!</span>
 										</c:if>
 									</td>
-									<td style="width: 10%">${showDTO.writer}</td>
+									<td>${showDTO.writer}</td>
 								<%--<td>${regdate}</td>	 --%>
-							 		<td style="width: 10%">
+							 		<td>
 										<c:choose>
 											<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
 											<c:when test="${today == regdate}">
@@ -403,10 +404,10 @@
 				
 			</div> <!-- board_wrap 게시판 -->
 			
-			<!-- ============================================================================================== -->
+<!-- ============================================================================================== -->
 			<div class="board_wrap">
-				<div class="board_title sg_color">
-						<div class="header_text">후기게시판</div>
+				<div class="board_title sg_color" id="revi_board_btn">
+						<div class="header_text">후기/리뷰</div>
 						<div><a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a></div>
 				</div><!-- board_title -->
 				<div class="table_div">
@@ -416,13 +417,13 @@
 							<td>제목</td>
 						
 							<td style="width: 10%">작성자</td>
-							<td style="width: 8%">작성일</td>
+							<td style="width: 10%">작성일</td>
 						</tr>
 								 		
 						<!-- formatDate 포맷해서 regdate 를 만들었음 -->
 						<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 						<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
-						<c:forEach items="${map.list}" var="showDTO">
+						<c:forEach items="${viewMap.listRevi}" var="showDTO">
 						<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
 						
 						<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
@@ -445,9 +446,9 @@
 											<span class="new_color new">New!</span>
 										</c:if>
 									</td>
-									<td style="width: 10%">${showDTO.writer}</td>
+									<td>${showDTO.writer}</td>
 								<%--<td>${regdate}</td>	 --%>
-							 		<td style="width: 10%">
+							 		<td>
 										<c:choose>
 											<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
 											<c:when test="${today == regdate}">
@@ -466,7 +467,12 @@
 				
 			</div> <!-- board_wrap 게시판 -->
 			
-		
+
+
+
+
+
+
 		</div><!-- 게시판 모음 종료 -->
 			
 			
@@ -519,7 +525,22 @@ jQuery 이벤트문법(클릭, 포커스) -->
 <!-- 제이쿼리 (열기/끄기) ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- 제이쿼리 동작하게 해주는 코드 -->
 	<script type="text/javascript">
-			
+	/* 게시판으로 이동 [a href 를 대신하는 ajax] */
+	$(document).ready(function() {	
+		$(document).on('click', '#noti_board_btn', function() {
+				location.href = "${path}/board/list_notice"; //컨트롤러 호출
+		});
+		
+		$(document).on('click', '#free_board_btn', function() {
+			location.href = "${path}/board/list"; //컨트롤러 호출
+		});
+		
+		$(document).on('click', '#revi_board_btn', function() {
+			location.href = "${path}/board/list_review"; //컨트롤러 호출
+		});
+	});
+	
+	
 
 	</script>
 </html>
