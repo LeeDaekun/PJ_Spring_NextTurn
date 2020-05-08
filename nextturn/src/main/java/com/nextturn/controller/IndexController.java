@@ -81,7 +81,7 @@ public class IndexController {
 
 		
 		
-		//----최근플레이게임 목록 출력--------------------------------------------------------------------------------------
+		//----보드게임 이미지 출력--------------------------------------------------------------------------------------
 		model.addAttribute("NewPdt", iService.newPdtList());  //모델은 컨트롤러에서 뷰단으로 전달 (newPdt에는 1~5순위 값이 담겨져서 돌아온다)
 		// iService.newPdtList 를 호출하면
 		// IndexService -> IndexServiceImpl -> ProductDAO -> ProductMapper SQL문 실행후 결과를 가지고 순서대로 빠꾸

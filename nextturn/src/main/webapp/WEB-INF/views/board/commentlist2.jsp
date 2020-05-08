@@ -99,7 +99,7 @@
 							<a href="#"><i class="far fa-envelope"></i></a>
 							<span>${replyDto.regdate}</span><!-- 날짜 -->
 							
-							<span>리플번호 ${replyDto.rno} </span>
+							<%-- <span>리플번호 ${replyDto.rno} </span> --%>
 
 						</div>
 						
@@ -110,7 +110,7 @@
 							<c:if test="${name == replyDto.writer}">
 								&nbsp;
 								<%-- <input type="text" class="del_rno" value="${replyDto.rno}"> --%>
-								<button class="reply_del_btn" data_num="${replyDto.rno}">삭제 ${replyDto.rno}</button>
+								<button class="reply_del_btn" data_num="${replyDto.rno}">댓글삭제 </button>
 							</c:if>
 								<a href="#" style="background: #3498DB" class="re_reple_btn">댓글달기</a>
 							</div>

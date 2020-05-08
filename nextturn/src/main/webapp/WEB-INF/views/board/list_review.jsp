@@ -103,6 +103,7 @@
 	.board_table{
 	    width: 100%;  /*테이블 가로길이*/
 		border-spacing: 0px; /*테이블 테두리 제거*/
+    	background: #f7f7f7;
 				
 	}
 	

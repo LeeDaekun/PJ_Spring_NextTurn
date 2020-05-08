@@ -62,8 +62,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			} else {
 				prevUrl = referer.substring(finalUrl.length()-1, indexQuery);
 			}
-			log.info("PREV URL >>>>> " + prevUrl);
-			log.info("NEXT URL >>>>> " + nextUrl);
+			log.info("■■■PREV URL >>>>> " + prevUrl);
+			log.info("■■■NEXT URL >>>>> " + nextUrl);
 			
 			if(nextUrl.equals("/board/update") || nextUrl.equals("/board/delete")) {
 				// board/delete는 삭제DB Action밖에 없다

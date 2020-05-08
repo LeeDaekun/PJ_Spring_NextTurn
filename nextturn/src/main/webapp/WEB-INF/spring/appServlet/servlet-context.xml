@@ -31,10 +31,11 @@
 	
 	
 	<!-- Google Mail Send -->
+	<!-- 구글에서.  보안수준이 낮은 앱의 액세스  사용으로 설정 -->
 	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com"/>
 		<beans:property name="port" value="587" /> <!-- 465 or 25 -->
-		<beans:property name="username" value="nextturn.games01@gmail.com" />
+		<beans:property name="username" value="nextturn.games02@gmail.com" />
 		<beans:property name="password" value="01031617755" />
 		<beans:property name="defaultEncoding" value="utf-8" />
 		<beans:property name="javaMailProperties">
@@ -59,7 +60,6 @@
 	<beans:bean id="loginInterceptor" class="com.nextturn.interceptor.LoginInterceptor"></beans:bean>
 	
 	<!-- URL Mapping for Interceptor call -->
-	<!-- 여기는 인터셉터 설정값이다. (빈즈가 아님) 이 URL로 들어온 애들은 인터셉터 클래스로 보낸다 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/member/mypage"/>

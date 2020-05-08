@@ -20,5 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			  )
 		WHERE rnum between 1 and 5
 	</select>
+	<!-- 날짜기준으로 출력하고,  -->
 </mapper>
 

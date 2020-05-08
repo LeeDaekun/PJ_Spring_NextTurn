@@ -103,6 +103,7 @@
 	.board_table{
 	    width: 100%;  /*테이블 가로길이*/
 		border-spacing: 0px; /*테이블 테두리 제거*/
+		background: #f7f7f7;
 				
 	}
 	
@@ -119,7 +120,7 @@
 		text-align: left;
 	}
 	.board_table tr:nth-child(1) { /* 제목표시줄 */
-		background-color: #f1f1f1;
+		background-color: white;
 		height: 35px;
 		font-weight: bolder;
 	}
