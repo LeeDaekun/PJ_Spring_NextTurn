@@ -346,7 +346,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;}
     line-height:57px;
     cursor:pointer;
     background:rgba(0,0,0,0.1);
-    z-index:100;
+    z-index:1000;
    
    
     -webkit-user-select: none;  
@@ -840,7 +840,7 @@ jQuery 이벤트문법(클릭, 포커스) -->
          //*> OPTIONAL SETTINGS
         ************************/
             //automatic slider
-            var autoSlider = setInterval(slideRight, 3000); /*3000 이었음*/
+            var autoSlider = setInterval(slideRight, 3000); /*기본 오토 슬라이드 (3000 = 3초)*/
            
             //for each slide
             $.each($('#slider-wrap ul li'), function() {
@@ -860,7 +860,7 @@ jQuery 이벤트문법(클릭, 포커스) -->
             //pause automatic slide when hover
             $('#slider-wrap').hover(
               function(){ $(this).addClass('active'); clearInterval(autoSlider); },
-              function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 30000000); }  /*3000 이었음*/
+              function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 30000); }  /*호버 이후 변경속도 3000 이었음*/
             );
            
            

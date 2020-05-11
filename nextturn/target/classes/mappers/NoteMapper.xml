@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nextturn.persistence.NoteDAO">
+	<!-- 세미콜론(;) 넣지 마세요!! -->
+	
+	<select id="note_view" resultType="NoteDTO">
+		SELECT *
+		FROM tbl_note
+		ORDER BY nno DESC
+	</select>
+
+
+
+
+</mapper>

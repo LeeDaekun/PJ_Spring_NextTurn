@@ -245,9 +245,10 @@
 			vertical-align: middle;
 		}
 		
-		/* 드랍다운 메뉴 */
+		/* 드랍다운 메뉴 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ */
 		.header_dropdown_menu {
 			position: relative; /*값을 주지 않으면 주나 안주나 똑같은것처럼 기본 위치에 고정되있음*/
+			
 			border-bottom-left-radius: 2px;
 			border-bottom-right-radius: 2px;
 			box-shadow: 0 4px 16px rgba(20,23,28,.25);
@@ -272,10 +273,11 @@
 			background-color: #f2f3f5;
 		}
 		.header_dropdown{
+			z-index: 100;  /*숫자가 높을수록 위로 올라옴*/
 			position: absolute; /*부모꺼 기준으로 탑0 레프트0*/
 			top:53px; /*0을 쓸때는 px를 생략해도 됨, 숫자가 들어갈때는 */
 			left:0px;
-			display: none; /*메뉴바를 숨김*/
+			display: none; /*none 메뉴바를 숨김*/
 		}
 
 		.arrow {
@@ -606,7 +608,7 @@
 								
 								
 									<!-- 나중에 사이트에 맞게 바꾸기 -->
-									<li><a href="#">쪽지 확인</a></li>
+									<li><a href="${path}/note/note_view">쪽지 확인</a></li>
 									<li><a href="#">내 게시글</a></li>
 									<li><a href="#">닉네임 변경</a></li>
 									<li><a href="#">고객센터</a></li>

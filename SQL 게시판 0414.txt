@@ -145,3 +145,23 @@ commit;
 
 SELECT * FROM tbl_board;
 SELECT * FROM tbl_attach;
+
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■ 쪽지 기능 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+DROP SEQUENCE seq_note;
+CREATE SEQUENCE seq_note
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+
+
+DROP TABLE tbl_note;
+CREATE TABLE tbl_note (
+    nno NUMBER,                 --쪽지 번호
+    send_id VARCHAR2(50),      --발신 아이디
+    Receive_id VARCHAR2(50),   --수신 아이디
+    note_content VARCHAR2(2000) NOT NULL,  --쪽지 내용
+    note_regdate DATE DEFAULT SYSDATE  --쪽지 날짜
+);
+
+
