@@ -132,8 +132,7 @@
 
 		<div class="board_wrap">
 			<div class="board_head">
-			<span class="header_text">쪽지</span>
-				
+				<span class="header_text">쪽지</span>
 			</div>
 			
 		
@@ -147,52 +146,107 @@
 				<td style="width: 10%">작성날짜</td>
 			</tr>
  		
-			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
-			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
-			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
+
 			<c:forEach items="${note_View}" var="showDTO">
-			<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
+			<fmt:formatDate value="${showDTO.note_regdate}" pattern="yyyy-MM-dd" var="regdate"/>
 			
-			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
 					<tr>
-						<td>${note_View.nno}</td>
-						<td>${note_View.send_id}</td>
-						<td>${note_View.Receive_id}</td>
-						<td>${note_View.note_content}</td>
+						<td>${showDTO.nno}</td>
+						<td>${showDTO.send_id}</td>
+						<td>${showDTO.receive_id}</td>
+						<td>${showDTO.note_content}</td>
 					 	<td>
 							<c:choose>
-								<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
 								<c:when test="${today == regdate}">
-									<fmt:formatDate value="${showDTO.regdate}" pattern="HH:mm:ss"/>
+									<fmt:formatDate value="${showDTO.note_regdate}" pattern="HH:mm:ss"/>
 								</c:when>
 								<c:otherwise>
-									<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd"/>
+									<fmt:formatDate value="${showDTO.note_regdate}" pattern="yyyy-MM-dd"/>
 								</c:otherwise>
 							</c:choose>
 						</td>
 					</tr>
 			</c:forEach>
-			
-			
 		</table>
-
+		
+		
+					<form class="form_send"><%-- ajax 로 리플 입력데이터를 전송하기 위한 form 태그 (name=""이 전달한다)--%>
+						
+						<%-- hidden은 태그만 안보이지 값이 있음 ,사용자 접속정보를 전달하기위해 작성 --%>
+						<%--view.jsp 에서 ajax가 처리함--%>
+						<input type="hidden" name="writer" class="reply_writer">
+						
+							<div>■쪽지 보내기■</div>
+							<div>
+								받을사람 ID: <input type="text" id="send_id" value="leedaekun">
+							</div>
+							<div>
+								보내는사람 ID: <input type="text" id="Receive_id" value="kenisia">
+							</div>
+							<div>
+								내용작성<textarea class="note_textarea" placeholder="내용을 입력하세요." id="note_content"></textarea>
+								
+								<a href="#"  class="send_btn" >
+									<i class="fas fa-comment"></i>전송하기
+								</a>
+							</div>
+					</form>
+				
+		
+		
 
 	</div> <!-- board_wrap -->
 </body>
 
 <script type="text/javascript">
-	$(function(){
-		var sort_option = '${map.sort_option}';  /* 해쉬맵을 받아옴 */
+	$(function(){ // 문서가 로드가되면
 		
-		if(sort_option != null) {
-			$('#sort_' + sort_option).css('color', '#f3ca00');
-			$('#sort_' + sort_option).css('font-weight', 'bold');
-			$('.ani_underline:after').css('background-color', 'yellow');
-		}
-	    		
-		$('.write_btn').click(function(){
-			location.href="/metop/board/write";
-		});
+		
+		$(document).on('click', '.send_btn', function(){
+			var note_textarea = $('.note_textarea').val();  //텍스트 에리어에 적은 댓글을 var에 저장
+			alert(note_textarea);
+			
+			//■■■쪽지 내용없을시 경고 출력■■■
+			if(note_textarea == '' || note_textarea.length == 0) {
+				$('.note_textarea').focus();  //댓글버튼 누르면 포커스를 에리어로 이동
+				alert("내용을 작성해주세요!")
+				/* $('.err_msg').css('visibility', 'visible'); */
+				return false;
+			}
+			
+			//인풋창의 벨류값을 변경
+			/* $('.note_writer').val('${name}'); */
+			
+			
+			//Mapper에 전송할 내용 send_id, Receive_id, note_content   (3개의 인풋의 데이터가 여기에 들어와야함)
+			var send_id = $('#send_id').val();
+			var Receive_id = $('#Receive_id').val();
+			var note_content = $('#note_content').val();
+			$.ajax({
+				url: '${path}/note/send', // url을 어디로 날릴거냐면 (post 방식으로 URL 호출)
+				type: 'POST',
+				data: {"send_id":send_id,
+					   "Receive_id":Receive_id,
+					   "note_content":note_content}, // json 방식으로 데이터 전송방법
+														// url갈때 가는 데이터 담아서 보낸다
+														// serialize()라는(직렬화라는) 함수를 쓰면 4차선이 1차선으로 바뀐다고 생각하면된다
+				success: function() {
+					alert('성공!');
+					listReply();  // function listReply(){ 호출함
+				},
+				error: function() {
+					alert('실패');
+					alert(send_id);
+					alert(Receive_id);
+					alert(note_content);
+					
+					}
+			
+			});  //ajax 종료
+			
+		}); //send 버튼 클릭시 기능 종료
 	});
+
+	
 </script>
 </html>

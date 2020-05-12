@@ -519,7 +519,7 @@
 					</span>
 				</div>
 
-				<div class="modal_error_next_box">에러출력박스(진주씨 교육중)</div>
+				<div class="modal_error_next_box">에러출력박스</div>
 
 				<!-- 로그인 상태 유지 -->
 				<div class="login_state">

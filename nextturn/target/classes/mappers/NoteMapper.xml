@@ -8,9 +8,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="note_view" resultType="NoteDTO">
 		SELECT *
 		FROM tbl_note
+		WHERE receive_id = #{userid}
 		ORDER BY nno DESC
 	</select>
 
+	<!-- 쪽지 입력하기 -->
+	<insert id="note_send" parameterType="NoteDTO">
+		INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
+		VALUES(seq_note.NEXTVAL, #{send_id}, #{Receive_id}, #{note_content})
+	</insert>
 
 
 

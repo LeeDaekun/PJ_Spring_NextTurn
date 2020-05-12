@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 import com.nextturn.domain.MemberDTO;
 import com.nextturn.persistence.LoginDAO;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
+@Slf4j
 public class LoginServiceImpl implements LoginService{
 
 	@Autowired
@@ -65,7 +68,10 @@ public class LoginServiceImpl implements LoginService{
 				session.removeAttribute("userid");  //기존에 세션에 있던 userid랑 name 을 지우고
 				session.removeAttribute("name");
 				session.setAttribute("userid", loginDto.getId());  //로그인이 되면, 유저아이디랑 이름을 세션에 저장한다  
-				session.setAttribute("name", loginDto.getName() );
+				session.setAttribute("name", loginDto.getName());
+				log.info("■■■■■■session 보기: "+loginDto.getId());
+				log.info("■■■■■■session 보기: "+loginDto.getName());
+				log.info("■■■■■■session 보기: "+session);
 			} else {
 				result = 3;  //비밀번호가 틀렸을때 리절트3
 			}

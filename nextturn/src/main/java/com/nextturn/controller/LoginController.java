@@ -26,8 +26,8 @@ public class LoginController {
 	
 	@PostMapping("/in")
 	public Integer logIn(MemberDTO mDto, HttpSession session) {  //httpsession 은 서버에 저장된다 로그인 정보값을 계속 기억하고있음(세션어트리뷰트, 쿠키의 친구)
-		log.info("★★★★★★★★★★★★★★★ POST: LOGIN/LOGIN ACTION");
-		log.info(mDto.toString());
+		log.info("■■■■■■■■■■■■ POST: LOGIN/LOGIN ACTION");
+		log.info("■■■■■■■■■■■■ 사용자가 입력한 정보"+mDto.toString());  //사용자가 ID비밀번호를 제대로 입력했는지 확인
 		// 로그인
 		int result = lService.login(mDto, session);  //성공하면 리턴1이 된
 			

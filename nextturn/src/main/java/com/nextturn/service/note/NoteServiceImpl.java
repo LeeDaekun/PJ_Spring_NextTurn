@@ -32,9 +32,17 @@ public class NoteServiceImpl implements NoteService{
 	
 	//인터페이스 오버라이딩 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 	@Override
-	public List<NoteDTO> note_view() {
+	public List<NoteDTO> note_view(String userid) {
 		log.info("■■■■ @오버라이딩 note_view 실행");
-		return nDao.note_view();
+		return nDao.note_view(userid);
+	}
+
+
+	//■■■■■ 쪽지 전송 기능 ■■■■■
+	@Override
+	public void note_send(NoteDTO nDto) {
+		//전송내용 #{send_id}, #{Receive_id}, #{note_content}
+		nDao.note_send(nDto);	
 	}
 	
 	
