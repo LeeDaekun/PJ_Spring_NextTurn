@@ -608,7 +608,7 @@
 								
 								
 									<!-- 나중에 사이트에 맞게 바꾸기 -->
-									<li><a href="${path}/note/note_view">쪽지 확인</a></li>
+									<li><a href="${path}/note/note_list">쪽지 확인</a></li>
 									<li><a href="#">내 게시글</a></li>
 									<li><a href="#">닉네임 변경</a></li>
 									<li><a href="#">고객센터</a></li>

@@ -110,15 +110,16 @@
 	
 	.board_table tr td{
 		font-size: 12px;
-		padding: 15px 0px;
+		padding: 10px 0px;
 
 		border-bottom: 1px solid #d0d0d0;
 		text-align: center;
 	}
 
-	.board_table td:nth-child(2) {
+	.board_table td:nth-child(3) {
 		text-align: left;
 	}
+	
 	.board_table tr:nth-child(1) { /* 제목표시줄 */
 		background-color: white;
 		height: 35px;
@@ -192,11 +193,6 @@
 			border-radius: 10px;
 			}
 
-
-
-
-
-
 		/*아이콘 스타일*/
 		.list_content_search_btn {
 		    
@@ -239,7 +235,43 @@
         		color: black;}
     }
     
+/* 쪽지 작성창 */
+	.form_send{
+		padding: 5px 10px;
+		margin: 10px 0px;
+		border : 1px solid black;
+		border-radius: 10px;
+		display : flex;
+		align-items: center;
+		background: white;
+		}
+	
+	.form_send input{
+		width: 90px;
+		}
+	
+	.form_send2 {
+		margin: 0 0 0 30px;
+	    display: flex;
+	    align-items: center;
+		}
+		
+	
+	.note_textarea{
+		width: 600px;
+		height: 42px;
+	    /* border: 0px; */
+        resize: none;  /* textarea 사이즈 조정 막기 */
+        outline: none; /* textarea 사이즈 조정 막기 */
+		}
 
+	.send_btn {
+		margin: 0 0 0 10px;
+	    padding: 10px;
+	    color: white;
+	    background-color: #2b2b2b;
+	    border-radius: 5px;
+		}
 </style>
 
 
@@ -255,7 +287,7 @@
 
 		<div class="board_wrap">
 			<div class="board_head">
-			<span class="header_text">자유게시판</span>
+			<span class="header_text">쪽지</span>
 				<!-- 검색창 -->
 				<div>
 					<div class="list_content_search">
@@ -274,109 +306,74 @@
 			</div>
 			
 			
-			<!-- 키워드가 비어있지 않을때, 띄움 -->
-			<c:if test="${not empty map.keyword}">
-				<div><span style="color:red">${map.keyword}</span>의 검색결과 중
-				<span style="color:red">${map.count}</span>건 의 게시글이 검색되었습니다.
-				<a href="${path}/board/list" class="search_clear">닫기</a>
-				</div>
-			</c:if>
-			
+				
 			
 			<div class="orderby_row">
 				<div>
-					<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">최신순</a>
-					<a href="${path}/board/list?sort_option=cnt&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_cnt">조회순</a>
-					<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">댓글순</a>
-					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
+					<a href="${path}/note/note_list?menu_option=myno" class="orderby_btn ani_underline" id="menu_myno">받은쪽지</a>
+					<a href="${path}/note/note_list?menu_option=send" class="orderby_btn ani_underline" id="menu_send">보낸쪽지</a>
 				</div>
 				
 				<div>
-					<a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a>
+					<a href="${path}/---/---" class="insert_btn ani_underline">게시글등록</a>
 				</div>
 			</div><!-- orderby_row -->
+		
+					
+								
+					<form class="form_send"><%-- ajax 로 리플 입력데이터를 전송하기 위한 form 태그 (name=""이 전달한다)--%>
+						<div>
+							<div>보낸사람: <input type="text" id="send_id" value="kenisia"></div>
+							<div>받는사람: <input type="text" id="receive_id" value="leedaekun"></div>
+						</div>
+						
+						<div class="form_send2">
+							<span class="textarea_bg">
+								<textarea class="note_textarea" placeholder="쪽지를 보내시려면 내용을 입력해주세요" id="note_content"></textarea>
+							</span>
+							
+							<a href="#"  class="send_btn" >
+								<i class="fas fa-comment"></i>전송하기
+							</a>
+						</div>
+						
+					</form>
+				
 
-		<table class="board_table">
+		<table class="board_table" id="listReply">
 			<tr>
-				<td style="width: 8%">글번호</td>
-				<td >제목</td>
-				<td style="width: 4%">조회수</td>
-				<td style="width: 10%">작성자</td>
-				<td style="width: 8%">작성일자</td>
-				<td style="width: 6%">첨부파일</td>
+				<td style="width: 10%">받는사람</td>
+				<td style="width: 10%">보낸사람</td>
+				<td>내용</td>
+				<td style="width: 20%">보낸날짜</td>
+				
 			</tr>
  		
-			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
-			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
-			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
-			<c:forEach items="${map.list}" var="showDTO">
-			<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
+			<c:forEach items="${map.list}" var="NoteDTO">
+			<fmt:formatDate value="${NoteDTO.note_regdate}" pattern="yyyy-MM-dd" var="regdate"/>
 			
-			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
+			<%-- <c:forEach items="${board_item}" var="NoteDTO"> 처음에 연습한 소스 --%>
 					<tr>
-						<td>${showDTO.bno}</td>
-						<td>
-							<a href="${path}/board/view/${showDTO.bno}">
-								<c:if test="${showDTO.re_level != 0}">
-									<c:forEach begin="1" end="${showDTO.re_level}">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									</c:forEach>
-									<span style="font-weight: bold; color:green;">└답변▶:&nbsp;</span> 
-								</c:if>				
-							<span>${showDTO.title}</span>
-							<span style="color:red">[${showDTO.replycnt}]</span>
-							</a>
-							
-							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
-							<c:if test="${today == regdate}">
-								<span class="new_color new">New!</span>
-							</c:if>
-						</td>
-						
-						
-						<td>${showDTO.viewcnt}</td>
-						<td>${showDTO.writer}</td>
-					<%--<td>${regdate}</td>	 --%>
+						<td>${NoteDTO.receive_id}</td>
+						<td>${NoteDTO.send_id}</td>
+						<td>${NoteDTO.note_content}</td>
 				 	<td>
 						<c:choose>
 							<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
 							<c:when test="${today == regdate}">
-								<fmt:formatDate value="${showDTO.regdate}" pattern="HH:mm:ss"/>
+								<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
+								<c:if test="${today == regdate}">
+									<span class="new_color new">오늘!</span>
+								</c:if>
+								<fmt:formatDate value="${NoteDTO.note_regdate}" pattern="HH:mm:ss"/>
 							</c:when>
 							<c:otherwise>
-								<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd"/>
+								<fmt:formatDate value="${NoteDTO.note_regdate}" pattern="yyyy-MM-dd"/>
 							</c:otherwise>
 						</c:choose>
 					</td>
-					
-					
-										
-				 	<td>
-						<c:choose>
-							<c:when test="${showDTO.filecnt == 0}">
-								<span>없음</span>
-							</c:when>
-							<c:otherwise>
-								<span>${showDTO.filecnt}개</span>
-							</c:otherwise>
-						</c:choose>
-					</td>
-					
 				</tr>
 			</c:forEach>
-			
-			
-			
-			<!-- HTML 예제용 -->
-			<!--<tr>
-				<td>0000</td>번호 
-				<td><a href="#">HTML에서 직접 타이핑(예제용)<span class="new">New!</span></a></td>제목 
-				<td>22</td>조회수 
-				<td>관리자</td>작성자 
-				<td>2020.03.18</td>작성일자
-				<td>♥</td>첨부파일
-			</tr> -->
-			
 		</table>
 
 
@@ -386,8 +383,8 @@
 			
 			<!-- 이전페이지, 처음페이지로 이동 (블록이동  1~10번 페이지가 1블록이다) -->
 				<c:if test="${map.pager.curBlock > 1}">
-					<a href="${path}/board/list?curPage=${map.pager.blockBegin-10}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="page_btn hover_btn board_page board_prev page_left">◀</a>
-					<a href="${path}/board/list?curPage=1&sort_option=${map.sort_option}&keyword=${map.keword}" class="board_page board_prev">1</a>
+					<a href="${path}/note/note_list?curPage=${map.pager.blockBegin-10}" class="page_btn hover_btn board_page board_prev page_left">◀</a>
+					<a href="${path}/note/note_list?curPage=1" class="board_page board_prev">1</a>
 					<span>...</span>
 				</c:if>
 
@@ -396,10 +393,10 @@
 				<c:forEach var="num" begin="${map.pager.blockBegin}" end="${map.pager.blockEnd}">
 					<c:choose>
 						<c:when test="${num == map.pager.curPage}">
-							<a href="${path}/board/list?curPage=${num}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="board_page" id="check_color">${num}</a>
+							<a href="${path}/note/note_list?curPage=${num}" class="board_page" id="check_color">${num}</a>
 						</c:when>
 						<c:otherwise>
-							<a href="${path}/board/list?curPage=${num}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="board_page">${num}</a>
+							<a href="${path}/note/note_list?curPage=${num}" class="board_page">${num}</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -407,28 +404,93 @@
 			<!-- 다음페이지, 마지막 페이지로 이동 (블록이동  1~10번 페이지가 1블록이다) -->
 			<c:if test="${map.pager.curBlock < map.pager.totBlock}">
 				<span>...</span>
-				<a href="${path}/board/list?curPage=${map.pager.totPage}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="board_page board_next">${map.pager.totPage}</a>
-				<a href="${path}/board/list?curPage=${map.pager.blockEnd + 1}&sort_option=${map.sort_option}&keyword=${map.keyword}" class="page_btn hover_btn board_page board_next page_right">▶</a>
+				<a href="${path}/note/note_list?curPage=${map.pager.totPage}" class="board_page board_next">${map.pager.totPage}</a>
+				<a href="${path}/note/note_list?curPage=${map.pager.blockEnd + 1}" class="page_btn hover_btn board_page board_next page_right">▶</a>
 			</c:if>
 		</div>
+
 
 
 	</div> <!-- board_wrap -->
 </body>
 
 <script type="text/javascript">
-	$(function(){
-		var sort_option = '${map.sort_option}';  /* 해쉬맵을 받아옴 */
+	$(function(){ // 문서가 로드가되면
 		
-		if(sort_option != null) {
-			$('#sort_' + sort_option).css('color', '#f3ca00');
-			$('#sort_' + sort_option).css('font-weight', 'bold');
-			$('.ani_underline:after').css('background-color', 'yellow');
-		}
-	    		
-		$('.write_btn').click(function(){
-			location.href="/metop/board/write";
+		
+		$(document).on('click', '.send_btn', function(){
+			var note_textarea = $('.note_textarea').val();  //텍스트 에리어에 적은 댓글을 var에 저장
+			
+			//■■■쪽지 내용없을시 경고 출력■■■
+			if(note_textarea == '' || note_textarea.length == 0) {
+				$('.note_textarea').focus();  //댓글버튼 누르면 포커스를 에리어로 이동
+				alert("내용을 작성해주세요!")
+				/* $('.err_msg').css('visibility', 'visible'); */
+				return false;
+			}
+			
+			//인풋창의 벨류값을 변경
+			/* $('.note_writer').val('${name}'); */
+			
+			
+			//Mapper에 전송할 내용 send_id, receive_id, note_content   (3개의 인풋의 데이터가 여기에 들어와야함)
+			var send_id = $('#send_id').val();
+			var receive_id = $('#receive_id').val();
+			var note_content = $('#note_content').val();
+			$.ajax({
+				url: '${path}/note/send', // url을 어디로 날릴거냐면 (post 방식으로 URL 호출)
+				type: 'POST',
+				aync:false,
+				data: {"send_id":send_id,
+					   "receive_id":receive_id,
+					   "note_content":note_content}, // json 방식으로 데이터 전송방법
+														// url갈때 가는 데이터 담아서 보낸다
+														// serialize()라는(직렬화라는) 함수를 쓰면 4차선이 1차선으로 바뀐다고 생각하면된다
+				success: function() {
+					console.log('성공!');
+					listReply(); //성공시 펑션 실행으로 즉시 새로고침
+					
+				},
+				error: function() {
+					alert('실패. 콘솔확인하세요');
+					console.log(send_id);
+					console.log(receive_id);
+					console.log(note_content);
+					}
+			
+			});  //ajax 종료
+			
+		}); //send 버튼 클릭시 기능 종료
+	});
+
+	
+	// 댓글 목록 출력 함수 (ajax로 URL을 호출하면, 화면전환없이 즉시 바뀜)
+	function listReply(){
+		$.ajax({
+			type: "get",
+			async: false, // 비동기 전송 방식을 동기로 바꿔준다(비동기 방식은 동시에 처리) false 는 순차적처리, ture는 동시처리
+			url: "${path}/note/note_list",  //해당 게시물을 다시 출력함 
+			success: function(){  	//result : 바로위 url을 실행했을때, 컨트롤러에서 리턴받은 값이 result가 됨 (/board/commentlist2 이것이다)
+				 location.reload(); //새로 띄울 페이지 (새로고침)
+			}
 		});
+	}
+	
+	
+	$(function(){
+		var menu_option = '${map.menu_option}';  /* 해쉬맵을 받아옴 */
+		console.log(menu_option);
+		if(menu_option != null) {  //쿼리스트링 어떤거로 접속했느냐에 따라, 메뉴를 노란색으로 표시
+			$('#menu_' + menu_option).css('color', '#f3ca00');
+			$('#menu_' + menu_option).css('font-weight', 'bold');
+			$('.ani_underline:after').css('background-color', 'yellow');
+			
+		}
+		if(menu_option == 'myno'){
+			$('.board_table td:nth-child(1)').css('color', 'blue');
+		}else{
+			$('.board_table td:nth-child(2)').css('color', 'blue');
+		}
 	});
 </script>
 </html>

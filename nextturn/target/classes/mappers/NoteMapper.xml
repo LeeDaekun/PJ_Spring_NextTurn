@@ -5,19 +5,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.nextturn.persistence.NoteDAO">
 	<!-- 세미콜론(;) 넣지 마세요!! -->
 	
-	<select id="note_view" resultType="NoteDTO">
+	
+<!-- 페이징 헤더  -->		
+	<sql id="paging_header">
 		SELECT *
-		FROM tbl_note
-		WHERE receive_id = #{userid}
-		ORDER BY nno DESC
+		FROM (
+			SELECT rownum AS rnum, A.*
+			FROM (
+	</sql>
+	
+<!-- 쪽지 보기 -->
+	<select id="note_list" resultType="NoteDTO">
+		<include refid="paging_header"/>
+			SELECT *
+			FROM tbl_note
+			<if test="map.menu_option == 'myno'">
+				WHERE receive_id = #{map.userid}
+			</if>
+			<if test="map.menu_option == 'send'">
+				WHERE send_id = #{map.userid}
+			</if>
+			ORDER BY nno DESC
+		<include refid="paging_footer"/>	
 	</select>
+	
+<!-- 페이징 푸터 -->	
+	<sql id="paging_footer">
+			) A
+		) WHERE rnum BETWEEN #{map.start} AND #{map.end}
+	</sql>
 
-	<!-- 쪽지 입력하기 -->
-	<insert id="note_send" parameterType="NoteDTO">
-		INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
-		VALUES(seq_note.NEXTVAL, #{send_id}, #{Receive_id}, #{note_content})
-	</insert>
+	
+		
+		<!-- 페이지를 위한 쪽지 갯수확인 -->
+		<select id="note_count" resultType="Integer">
+			SELECT COUNT(*)
+			FROM tbl_note
+		</select>
+	
+		<!-- 쪽지 입력하기 -->
+		<insert id="note_send" parameterType="NoteDTO">
+			INSERT INTO tbl_note(nno, send_id, receive_id, note_content)
+			VALUES(seq_note.NEXTVAL, #{send_id}, #{receive_id}, #{note_content})
+		</insert>
 
-
+	
 
 </mapper>

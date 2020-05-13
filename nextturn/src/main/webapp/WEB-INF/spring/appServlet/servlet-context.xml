@@ -70,7 +70,7 @@
 			<mapping path="/board/update"/>
 			<mapping path="/board/delete"/>
 			<mapping path="/board/answer"/>
-			<mapping path="/note/note_view"/>
+			<mapping path="/note/note_list"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>

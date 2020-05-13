@@ -62,8 +62,7 @@ public class BoardController {
 
 		int start = pager.getPageBegin(); // Pager에 담긴 값을 가져옴
 		int end = pager.getPageEnd(); // Pager에 담긴 값을 가져옴
-		List<BoardDTO> list = bService.boardList(sort_option, search_option, keyword, type, start, end); // 서비스작업 처리한 결과를 list
-																									// 에 담음
+		List<BoardDTO> list = bService.boardList(sort_option, search_option, keyword, type, start, end); // 서비스작업 처리한 결과를 list에 담음
 
 		HashMap<String, Object> map = new HashMap<>(); // 보내야될 데이터가 많아서, 바로 보내지않고 해쉬맵을 쓴다
 		map.put("list", list); // <BoardDTO> list를 ▶ 해쉬맵 "list"에 담는다
