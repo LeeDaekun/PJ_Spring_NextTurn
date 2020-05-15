@@ -8,7 +8,6 @@
 	<title>board</title>
 	<!-- 서치박스 스크립트 -->
 	<script src="https://kit.fontawesome.com/1aa6bb9bc2.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
 
 <style type="text/css">
 /*  	div, span, table, tr, td, a{

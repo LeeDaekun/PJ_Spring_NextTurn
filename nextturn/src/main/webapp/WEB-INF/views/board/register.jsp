@@ -293,11 +293,11 @@
 						<td>게시판 선택</td>
 						<td>
 							<div class="input_wrap"> <%-- 스프링 폼태그가 벨류값에 있는 글자를 가져감 --%>
-								<input type="radio" id="ra_a" name="type" value="free" checked>	<label for="ra_a">자유게시판</label>
-								<input type="radio" id="ra_b" name="type" value="qna">	<label for="ra_b" >문의하기</label>
-								<input type="radio" id="ra_c" name="type" value="trad">	<label for="ra_c">중고거래</label>
+								<input type="radio" id="ra_a" name="type" value="noti">	<label for="ra_a">오프라인모임</label>
+								<input type="radio" id="ra_b" name="type" value="game">	<label for="ra_b">게임 룰영상</label>
+								<input type="radio" id="ra_c" name="type" value="free" checked>	<label for="ra_c">자유게시판</label>
 								<input type="radio" id="ra_d" name="type" value="revi">	<label for="ra_d">게임후기</label>
-								<input type="radio" id="ra_e" name="type" value="noti">	<label for="ra_e">공지사항</label>
+								<input type="radio" id="ra_e" name="type" value="trad"><label for="ra_e">중고장터</label>
 							</div>
 						</td>
 					</tr>
@@ -309,7 +309,14 @@
 							<input type="text" placeholder="제목을 입력하세요" id="board_title" name="title" value="${bDto.title}">
 						</td>
 					</tr>
-		
+					
+					<tr>
+						<td>영상 코드</td>
+						<td>
+							<input type="text" placeholder="유튜브 영상에서 우클릭해서, [소스코드 복사]를 누른후 여기에 붙여넣기 하세요" id="video_code" name="video_code" value="${bDto.video_code}">
+						</td>
+					</tr>
+					
 					<tr>
 						<td class="align_top">내용</td>
 						<td>

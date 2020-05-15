@@ -8,7 +8,6 @@
 	<title>board</title>
 	<!-- 서치박스 스크립트 -->
 	<script src="https://kit.fontawesome.com/1aa6bb9bc2.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
 
 <style type="text/css">
 /*  	div, span, table, tr, td, a{
@@ -103,7 +102,8 @@
 	.board_table{
 	    width: 100%;  /*테이블 가로길이*/
 		border-spacing: 0px; /*테이블 테두리 제거*/
-		background: #f7f7f7;
+    	background: #f7f7f7;
+				
 	}
 	
 	
@@ -254,7 +254,7 @@
 
 		<div class="board_wrap">
 			<div class="board_head">
-			<span class="header_text">공지사항</span>
+			<span class="header_text">중고장터</span>
 				<!-- 검색창 -->
 				<div>
 					<div class="list_content_search">
@@ -291,9 +291,11 @@
 				</div>
 				
 				<div>
-					<a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a>
+					<a href="${path}/board/write" class="insert_btn ani_underline">중고 상품등록</a>
 				</div>
 			</div><!-- orderby_row -->
+
+			<iframe width="100%" height="500" src="https://www.youtube.com/embed/XeVVUEd8DDg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 		<table class="board_table">
 			<tr>

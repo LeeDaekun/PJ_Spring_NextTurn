@@ -214,7 +214,7 @@
 			font-weight: 100; /*글자두께*/
 			color: #c7c7c7;  /*글자 색상 공지사항 게임후기 자유게시판 중고거래*/
 			font-size: 15px;
-			padding: 10px 20px;
+			padding: 10px 10px;
 		}
 
 		/*밑줄 애니메이션 효과*/
@@ -571,10 +571,11 @@
 				<!-- 상단 밑줄효과있는 메뉴들  -->
 				<div class="container">
 				<ul>
-					<li><a href="${path}/board/list_notice" class="cool_link" >공지사항</a></li>
-					<li><a href="${path}/board/list_review" class="cool_link">게임후기</a></li>
+					<li><a href="${path}/board/list_meeting" class="cool_link" >오프라인 모임</a></li>
+					<li><a href="${path}/board/list_rull" class="cool_link">게임 룰영상</a></li>
 					<li><a href="#" class="cool_link" id="header_menu_list">자유게시판</a></li>
-					<li><a href="#" class="cool_link">중고거래</a></li>
+					<li><a href="${path}/board/list_review" class="cool_link">게임후기</a></li>
+					<li><a href="${path}/board/list_trade" class="cool_link">중고장터</a></li>
 				</ul>
 				</div>
 

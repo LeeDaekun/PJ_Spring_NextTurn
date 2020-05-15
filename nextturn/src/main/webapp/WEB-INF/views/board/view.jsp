@@ -251,6 +251,21 @@
 		font-size: 15px;
 	}
 	
+	
+	
+	/*  ■■■■■ 유튜브 영상 아이프레임 박스 내 홈페이지에 맞게 변환 ■■■■■■■■■■■■■■■■■■■■■■■■*/
+	.iframebox {
+		 position: relative;
+		 width: 100%;
+		 padding-bottom: 56.25%;
+		}
+	
+	.iframebox iframe {
+		 position: absolute;
+		 width: 100%;
+		 height: 100%;
+		}​
+	
 
 	
 	
@@ -268,8 +283,37 @@
 				<div class="board_head">
 					
 					<div style="display: flex;">
-						<div class="board_name">자유게시판▶</div>
-						            
+					<c:choose>
+						<c:when test="${bDto.type == 'noti'}">
+							<div class="board_name">오프라인 모임▶</div>
+						</c:when>
+						
+						<c:when test="${bDto.type == 'rull'}">
+							<div class="board_name">게임 룰영상▶</div>
+						</c:when>
+						
+						<c:when test="${bDto.type == 'free'}">
+							<div class="board_name">자유게시판▶</div>
+						</c:when>
+						
+						<c:when test="${bDto.type == 'revi'}">
+							<div class="board_name">게임후기▶</div>
+						</c:when>
+						
+						<c:when test="${bDto.type == 'trad'}">
+							<div class="board_name">중고장터▶</div>
+						</c:when>
+						
+						<c:otherwise>
+							<div class="board_name">게시글▶</div>
+						</c:otherwise>
+					</c:choose>
+						
+						
+						
+						
+						
+						           
 						<%-- <c:choose>
 			              	<c:when  test="${bDto.re_level == 0}">제목:</c:when>
 			           		<c:otherwise>답글:</c:otherwise>
@@ -325,7 +369,14 @@
 						
 				</div>
 			</div>	
-
+			
+			<!-- 유튜브 영상코드 출력 -->
+			 <c:if test="${bDto.video_code != null}">	
+			 	<div class="iframebox">
+					 ${bDto.video_code}
+				</div>
+			</c:if>
+			
 			<!-- 컨텐츠 -->
 			<div class="view_content">
 				<div>

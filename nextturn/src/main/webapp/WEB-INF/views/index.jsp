@@ -11,7 +11,6 @@
 		<script src="https://kit.fontawesome.com/1aa6bb9bc2.js" crossorigin="anonymous"></script>
 		<script src="https://kit.fontawesome.com/825f57de13.js" crossorigin="anonymous"></script> <!-- 캐러셀 설치용 -->
 
-	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
 	
 	<!-- foreach 문으로 만든 태그에서 외부CSS를 인식하지 못하여 여기에 꺼내놨어요 -->
 	<style type="text/css">
@@ -56,43 +55,6 @@
 		    border-radius: 20px;
 		}
 
-	/*■■■■■■■■■ 푸터 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
-
-		div.footer_content{
-			/*공사 가이드라인*/
-			/*border-left: 3px solid white; 
-			border-right: 3px solid white;*/
-			width: 1400px; /* 모니터 좌우 1400 안에서 웹을 보여주겠다*/
-
-			margin: 0 auto;
-			height: 65px;
-			box-sizing: border-box;
-			display: flex;
-			justify-content: space-between; /*여백을 똑같이 맞추겠다*/
-			align-items: center; /* 수평 가운데 정렬*/
-			background-color: #000000; /*헤더 전체 색상*/
-			color: #c3c3c3;
-			text-align: center;
-			}
-
-		.footer_wrap {
-			background-color: #000000;
-			height: 75px;
-		}
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/* 작은 이미지박스가 있는 li박스들 */
 		.small_img{
@@ -253,10 +215,10 @@
 		
 	/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■캐러셀 CSS 시작■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 /*GLOBALS*/
-*{margin:0; padding:0; list-style:none;}
+/* *{margin:0; padding:0; list-style:none;}
 a{text-decoration:none; color:#666;}
 a:hover{color:none;}
-body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;}
+body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 
 
 #slider-wrap.active #next{right:0px;}
@@ -537,7 +499,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;}
 <!-- ============================================================================================== -->
 			<div class="board_wrap">
 				<div class="board_title sg_color" id="noti_board_btn">
-						<div class="header_text">공지사항</div>
+						<div class="header_text">오프라인 모임</div>
 						<div><a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a></div>
 				</div><!-- board_title -->
 				<div class="table_div">
@@ -738,7 +700,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;}
 			
 		<!-- 최근 플레이한 게임 -->
 			<div>
-				<div><h1>최신 보드게임</h1></div>
+				<div><h1>보드게임 룰 영상</h1></div>
 				<ul class="Recently_played_games_box">
 					
 					<!-- JSTL 자바 코드를 쓴다 -->
@@ -758,14 +720,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;}
 	
 	</section>
 
-<!--■■■■■■ 푸터(하단부)■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
-	<footer>
-		<div class="footer_wrap">
-			<div class="footer_content">
-				Copyright © Next Turn Corp. All rights reserved.
-			</div>
-		</div>
-	</footer>
+	<%@ include file="include/footer.jsp"%>
 </body>
 
 <!-- jQuery 문법
@@ -785,7 +740,7 @@ jQuery 이벤트문법(클릭, 포커스) -->
 	/* 게시판으로 이동 [a href 를 대신하는 ajax] */
 	$(document).ready(function() {	
 		$(document).on('click', '#noti_board_btn', function() {
-				location.href = "${path}/board/list_notice"; //컨트롤러 호출
+				location.href = "${path}/board/list_meeting"; //컨트롤러 호출
 		});
 		
 		$(document).on('click', '#free_board_btn', function() {

@@ -18,6 +18,7 @@ public class BoardDTO {
     private int bno;		//게시글번호
     private String type;	//게시글 타입
     private String title;	//게시글 제목
+    private String video_code;  //게임소개에서 영상코드 주소
     private String content;	//게시글 내용
     private String view_content;   //게시글내용 (에디터 태그 추가)
     private String search_content; //게시글 내용 (순수 text만 검색될 수 있게)
