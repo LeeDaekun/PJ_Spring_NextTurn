@@ -308,11 +308,6 @@
 							<div class="board_name">게시글▶</div>
 						</c:otherwise>
 					</c:choose>
-						
-						
-						
-						
-						
 						           
 						<%-- <c:choose>
 			              	<c:when  test="${bDto.re_level == 0}">제목:</c:when>

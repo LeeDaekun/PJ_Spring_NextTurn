@@ -238,7 +238,24 @@
         		color: black;}
     }
     
-
+    
+    
+  	/*  ■■■■■ 유튜브 영상 아이프레임 박스 내 홈페이지에 맞게 변환 ■■■■■■■■■■■■■■■■■■■■■■■■*/
+	.iframebox {
+		 position: relative;
+		 width: 100%;
+		 padding-bottom: 56.25%;
+		}
+	
+	.iframebox iframe {
+		 position: absolute;
+		 width: 70%;
+		 height: 70%;
+		}
+    
+	.Thumbnail{
+		height: 200px;
+	}
 </style>
 
 
@@ -325,7 +342,7 @@
 									</c:forEach>
 									<span style="font-weight: bold; color:green;">└답변▶:&nbsp;</span> 
 								</c:if>				
-							<span><div class="video" style="">${showDTO.video_code}</div></span>
+							<span><img class="Thumbnail" src="${showDTO.video_img}">${showDTO.title}</span>
 							<span style="color:red">[${showDTO.replycnt}]</span>
 							</a>
 								

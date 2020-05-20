@@ -70,6 +70,7 @@ CREATE TABLE tbl_board(
     type CHAR(4) NOT NULL,  --게시판 타입
     title VARCHAR2(200) NOT NULL, --제목
     video_code VARCHAR2(300),  --게임소개에서 영상 주소 받을꺼
+    video_img VARCHAR2(100);
     view_content VARCHAR2(4000) NOT NULL,  --========== 04.06 추가
     search_content VARCHAR2(4000) NOT NULL, --========= 04.06 추가
     filecnt NUMBER DEFAULT 0, --첨부파일 갯수 04.13추가
@@ -89,8 +90,15 @@ ALTER TABLE tbl_board ADD CONSTRAINT pk_board
 PRIMARY KEY(bno);
 commit;
 
+--■■■■■ 칼럼 추가 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+ALTER TABLE tbl_board
+ADD video_img VARCHAR2(100);
+
 SELECT * 
 FROM tbl_board;
+
+
+
 
 --■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 --■■■■■ 리플 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■

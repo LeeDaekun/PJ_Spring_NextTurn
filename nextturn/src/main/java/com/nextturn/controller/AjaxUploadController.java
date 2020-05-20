@@ -134,7 +134,7 @@ public class AjaxUploadController {
 			// delete >> c:\\developer\ upload\2020\04\10\s_8419df4a-2395-4507-88dc-a01ac0c8f46a_yoojeong.jpg
 			
 			// 썸네일이미지 삭제 or 이미지가 아닌 첨부파일 삭제
-			return new ResponseEntity<String>("deleted", HttpStatus.OK);
+			return new ResponseEntity<String>("deleted", HttpStatus.OK);  //HttpStatus 는 성공하면 200번이 뜬다
 			// ResponseEntity: response의 설정값들을 디테일하게 바꾸고싶을때 사용
 		}
 		

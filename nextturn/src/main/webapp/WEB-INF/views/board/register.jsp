@@ -294,7 +294,7 @@
 						<td>
 							<div class="input_wrap"> <%-- 스프링 폼태그가 벨류값에 있는 글자를 가져감 --%>
 								<input type="radio" id="ra_a" name="type" value="noti">	<label for="ra_a">오프라인모임</label>
-								<input type="radio" id="ra_b" name="type" value="game">	<label for="ra_b">게임 룰영상</label>
+								<input type="radio" id="ra_b" name="type" value="rull">	<label for="ra_b">게임 룰영상</label>
 								<input type="radio" id="ra_c" name="type" value="free" checked>	<label for="ra_c">자유게시판</label>
 								<input type="radio" id="ra_d" name="type" value="revi">	<label for="ra_d">게임후기</label>
 								<input type="radio" id="ra_e" name="type" value="trad"><label for="ra_e">중고장터</label>
@@ -382,7 +382,36 @@
 		// 수정시 로컬에서 삭제할 기존 첨부파일 목록
 		var deleteFileList = new Array();
 //==================================================================================================
-		
+
+	
+//■■■■■■■■ 게시글 등록을 눌렀을때, 레퍼럴을 확인하여 게시판 카테고리를 자동으로 선택해줌 ■■■■■■■■■■■■■■■■■■■■■■■
+			$(function(){
+				var referer = '${header.referer}';
+				console.log('■■■■레퍼럴 확인■■■■■이전 URL: '+referer);
+					
+					if(referer.indexOf('list_meeting') != -1) {
+						console.log('list_meeting 에서 왔습니다');
+						$("#ra_a").attr("checked",true);  //게시판 선택 체크박스를 선택해줌
+						
+					}else if(referer.indexOf('list_rull') != -1) {
+						console.log('list_rull 에서 왔습니다');
+						$("#ra_b").attr("checked",true);  //게시판 선택 체크박스를 선택해줌
+						
+					}else if(referer.indexOf('list_review') != -1) {
+						console.log('list_review 에서 왔습니다');
+						$("#ra_d").attr("checked",true);  //게시판 선택 체크박스를 선택해줌
+						
+					}else if(referer.indexOf('list_trade') != -1) {
+						console.log('list_trade 에서 왔습니다');
+						$("#ra_e").attr("checked",true);  //게시판 선택 체크박스를 선택해줌
+					
+					}else {
+						console.log('list 에서 왔거나, 또는 다른경로 입니다.');
+						$("#ra_c").attr("checked",true);  //자유게시판 선택 체크박스를 선택해줌
+				}
+  			});
+  	//=====================================================
+	
 		$(function(){
 			// register.jsp ==> [게시글 등록]_[게시글 수정]_[게시글 답변]}
 				if(flag == 'update') {
@@ -459,10 +488,6 @@
 						}
 					});
 				});
-				
-				
-				
-				
 				
 				
 			//첨부part3. 파일 첨부 후, 첨부파일에서 X 버튼을 눌렀을때

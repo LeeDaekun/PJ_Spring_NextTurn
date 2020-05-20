@@ -287,6 +287,7 @@ public class BoardController {
 		return "/board/register";
 	}
 
+	
 	// 게시글 등록 완료 후 , 등록한 상세게시글을 띄움 (CURRVAL 사용)
 	@PostMapping("/write")
 	public String write(BoardDTO bDto, Model model) {
