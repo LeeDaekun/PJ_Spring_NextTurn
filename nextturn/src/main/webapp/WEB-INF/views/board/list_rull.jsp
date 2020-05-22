@@ -98,32 +98,6 @@
 
 
 
-/*■■■■ 테이블 스타일 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
-	.board_table{
-	    width: 100%;  /*테이블 가로길이*/
-		border-spacing: 0px; /*테이블 테두리 제거*/
-    	background: #f7f7f7;
-				
-	}
-	
-	
-	.board_table tr td{
-		font-size: 12px;
-		padding: 15px 0px;
-
-		border-bottom: 1px solid #d0d0d0;
-		text-align: center;
-	}
-
-	.board_table td:nth-child(2) {
-		text-align: left;
-	}
-	.board_table tr:nth-child(1) { /* 제목표시줄 */
-		background-color: #f1f1f1;
-		height: 35px;
-		font-weight: bolder;
-	}
-
 	.new {
 			padding: 0px 5px;
 			color: orangered;
@@ -256,6 +230,32 @@
 	.Thumbnail{
 		height: 200px;
 	}
+	
+	
+/*----비디오 게시판 출력부분----------*/
+	.video_list{
+	    display: flex;
+	    flex-direction: row;
+	    flex-wrap: wrap;
+	    /* border: 1px solid green; */
+	}
+	
+	.title_line{
+		font-size: 16px;
+		padding: 7px 0 0 0;
+	}
+	
+ 	.video_card{
+ 		margin: 20px auto;
+	}
+	
+	.info_line{
+		display: flex;
+	    justify-content: space-between;
+	}
+	 
+	
+
 </style>
 
 
@@ -312,94 +312,49 @@
 				</div>
 			</div><!-- orderby_row -->
 
-		<table class="board_table">
-			<tr>
-				<td style="width: 8%">글번호</td>
-				<td >제목</td>
-				<td style="width: 4%">조회수</td>
-				<td style="width: 10%">작성자</td>
-				<td style="width: 8%">작성일자</td>
-				<td style="width: 6%">첨부파일</td>
-			</tr>
- 		
-		
-			
+
 			<!-- formatDate 포맷해서 regdate 를 만들었음 -->
 			<!-- 위에 시계날짜랑 같으면, 시간으로 나오고, 다르면 날짜로 나온다 -->
 			<!-- regdate 를 년월일 만 뜨도록 바꾸는거다 showDTO의 자료가 아니고 새로 만든자료임-->
-			<c:forEach items="${map.list}" var="showDTO">
-			<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"/>
-			
-			<%-- <c:forEach items="${board_item}" var="showDTO"> 처음에 연습한 소스 --%>
-					<tr>
-						<td>${showDTO.bno}</td>
-					
-						<td>
+			<div class="video_list">
+				<c:forEach items="${map.list}" var="showDTO">
+				<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"></fmt:formatDate>
+					<div class="video_card">
+						<div>
 							<a href="${path}/board/view/${showDTO.bno}">
-								<c:if test="${showDTO.re_level != 0}">
-									<c:forEach begin="1" end="${showDTO.re_level}">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-									</c:forEach>
-									<span style="font-weight: bold; color:green;">└답변▶:&nbsp;</span> 
-								</c:if>				
-							<span><img class="Thumbnail" src="${showDTO.video_img}">${showDTO.title}</span>
-							<span style="color:red">[${showDTO.replycnt}]</span>
-							</a>
-								
+								<img class="Thumbnail" src="${showDTO.video_img}">
+							</a>						 	
+					 	</div>
+					 	
+					 	<div class="title_line">
+				 			<b>${showDTO.title}</b>
+				 			<span style="color:red">[${showDTO.replycnt}]</span>
+							<c:if test="${today == regdate}"><span class="new_color new">New!</span></c:if>
+					 	</div>
 							
-							<%-- 오늘 올라온 게시글에 새 게시글 깜빡이기 --%>
-							<c:if test="${today == regdate}">
-								<span class="new_color new">New!</span>
-							</c:if>
-						</td>
-						
-						
-						<td>${showDTO.viewcnt}</td>
-						<td>${showDTO.writer}</td>
-					<%--<td>${regdate}</td>	 --%>
-				 	<td>
-						<c:choose>
-							<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
-							<c:when test="${today == regdate}">
-								<fmt:formatDate value="${showDTO.regdate}" pattern="HH:mm:ss"/>
-							</c:when>
-							<c:otherwise>
-								<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd"/>
-							</c:otherwise>
-						</c:choose>
-					</td>
-					
-					
-										
-				 	<td>
-						<c:choose>
-							<c:when test="${showDTO.filecnt == 0}">
-								<span>없음</span>
-							</c:when>
-							<c:otherwise>
-								<span>${showDTO.filecnt}개</span>
-							</c:otherwise>
-						</c:choose>
-					</td>
-					
-				</tr>
-			</c:forEach>
-			
-			
-			
-			<!-- HTML 예제용 -->
-			<!--<tr>
-				<td>0000</td>번호 
-				<td><a href="#">HTML에서 직접 타이핑(예제용)<span class="new">New!</span></a></td>제목 
-				<td>22</td>조회수 
-				<td>관리자</td>작성자 
-				<td>2020.03.18</td>작성일자
-				<td>♥</td>첨부파일
-			</tr> -->
-			
-		</table>
+						<div class="info_line">
+							<div>${showDTO.writer}</div>
+							
+							<div>	
+								<span>조회수: ${showDTO.viewcnt}&nbsp;&nbsp;</span>
+								<c:choose>
+								<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
+									<c:when test="${today == regdate}">
+										<fmt:formatDate value="${showDTO.regdate}" pattern="HH:mm:ss"/>
+									</c:when>
+									<c:otherwise>
+										<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd"/>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							
+						</div>
+					</div> 
+				</c:forEach>
+			</div> <!-- video_list 출력 종료(1개 출력) -->	
+	
 
-
+	
 		<!-- 페이지 검색 영역 (페이지 네이션)  < 1 2 3 4 5 >-->
 		<div class="page">
 		<!-- 페이지네이션 :글이 많을 때 다음 글 또는 이전 글, 다음 글 목록 또는 이전 글 목록으로 이동하는 링크를 만듭니다. 이를 페이지네이션(Pagination)이라고 합니다 -->
