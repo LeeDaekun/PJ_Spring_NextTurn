@@ -15,7 +15,7 @@ public interface BoardService {
 
 	
 	//게시글 갯수 계산
-	public int countArticle(String search_option, String keyword);
+	public int countArticle(String search_option, String keyword, String type);
 
 	//게시글 출력
 	public BoardDTO boardView(int bno);

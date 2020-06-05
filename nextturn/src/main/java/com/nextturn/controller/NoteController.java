@@ -93,10 +93,8 @@ public class NoteController {
 				
 		//전송내용 #{send_id}, #{receive_id}, #{note_content}
 		nService.note_send(nDto); //리턴이 없으니까, 리스폰스 바디 써주고
-		
 	}
 	
-	
-	
+
 	
 }//class

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nextturn.domain.BoardDTO;
-import com.nextturn.service.board.Pager;
 import com.nextturn.service.index.IndexService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,10 +65,20 @@ public class IndexController {
 		log.info(" ■■■■■■ 리뷰게시판 글목록 listRevi에 수집완료  ■■■■■■");
 		
 		
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		type = "rull";
+		List<BoardDTO> listRull = iService.iboardList(sort_option, type); // 서비스작업 처리한 결과를 list
+		
+		log.info("■■■■■■리스트 까보기"+listRull.toString());
+		log.info("■■■■■■ 게임 룰 게시판 글목록 listRull에 수집완료  ■■■■■■");
+		
+		
+		
 		HashMap<String, Object> map = new HashMap<>(); // 보내야될 데이터가 많아서, 바로 보내지않고 해쉬맵을 쓴다
 		map.put("listFree", listFree); // <BoardDTO> list를 ▶ 해쉬맵 "listFree"에 담는다
 		map.put("listNoti", listNoti); // <BoardDTO> list를 ▶ 해쉬맵 "listNoti"에 담는다
 		map.put("listRevi", listRevi); // <BoardDTO> list를 ▶ 해쉬맵 "listRevi"에 담는다
+		map.put("listRull", listRull); // <BoardDTO> list를 ▶ 해쉬맵 "listRull"에 담는다
 
 		map.put("sort_option", sort_option); // 스트링 sort_option을 ▶ 해쉬맵 "sort_option"에 담는다
 		// 정렬 옵션 (정렬 옵션은 페이지가 넘어갈때마다 항상 따라다녀야한다. 안그러면 첫페이지만 정렬되고 말아버리니까)
@@ -77,9 +86,9 @@ public class IndexController {
 		model.addAttribute("viewMap", map); // 해쉬맵 map을, 모델"viewMap"에 담는다 (모델은 화면단에 데이터를 전달하는 수단)
 											// 화면단에서 출력할때
 
-		log.info(" ■■■■■■■■■■■ViewMap.toString■■■■■■■■■■■" + map.toString());
-
-		
+		//값 올라왔는지 확인하기
+		//log.info(" ■■■■■■■■■■■ViewMap.toString■■■■■■■■■■■" + listRull.toString());
+		//----------------------------------------------------
 		
 		//----보드게임 이미지 출력--------------------------------------------------------------------------------------
 		model.addAttribute("NewPdt", iService.newPdtList());  //모델은 컨트롤러에서 뷰단으로 전달 (newPdt에는 1~5순위 값이 담겨져서 돌아온다)

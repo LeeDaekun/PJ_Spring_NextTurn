@@ -397,28 +397,8 @@ to {
 			</form:form>
 			<!-- 스프링전용 폼태그 닫음  -->
 		</section>
-
-
-		<!-- ■■■■ 푸터 (열기 / 닫기) ■■■■■■■■■■■■■■■■■■■■ -->
-		<footer>
-			<div id="footer">
-				<ul>
-					<li><a href="#">이용약관</a></li>
-					<li><strong><a href="#">개인정보처리방침</a></strong></li>
-					<li><a href="#">책임의 한계와 법적고지</a></li>
-					<li><a href="#">회원정보 고객센터</a></li>
-				</ul>
-
-				<div id="address">
-					<span> <a href="../html/header.html"> <img
-							id="addr_logo" src="${path}/resources/img/logos.png">
-					</a>
-					</span> &nbsp; <span>Copyright</span> <span>ⓒ</span> <span><strong><a
-							href="#">NEXT TURN Corp.</a></strong></span> <span>All Rights Reserved.</span>
-				</div>
-			</div>
-		</footer>
 	</div>
+	<%@ include file="../include/footer.jsp"%>
 </body>
 
 

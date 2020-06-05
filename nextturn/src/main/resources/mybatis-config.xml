@@ -9,6 +9,8 @@
 	 	<typeAlias type="com.nextturn.domain.ReplyDTO" alias="ReplyDTO"></typeAlias>
         <typeAlias type="com.nextturn.domain.AttachDTO" alias="AttachDTO"></typeAlias>
         <typeAlias type="com.nextturn.domain.NoteDTO" alias="NoteDTO"></typeAlias>
+        <typeAlias type="com.nextturn.domain.DailyDTO" alias="DailyDTO"></typeAlias>
+        
 	</typeAliases>
 	
 </configuration>

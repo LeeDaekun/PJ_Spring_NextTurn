@@ -283,8 +283,8 @@
 				<table class="table_wrap"><%--name="" 에 들어가는건 DTO에도 있는 변수여야 한다--%>
 					<tr>
 						<td>작성자</td>
-						<td><div class="user_name">${name}</div>
-							<input type="hidden" value="${name}" name="writer">
+						<td><div class="user_name">${userid}</div>
+							<input type="hidden" value="${userid}" name="writer">
 						</td> <%-- 작성자도 스프링폼이 가져갈수 있는 태그로 바꿔야함 --%>
 						
 					</tr>
@@ -554,17 +554,20 @@
 		$(document).on('click', '#y_btn', function(){
 			// 유효성체크(제목)
 			var title = $('#board_title').val();
+			
+			
 			if(title == '' || title.length == 0) {
 				// 에러메세지 '제목을 입력해주세요.'
 				alert('값 입력해라!!!');
 				return false;
-			} else {
+			
+			}else {
 				 // 에디터의 내용이 textarea에 적용된다.
 				 oEditors.getById["board_content"].exec("UPDATE_CONTENTS_FIELD", []);
-				var view_content = $('#board_content').val();
-				
-				//검색어 정규식 (게시글 검색시 태그는 검색할 수 없게함)
-				var search_content = view_content.replace(/(<([^>]+)>)/ig, "").replace("&nbsp;", ""); //태그가 들어간값의 내용을 다 지워주세요 (태그를 제거하는 정규식)
+				 var view_content = $('#board_content').val();
+				 
+				 //검색어 정규식 (게시글 검색시 태그는 검색할 수 없게함)
+				 var search_content = view_content.replace(/(<([^>]+)>)/ig, "").replace("&nbsp;", ""); //태그가 들어간값의 내용을 다 지워주세요 (태그를 제거하는 정규식)
 				
 				//append 는 폼태그가 끝나는 지점에 이것을 넣어준다.
 				$('#frm_board').append('<textarea id="search_content" name="search_content"></textarea>');  //사용자가 입력한 폼값에, 택스트에리어를 붙인다.
@@ -574,8 +577,6 @@
 				//--------------첨부파일 part3---------------------
 				if(flag == 'answer') {
 					$('#board_title').val(title);
-                    
-                    
 				}
 				
 				// 첨부파일 목록[배열]도 추가

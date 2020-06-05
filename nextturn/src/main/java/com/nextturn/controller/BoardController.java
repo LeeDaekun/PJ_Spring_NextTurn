@@ -50,10 +50,10 @@ public class BoardController {
 						@RequestParam(defaultValue = "") String keyword, String type, Model model) { // DTO에서 자료를 가져와서 list 띄워라
 		//@RequestParam은 값이 안넘어와도 기본값을 셋팅해주는것
 		type = "free";
-		log.info(" ■■■■■■GET■■■■■■: 게시글 목록을 띄움");
+		log.info(" ■■■■■■GET■■■■■■: 자유게시판 띄움");
 
 		// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
-		int count = bService.countArticle(search_option, keyword);
+		int count = bService.countArticle(search_option, keyword, type);
 		// 여기에 SQL에서 조회한 게시글 갯수가 담겨옴
 
 		// 페이지 관련 설정 (URL에 ?curPage=1 이런식으로 쓸수 있다)
@@ -92,7 +92,7 @@ public class BoardController {
 		log.info(" ■■■■■GET■■■■■■: 공지 게시글 목록을 띄움");
 
 		// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
-		int count = bService.countArticle(search_option, keyword);
+		int count = bService.countArticle(search_option, keyword, type);
 		// 여기에 SQL에서 조회한 게시글 갯수가 담겨옴
 
 		// 페이지 관련 설정 (URL에 ?curPage=1 이런식으로 쓸수 있다)
@@ -135,7 +135,7 @@ public class BoardController {
 			log.info(" ■■■■■GET■■■■■■: 공지 게시글 목록을 띄움");
 
 			// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
-			int count = bService.countArticle(search_option, keyword);
+			int count = bService.countArticle(search_option, keyword, type);
 			// 여기에 SQL에서 조회한 게시글 갯수가 담겨옴
 
 			// 페이지 관련 설정 (URL에 ?curPage=1 이런식으로 쓸수 있다)
@@ -175,7 +175,7 @@ public class BoardController {
 			log.info(" ■■■■■GET■■■■■ 게임 룰 영상 컨트롤러 ■■■■■");
 
 			// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
-			int count = bService.countArticle(search_option, keyword);
+			int count = bService.countArticle(search_option, keyword, type);
 			// 여기에 SQL에서 조회한 게시글 갯수가 담겨옴
 
 			// 페이지 관련 설정 (URL에 ?curPage=1 이런식으로 쓸수 있다)
@@ -215,7 +215,7 @@ public class BoardController {
 					log.info(" ■■■■■GET■■■■■ 중고거래 게시판");
 
 					// 게시글 갯수 계산 //게시글을 '보드'라고도 하고 '아티클'이라고도한대 회사마다 다름
-					int count = bService.countArticle(search_option, keyword);
+					int count = bService.countArticle(search_option, keyword, type);
 					// 여기에 SQL에서 조회한 게시글 갯수가 담겨옴
 
 					// 페이지 관련 설정 (URL에 ?curPage=1 이런식으로 쓸수 있다)
@@ -292,7 +292,7 @@ public class BoardController {
 	@PostMapping("/write")
 	public String write(BoardDTO bDto, Model model) {
 		log.info(" ■■■■■POST■■■■■ /write (bDto)");
-		log.info(bDto.toString());
+		log.info("■■컨트롤러에 전달된 데이터■■"+bDto.toString());
 				
 		//log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■currval:"+bDto.getBno());  //방금 등록한 게시글 번호를 확인하기 위한것 CURRVAL
 		
@@ -307,7 +307,9 @@ public class BoardController {
 		//int bno=bDto.getBno();
 		//model.addAttribute("bno",bno);
 		//return "redirect:/board/view/{bno}
+		log.info("■■SQL 실행 시작");
 		bService.write(bDto);
+		log.info("■■SQL 실행 완료");
 		return "redirect:/board/view/" + bDto.getBno();
 	}
 //=========================================================================================================

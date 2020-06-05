@@ -389,7 +389,7 @@
 						<a href="${path}/board/answer?bno=${bDto.bno}" class="down_menu_btn answer" style="background: #3498DB">답변</a>
 						
 							<!-- 로그인 유저랑, 작성자가 같을때만 띄우는 버튼 -->	
-					<c:if test="${name == bDto.writer}">	
+					<c:if test="${userid == bDto.writer}">	
 						<a href="${path}/board/update?bno=${bDto.bno}" class="down_menu_btn" style="background: #F39C12">수정</a>
 						<a href="#" class="down_menu_btn" id="delete_btn" style="background: #C0392B">삭제</a>
 					</c:if>
@@ -415,8 +415,9 @@
 			<div id="listReply"></div>
 		</div>
 	</div> <!-- view_wrap -->
-</body>
 
+	<div><%@ include file="../include/footer.jsp"%></div>
+</body>
 
 <!-- 첨부파일 보여주기 (상단에 첨부파일 관련  스크립트가 있어야 사용할 수 있음, var fileTemplate 도 필요함) --> 
 <script id="fileTemplate" type="text/x-handlebars-template">
@@ -515,7 +516,7 @@
 			
 			$('.reply_bno').val('${bDto.bno}');  //bno태그에 벨류어블 값을 집어넣는다.
 			$('.reply_type').val('${bDto.type}');
-			$('.reply_writer').val('${name}');
+			$('.reply_writer').val('${userid}');
 		
 			$.ajax({
 				url: '${path}/reply/insert', // url을 어디로 날릴거냐면 (post 방식으로 URL 호출)

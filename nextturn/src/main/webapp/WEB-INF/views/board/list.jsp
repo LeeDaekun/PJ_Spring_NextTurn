@@ -413,6 +413,7 @@
 
 
 	</div> <!-- board_wrap -->
+	<%@ include file="../include/footer.jsp"%>
 </body>
 
 <script type="text/javascript">

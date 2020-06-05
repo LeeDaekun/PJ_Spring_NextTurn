@@ -166,10 +166,6 @@
 			}
 
 
-
-
-
-
 		/*아이콘 스타일*/
 		.list_content_search_btn {
 		    
@@ -228,7 +224,7 @@
 		}
     
 	.Thumbnail{
-		height: 200px;
+		height: 160px;
 	}
 	
 	
@@ -237,7 +233,8 @@
 	    display: flex;
 	    flex-direction: row;
 	    flex-wrap: wrap;
-	    /* border: 1px solid green; */
+
+}
 	}
 	
 	.title_line{
@@ -263,6 +260,7 @@
 
 </head>
 <body>
+<section>
 	<!-- 날짜나오는 것의 포맷을 바꾼다 -->
 	<!-- 자바유틸 데이터를 now 라고 이름짓고, 포맷을 바꾼다, 바꾼녀석의 이름은 today -->
 	<jsp:useBean id="now" class="java.util.Date"/>
@@ -301,10 +299,10 @@
 			
 			<div class="orderby_row">
 				<div>
-					<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">최신순</a>
-					<a href="${path}/board/list?sort_option=cnt&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_cnt">조회순</a>
-					<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">댓글순</a>
-					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">추천순</a>
+					<a href="${path}/board/list?sort_option=new&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_new">메뉴1</a>
+					<a href="${path}/board/list?sort_option=cnt&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_cnt">메뉴2</a>
+					<a href="${path}/board/list?sort_option=reply&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_reply">메뉴3</a>
+					<a href="${path}/board/list?sort_option=good&keyword=${map.keyword}" class="orderby_btn ani_underline" id="sort_good">메뉴4</a>
 				</div>
 				
 				<div>
@@ -389,10 +387,16 @@
 
 		</div>
 
-
+	
 	</div> <!-- board_wrap -->
-</body>
+	</section>
 
+
+
+<footer>
+	<%@ include file="../include/footer.jsp"%>
+</footer>
+</body>
 <script type="text/javascript">
 	$(function(){
 		var sort_option = '${map.sort_option}';  /* 해쉬맵을 받아옴 */

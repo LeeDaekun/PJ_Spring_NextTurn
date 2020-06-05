@@ -7,7 +7,6 @@
 	<title>join_agree</title>
 	<!-- favicon: 제목줄의 아이콘 -->
 	<link rel="stylesheet" type="text/css" href="${path}/resources/css/common.css">
-	<link rel="stylesheet" type="text/css" href="${path}/resources/css/footer.css"><!-- 푸터 CSS추가 -->
 	<link rel="icon" type="image/png" href=""><!-- 파비콘 -->
 	
 	<style type="text/css">
@@ -259,8 +258,28 @@
 			color: #333;
 		}
 
-		
+		/*푸터 CSS*/
+		div.footer_content{
+			/*공사 가이드라인*/
+			/*border-left: 3px solid white; 
+			border-right: 3px solid white;*/
+			width: 1400px; /* 모니터 좌우 1400 안에서 웹을 보여주겠다*/
 
+			margin: 0 auto;
+			height: 65px;
+			box-sizing: border-box;
+			display: flex;
+			justify-content: space-between; /*여백을 똑같이 맞추겠다*/
+			align-items: center; /* 수평 가운데 정렬*/
+			background-color: #000000; /*헤더 전체 색상*/
+			color: #c3c3c3;
+			text-align: center;
+			}
+
+		.footer_wrap {
+			background-color: #000000;
+			height: 75px;
+			}
 
 		
 	</style>
@@ -395,33 +414,10 @@
 			</div>
 		</section>
 		
-	<!-- ■■■■ 푸터 (열기 / 닫기) ■■■■■■■■■■■■■■■■■■■■ -->
-		<footer>
-			<div id="footer">
-				<ul>
-					<li><a href="#">이용약관</a></li>
-					<li><strong><a href="#">개인정보처리방침</a></strong></li>
-					<li><a href="#">책임의 한계와 법적고지</a></li>
-					<li><a href="#">회원정보 고객센터</a></li>
-				</ul>
 
-				<div id="address">
-					<span>
-						<a href="${path}/resources/html/header.html">
-							<img id="addr_logo" src="${path}/resources/img/logos.png">
-						</a>
-					</span>
-					&nbsp;
-					<span>Copyright</span>
-					<span>ⓒ</span>
-					<span><strong><a href="#">NEXT TURN Corp.</a></strong></span>
-					<span>All Rights Reserved.</span>
-				</div>
-			</div>
-		</footer>
 	</div>
 </body>
-
+<%@ include file="../include/footer.jsp"%>
 
 <script type="text/javascript">
 	$(document).ready(function() {

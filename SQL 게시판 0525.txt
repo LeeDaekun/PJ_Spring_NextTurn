@@ -1,0 +1,279 @@
+show user;
+-- 상위 게시글 3건에다가 2건 ~ 3건 댓글
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글1이다', '이대군', 240);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글2이다', '조보훈', 240);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글3이다', '동비', 240);
+
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글1이다', '동비', 239);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글2이다', '조보훈', 239);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글3이다', '이대군', 239);
+
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글1이다', '조보훈', 238);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글2이다', '이대군', 238);
+INSERT INTO tbl_reply(rno, type, content, writer, bno)
+VALUES(seq_reply.NEXTVAL, 'free', '댓글3이다', '동비', 238);
+
+
+--                                               게시판 타입
+-- 게시물 총 15건 추가! ref=1, re_step=1, re_level=0 type, writer=가입한 유저
+
+
+
+
+-- 자유게시판
+-- QnA게시판
+-- 고객게시판
+-- 공지사항
+-- tbl_board 통합형 게시판
+-- type: free, qna, cs, noti
+
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■■ 게시판 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+-- 게시판 Sequence 생성
+DROP SEQUENCE seq_board;
+CREATE SEQUENCE seq_board
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+--=====================================
+DROP TABLE tbl_board CASCADE CONSTRAINTS;
+CREATE TABLE tbl_board(
+    bno NUMBER(10, 0),  --
+    type CHAR(4) NOT NULL,  --게시판 타입
+    title VARCHAR2(200) NOT NULL, --제목
+    video_code VARCHAR2(300),  --게임소개에서 영상 주소 받을꺼
+    view_content VARCHAR2(4000) NOT NULL,  --========== 04.06 추가
+    search_content VARCHAR2(4000) NOT NULL, --========= 04.06 추가
+    filecnt NUMBER DEFAULT 0, --첨부파일 갯수 04.13추가
+    writer VARCHAR2(50) NOT NULL,  --작성자
+    viewcnt NUMBER DEFAULT 0,  --조회수
+    replycnt NUMBER DEFAULT 0,  -- 댓글수
+    goodcnt NUMBER DEFAULT 0,  --좋아요
+    regdate DATE DEFAULT SYSDATE,  -- 작성일
+    updatedate DATE DEFAULT SYSDATE,  --수정일
+    show CHAR(1) DEFAULT 'y',  -- 로그인해야 보여주는거
+    ref NUMBER DEFAULT 1,            --답글이 달릴 게시글 번호
+    re_step NUMBER DEFAULT 1,        -- 답글의 총갯수 (하나씩 밀려나가기도함)
+    re_level NUMBER DEFAULT 0        -- 답글의 깊이 (답글의 답글인지, 답글의 답글의 답글인지 확인)
+);
+-- 게시판 테이블 PK Key 추가 (pk_board 라는 제약조건을 등록하기위해서 제약조건을 누르면 확인할 수 있음, 나중에 데이터가 복잡할것 같아서 이렇게 해놓는다)
+ALTER TABLE tbl_board ADD CONSTRAINT pk_board
+PRIMARY KEY(bno);
+commit;
+
+--■■■■■ 칼럼 추가 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+ALTER TABLE tbl_board
+ADD video_img VARCHAR2(100);
+commit;
+
+ALTER TABLE tbl_board
+MODIFY video_img VARCHAR2(300);
+commit;
+
+
+SELECT * 
+FROM tbl_board;
+
+
+-- 게시물 총 15건 추가! 
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'free', '타이틀1','뷰컨텐츠 내용1', '서치컨텍스트 내용', '이대군');
+
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀2','뷰컨텐츠 내용2', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀3','뷰컨텐츠 내용3', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀4','뷰컨텐츠 내용4', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀5','뷰컨텐츠 내용5', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀6','뷰컨텐츠 내용6', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀7','뷰컨텐츠 내용7', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀8','뷰컨텐츠 내용8', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀9','뷰컨텐츠 내용9', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀ㅁ','뷰컨텐츠 내용10', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀ㅠ','뷰컨텐츠 내용11', '서치컨텍스트 내용', '이대군');
+INSERT INTO tbl_board(bno, type, title, view_content, search_content, writer)
+VALUES(seq_board.NEXTVAL, 'game', '타이틀ㅊ','뷰컨텐츠 내용12', '서치컨텍스트 내용', '이대군');
+
+commit;
+
+
+
+
+
+
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■■ 리플 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+-- 댓글 테이블 생성
+DROP SEQUENCE seq_reply;
+CREATE SEQUENCE seq_reply
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+    
+DROP TABLE tbl_reply CASCADE CONSTRAINTS;
+CREATE TABLE tbl_reply(
+    rno NUMBER,
+    type CHAR(4) NOT NULL,
+    content VARCHAR2(2000) NOT NULL,
+    writer VARCHAR2(100) NOT NULL,
+    regdate DATE DEFAULT SYSDATE,
+    bno NUMBER NOT NULL
+);
+
+-- tbl_reply에 PK 제약조건 추가
+ALTER TABLE tbl_reply
+ADD CONSTRAINT pk_reply_rno
+PRIMARY KEY(rno);
+
+-- 댓글 FK 게시글과 참조, 게시글 삭제시 참조하고 있는 댓글 연쇄 삭제를 위한 cascade 설정
+ALTER TABLE tbl_reply
+ADD CONSTRAINT fk_reply_bno
+FOREIGN KEY(bno) REFERENCES tbl_board(bno)  --이거 두개를 연결시킴 (PK를 삭제하면 둘다 삭제됨)
+ON DELETE CASCADE;  --삭제부분이 서로 연결되있음
+
+commit;
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■ 첨부파일 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+-- 게시판 첨부파일 테이블
+-- : 첨부파일 이름은 uuid를 사용하기 때문에 중복 안됨
+DROP TABLE tbl_attach CASCADE CONSTRAINTS;  --서로 연결된거 모두 삭제
+CREATE TABLE tbl_attach (
+    fullname VARCHAR2(150) NOT NULL,  --경로까지 같이 들어간다
+    bno NUMBER NOT NULL,            --첨부파일 번호
+    regdate DATE DEFAULT SYSDATE    --첨부파일 등록일자
+);
+
+--제약조건에 이름을 달려면 이렇게 프라이머리키를 등록시켜야한다.
+ALTER TABLE tbl_attach ADD CONSTRAINT pk_attach  --tbl_cttach 에 재약조건인 pk_attack 를 추가한다.
+PRIMARY KEY(fullname);  --풀네임이 PK키
+
+ALTER TABLE tbl_attach          --tbl_attach 를 tbl_board랑 관계를 맺어준다.
+ADD CONSTRAINT fk_attach_bno    --제약조건 등록 ,,포링키 (관계를 맺어주는키), 관계되는 테이블이 없다면, 이 테이블을 사용할 수 없음(주종 관계)
+FOREIGN KEY(bno) REFERENCES tbl_board(bno)  --tbl_attach의 bno랑  tbl_board의 bno를 서로연결
+ON DELETE CASCADE;  --연결된 테이블은 삭제조건을 공유함
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+DELETE FROM tbl_board;
+commit;
+
+SELECT * FROM tbl_board;
+SELECT * FROM tbl_attach;
+
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■ 쪽지 기능 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+DROP SEQUENCE seq_note;
+CREATE SEQUENCE seq_note
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+
+
+DROP TABLE tbl_note;
+CREATE TABLE tbl_note (
+    nno NUMBER,                 --쪽지 번호
+    send_id VARCHAR2(50),      --발신 아이디
+    Receive_id VARCHAR2(50),   --수신 아이디
+    note_content VARCHAR2(2000) NOT NULL,  --쪽지 내용
+    note_regdate DATE DEFAULT SYSDATE  --쪽지 날짜
+);
+
+--인서트 후 꼭 커밋을 해야 합니다.
+INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
+VALUES(seq_note.NEXTVAL, 'admin', 'kenisia', '첫번째 쪽지글 테스트 중 입니다');
+INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
+VALUES(seq_note.NEXTVAL, 'admin', 'kenisia', '두번째 쪽지글 테스트 중 입니다');
+
+INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
+VALUES(seq_note.NEXTVAL, 'admin', 'leedaekun', '이대군 이세요?');
+INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
+VALUES(seq_note.NEXTVAL, 'admin', 'leedaekun', '이대군에게 쪽지보냄');
+INSERT INTO tbl_note(nno, send_id, Receive_id, note_content)
+VALUES(seq_note.NEXTVAL, 'admin', 'leedaekun', '이대군이 아니면 이걸 볼 수 없음');
+commit;
+
+SELECT *
+FROM tbl_note
+WHERE receive_id = 'kenisia'
+ORDER BY nno DESC;
+
+
+
+SELECT *
+FROM tbl_board
+WHERE type = 'game';
+
+UPDATE tbl_board
+SET type = 'rull'
+WHERE type = 'game';
+commit;
+SELECT *FROM tbl_board;
+
+
+UPDATE tbl_board
+SET video_code = '<iframe width="1280" height="720" src="https://www.youtube.com/embed/XeVVUEd8DDg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+WHERE type = 'rull';
+
+commit;
+
+
+--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+--■■■■ 데일리 기능 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+DROP SEQUENCE seq_daily;
+
+CREATE SEQUENCE seq_daily
+    START WITH 1
+    INCREMENT BY 1
+    NOCYCLE;
+
+DROP TABLE tbl_daily;
+CREATE TABLE tbl_daily(
+    dno NUMBER,
+    content VARCHAR2 (4000) NOT NULL,
+    writer VARCHAR2 (50) NOT NULL,
+    regdate DATE DEFAULT SYSDATE
+);
+
+ALTER TABLE tbl_daily
+ADD CONSTRAINT pk_daily_dno
+PRIMARY KEY(dno);
+
+SELECT *
+FROM tbl_daily;
+COMMIT;
+
+

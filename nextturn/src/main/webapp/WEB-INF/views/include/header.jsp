@@ -609,6 +609,7 @@
 								
 								
 									<!-- 나중에 사이트에 맞게 바꾸기 -->
+									<li><a href="${path}/daily/read">데일리체크</a></li>
 									<li><a href="${path}/note/note_list">쪽지 확인</a></li>
 									<li><a href="#">내 게시글</a></li>
 									<li><a href="#">닉네임 변경</a></li>
@@ -640,7 +641,7 @@
 							<!-- 시그니쳐 색깔 -->
 						</c:when>
 						<c:otherwise>
-							<div style="color:white">${name}님</div>
+							<div style="color:white">${userid}님</div>
 							<div>
 								<button type="button" class="btn btn-basic" id="header_btn_logout">로그아웃</button>
 							</div>
@@ -664,7 +665,7 @@
 	// $(function(){   위에꺼랑 같은거
 
 		
-		//인터셉터로 인한 기능 (로그인 안됐을때 로그인모달 띄우기)
+	//인터셉터로 인한 기능 (로그인 안됐을때 로그인모달 띄우기)
 	$(function(){
 		var message = '${message}';  //flashMap 의 값
 		var uri = '${uri}';

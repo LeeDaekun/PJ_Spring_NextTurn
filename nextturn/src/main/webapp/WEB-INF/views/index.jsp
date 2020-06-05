@@ -430,8 +430,51 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 }
 /*■■■■■■■■■■■■■■■■■■■■■캐러셀 CSS 종료■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/ 
 
+
+/* ■■■■■■■■ 비디오 게시판 출력 부분 CSS ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
+/* ----- 유튜브 영상 아이프레임 박스 내 홈페이지에 맞게 변환 --------*/
+	.iframebox {
+		 position: relative;
+		 width: 100%;
+		 padding-bottom: 56.25%;
+		}
 	
-		
+	.iframebox iframe {
+		 position: absolute;
+		 width: 70%;
+		 height: 70%;
+		}
+    
+	.Thumbnail{
+		height: 160px;
+	}
+/* ----- 비디오 게시판 관련 CSS --------*/
+	.video_wrap {
+		width: 100%;
+	}
+
+	.video_list{
+	    display: flex;
+	    flex-direction: row;
+	    flex-wrap: wrap;
+	    
+   	    background: white;
+	    border-radius: 10px;
+	}
+	
+	.title_line{
+		font-size: 16px;
+		padding: 7px 0 0 0;
+	}
+	
+ 	.video_card{
+ 		margin: 20px auto;
+	}
+	
+	.info_line{
+		display: flex;
+	    justify-content: space-between;
+	}
 		
 		
 		
@@ -496,7 +539,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today"/>
 								<!-- mm을 대문자로 써야한다 -->
 		<div class="mini_board_all">						
-<!-- ============================================================================================== -->
+<!-- ■■■■■■■■■■ 오프라인 모임 미니목록 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 			<div class="board_wrap">
 				<div class="board_title sg_color" id="noti_board_btn">
 						<div class="header_text">오프라인 모임</div>
@@ -559,7 +602,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 				
 			</div> <!-- board_wrap 게시판 -->
 			
-<!-- ============================================================================================== -->
+<!-- ■■■■■■■■■■ 자유게시판 미니목록 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 			<div class="board_wrap">
 				<div class="board_title sg_color" id="free_board_btn">
 						<div class="header_text">자유게시판</div>
@@ -622,7 +665,7 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 				
 			</div> <!-- board_wrap 게시판 -->
 			
-<!-- ============================================================================================== -->
+<!-- ■■■■■■■■■■ 후기 리뷰 게시판 미리보기 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 			<div class="board_wrap">
 				<div class="board_title sg_color" id="revi_board_btn">
 						<div class="header_text">후기/리뷰</div>
@@ -684,23 +727,59 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 				</div>	
 				
 			</div> <!-- board_wrap 게시판 -->
-			
-
-
-
-
-
-
 		</div><!-- 게시판 모음 종료 -->
 			
 			
+<!-- ■■■■■■■■■■ 룰 영상 게시판 미니목록 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+			<div class="video_wrap">
+				<div class="board_title sg_color" id="noti_board_btn">
+						<div class="header_text">게임 룰 영상 (YouTube)</div>
+						<div><a href="${path}/board/write" class="insert_btn ani_underline">게시글등록</a></div>
+				</div><!-- board_title 검정색바 종료 -->
+				
+			<!-- 동영상 게시판 출력 -->
+				<div class="video_list">
+					<c:forEach items="${viewMap.listRull}" var="showDTO">
+					<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd" var="regdate"></fmt:formatDate>
+						<div class="video_card">
+							<div>
+								<a href="${path}/board/view/${showDTO.bno}">
+									<img class="Thumbnail" src="${showDTO.video_img}">
+								</a>						 	
+						 	</div>
+						 	
+						 	<div class="title_line">
+					 			<b>${showDTO.title}</b>
+					 			<span style="color:red">[${showDTO.replycnt}]</span>
+								<c:if test="${today == regdate}"><span class="new_color new">New!</span></c:if>
+						 	</div>
+								
+							<div class="info_line">
+								<div>${showDTO.writer}</div>
+								
+								<div>	
+									<span>조회수: ${showDTO.viewcnt}&nbsp;&nbsp;</span>
+									<c:choose>
+									<%-- 투데이와 레그데이트의 날짜가 같으면, 오늘 올라온 거니까 시간으로 표시하고, 날짜가 다르면, 날짜로 보여줘라 --%>
+										<c:when test="${today == regdate}">
+											<fmt:formatDate value="${showDTO.regdate}" pattern="HH:mm:ss"/>
+										</c:when>
+										<c:otherwise>
+											<fmt:formatDate value="${showDTO.regdate}" pattern="yyyy-MM-dd"/>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								
+							</div>
+						</div> 
+					</c:forEach>
+				</div> <!-- video_list 출력 종료(1개 출력) -->	
+			</div> <!-- board_wrap 게시판 -->
 			
 			
-			
-			
-		<!-- 최근 플레이한 게임 -->
+			<!-- 최근 플레이한 게임 -->
 			<div>
-				<div><h1>보드게임 룰 영상</h1></div>
+				<div><h1>최신 보드게임</h1></div>
 				<ul class="Recently_played_games_box">
 					
 					<!-- JSTL 자바 코드를 쓴다 -->
@@ -716,6 +795,8 @@ body, hmtl{background: #ecf0f1; font-family: 'Anton', sans-serif;} */
 					
 				</ul>
 			</div>
+			
+			
 		</div> <!-- header_wrap -->
 	
 	</section>

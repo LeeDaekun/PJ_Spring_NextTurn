@@ -3,9 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nextturn.persistence.BoardDAO">
-		
+	
+	<!-- 인덱스 페이지 출력용 -->
 	<select id="iboardList" resultType="BoardDTO">
-		SELECT bno, title, type, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
+		SELECT bno, title, video_img, type, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
 		FROM tbl_board b, tbl_member m
 		<if test="map.type == 'free'">
 			WHERE type = 'free' AND 5 >=rownum
@@ -16,17 +17,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="map.type == 'revi'">
 			WHERE type = 'revi' AND 5 >=rownum
 		</if>
+		<if test="map.type == 'rull'">
+			WHERE type = 'rull' AND 4 >=rownum
+		</if>
 				
-		ORDER BY ref DESC, re_step ASC
+		ORDER BY bno DESC
 	</select>	
 	<!-- rownum 쓸때 AND 5 <=rownum 이렇게 꺽쇠 방향이 바뀌면 mapper에서 에러가 납니다-->
 		
 		
-		
-		
-		
-		
-	<!-- 계정이 있는 사용자의 게시글만 띄우기 -->
 	<!-- 보드와 회원가입한 사람의 이름이 같고, 보드에서 show가 y인 게시글만 출력하라-->
 	<!-- 정렬방법에 동적쿼리 if문 적용 -->
 	
@@ -37,7 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT rownum AS rnum, A.*
 			FROM (
 	</sql>
-	<!-- 인클루드 쿼리문 적용 -->
+	
+	<!-- 게시판에서 사용하는 출력 (인클루드 쿼리문 적용) -->
 	<select id="boardList" resultType="BoardDTO">
 		<include refid="paging_header"/>
 		SELECT bno, title, video_code, video_img, writer, name, b.regdate, updatedate, viewcnt, replycnt, goodcnt, show, filecnt, ref, re_step, re_level
@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- ■■■■■출력할 게시글 타입 설정 ■■■■■■■■■통합검색(게시글 출력용) 하라고 만든 SQL (작성자와,가입한사람이 있는정보중 show가 y인 사람의 글중에 통합검색)-->	
 	<sql id="search">
-		WHERE b.writer = m.name
+		WHERE b.writer = m.id
 				  AND b.show = 'y'
 				  AND (title LIKE #{map.keyword}
 				  OR search_content LIKE #{map.keyword}
@@ -90,9 +90,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 
 	</sql>
-
-
-
 	
 	
 	
@@ -104,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM tbl_board b, tbl_member m
 		<include refid="search"/>
 	</select>
+
 	
 	
 	<select id="boardView" resultType="BoardDTO">

@@ -48,12 +48,14 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
-	//셀렉트된 게시글들을 갯수로(count)로 표시해줌
+	//셀렉트된 게시글들을 갯수로(count)로 표시해줌(페이저 사용을 위한것)
 	@Override
-	public int countArticle(String search_option, String keyword) {
+	public int countArticle(String search_option, String keyword, String type) {
 		Map<String, String> map = new HashMap<>();
 		map.put("search_option",search_option);  //키워드 검색에 필요함
 		map.put("keyword","%"+keyword+"%");      //키워드 검색에 필요함
+		map.put("list_type","%"+type+"%");      //키워드 검색에 필요함
+		
 		
 		return bDao.countArticle(map);  //dao의 카운트아티클로 이동
 	}
@@ -115,18 +117,26 @@ public class BoardServiceImpl implements BoardService{
 	@Transactional  //한번에 다 처리해야 처리되는 트랜젝션
 	@Override
 	public void write(BoardDTO bDto) {
+		log.info("■■BoardServiceImpl의 Write■■");
 		
-		//-------------------썸네일 이미지 주소 만들기 -----------------------
-		String originalName = bDto.getVideo_code();
-		String substring1 = originalName.substring(originalName.indexOf("/embed/")+ 7); 			 //처음부터 검색해서 /embed/가 있는걸 찾고 시작/가 0인데, 7칸 더 버리고 뒤에만 씀
-		String substring2 = substring1.substring(0,11); 											 //0~11까지 사용  (숫자 하나만 쓸경우 거기까지 버려버림)
-		log.info("■■■ 추출된 유튜브 이미지 주소■■■■"+substring2);
-		
-		String video_img = "https://img.youtube.com/vi/"+substring2+"/maxresdefault.jpg";  //유튜브 썸네일 주소
-		bDto.setVideo_img(video_img);  //완성된 주소를 DTO에 주입
-		log.info("■■■ 데이터에 저장된 유튜브 썸네일 코드 ■■■■"+video_img);
-		
-		//----------------------------------
+		//video_code가 값이 안들어온 경우 null을 입력함
+		if("".equals(bDto.getVideo_code())){
+				bDto.setVideo_code("");
+				bDto.setVideo_img("");
+				log.info("■변경됨■"+bDto.toString());
+		}else {
+			log.info("■■썸네일 주소 생성■■");
+			//-------------------썸네일 이미지 주소 만들기 -----------------------
+			String originalName = bDto.getVideo_code();
+			String substring1 = originalName.substring(originalName.indexOf("/embed/")+ 7); 			 //처음부터 검색해서 /embed/가 있는걸 찾고 시작/가 0인데, 7칸 더 버리고 뒤에만 씀
+			String substring2 = substring1.substring(0,11); 											 //0~11까지 사용  (숫자 하나만 쓸경우 거기까지 버려버림)
+			log.info("■■■ 추출된 유튜브 이미지 주소■■■■"+substring2);
+			
+			String video_img = "https://img.youtube.com/vi/"+substring2+"/maxresdefault.jpg";  //유튜브 썸네일 주소
+			bDto.setVideo_img(video_img);  //완성된 주소를 DTO에 주입
+			log.info("■■■ 데이터에 저장된 유튜브 썸네일 코드 ■■■■"+video_img);
+			//----------------------------------
+		}
 		
 		//tbl_board에 게시글 등록(type, title, content, writer)
 		bDao.write(bDto);
